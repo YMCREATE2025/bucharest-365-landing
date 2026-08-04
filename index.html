@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Bucharest 365 | חוויות ושירותי VIP בבוקרשט</title>
 <meta name="description" content="ליווי VIP אישי, מסעדות, חיי לילה, לימוזינות ואירועים בבוקרשט. שירות בעברית, זמינות 365 ימים בשנה.">
+<link rel="icon" type="image/png" href="logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Hebrew:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -45,8 +46,11 @@
     display:flex;align-items:center;justify-content:space-between;
     height:76px;
   }
-  .logo{font-size:1.3rem;font-weight:700;letter-spacing:1px;color:var(--gold-light);}
+  .logo{font-size:1.3rem;font-weight:700;letter-spacing:1px;color:var(--gold-light);display:flex;align-items:center;gap:10px;}
   .logo span{color:var(--text);font-weight:300;}
+  .logo-img{height:44px;width:44px;object-fit:contain;display:block;}
+  footer .logo{margin-bottom:6px;}
+  footer .logo-img{height:56px;width:56px;}
   nav{display:flex;gap:32px;}
   nav a{font-size:0.95rem;color:var(--text-dim);transition:color .2s;}
   nav a:hover{color:var(--gold-light);}
@@ -236,7 +240,7 @@
 
 <header>
   <div class="container">
-    <a href="#top" class="logo">Bucharest 365 <span>| VIP</span></a>
+    <a href="#top" class="logo"><img src="logo.png" alt="Bucharest 365" class="logo-img"> Bucharest 365 <span>| VIP</span></a>
     <nav>
       <a href="#services">שירותים</a>
       <a href="#about">למה אנחנו</a>
@@ -456,7 +460,7 @@
   <div class="container">
     <div class="footer-wrap">
       <div>
-        <div class="logo">Bucharest 365</div>
+        <div class="logo"><img src="logo.png" alt="Bucharest 365" class="logo-img"> Bucharest 365</div>
         <p>שירותי VIP, בילויים וחוויות בבוקרשט, בהתאמה אישית ובשירות בעברית.</p>
       </div>
       <div class="footer-links">
