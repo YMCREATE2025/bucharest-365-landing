@@ -5,29 +5,33 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Bucharest 365 | חוויות ושירותי VIP בבוקרשט</title>
 <meta name="description" content="ליווי VIP אישי, מסעדות, חיי לילה, לימוזינות ואירועים בבוקרשט. שירות בעברית, זמינות 365 ימים בשנה.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Hebrew:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root{
     --bg:#0b0b0f;
     --bg-alt:#111116;
     --card:#16161c;
-    --gold:#c9a24a;
-    --gold-light:#e6c877;
+    --gold:#ec4899;
+    --gold-light:#ff9ecb;
     --text:#f2f0ea;
     --text-dim:#a8a5ad;
-    --border:rgba(201,162,74,0.18);
+    --border:rgba(236,72,153,0.18);
+    --max-w:1200px;
   }
   *{box-sizing:border-box;margin:0;padding:0;}
   html{scroll-behavior:smooth;}
   body{
     background:var(--bg);
     color:var(--text);
-    font-family:'Segoe UI', Arial, sans-serif;
+    font-family:'Noto Sans Hebrew', 'Segoe UI', Arial, sans-serif;
     line-height:1.6;
     overflow-x:hidden;
   }
   a{color:inherit;text-decoration:none;}
   img{max-width:100%;display:block;}
-  .container{max-width:1120px;margin:0 auto;padding:0 24px;}
+  .container{max-width:var(--max-w);margin:0 auto;padding:0 24px;}
   section{padding:96px 0;}
 
   /* Header */
@@ -49,11 +53,11 @@
   .btn{
     display:inline-block;padding:12px 28px;border-radius:999px;
     background:linear-gradient(135deg,var(--gold-light),var(--gold));
-    color:#151108;font-weight:700;font-size:0.95rem;
+    color:#ffffff;font-weight:700;font-size:0.95rem;
     transition:transform .2s, box-shadow .2s;
-    box-shadow:0 8px 24px rgba(201,162,74,0.25);
+    box-shadow:0 8px 24px rgba(236,72,153,0.25);
   }
-  .btn:hover{transform:translateY(-2px);box-shadow:0 12px 32px rgba(201,162,74,0.4);}
+  .btn:hover{transform:translateY(-2px);box-shadow:0 12px 32px rgba(236,72,153,0.4);}
   .btn-outline{
     display:inline-block;padding:11px 27px;border-radius:999px;
     border:1px solid var(--border);color:var(--text);font-size:0.95rem;
@@ -63,11 +67,15 @@
 
   /* Hero */
   .hero{
-    padding:180px 0 120px;
+    padding:220px 0 140px;
     position:relative;
     background:
-      radial-gradient(ellipse 80% 60% at 70% 0%, rgba(201,162,74,0.15), transparent),
-      radial-gradient(ellipse 60% 50% at 10% 20%, rgba(201,162,74,0.08), transparent);
+      radial-gradient(ellipse 80% 60% at 70% 0%, rgba(236,72,153,0.25), transparent),
+      radial-gradient(ellipse 60% 50% at 10% 20%, rgba(236,72,153,0.12), transparent),
+      linear-gradient(rgba(11,11,15,0.88), rgba(11,11,15,0.94)),
+      url('https://images.unsplash.com/photo-1706209015879-06c839635494?w=1920&q=80&auto=format&fit=crop');
+    background-size:cover;
+    background-position:center;
     text-align:center;
   }
   .eyebrow{
@@ -100,14 +108,18 @@
   .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
   .card{
     background:var(--card);border:1px solid var(--border);border-radius:16px;
-    padding:32px 28px;transition:transform .25s, border-color .25s;
+    overflow:hidden;transition:transform .25s, border-color .25s;
   }
   .card:hover{transform:translateY(-6px);border-color:var(--gold);}
+  .card-img{
+    width:100%;aspect-ratio:16/10;object-fit:cover;display:block;
+  }
+  .card-body{padding:28px;}
   .card .icon{
     width:48px;height:48px;border-radius:12px;
     background:linear-gradient(135deg,var(--gold-light),var(--gold));
     display:flex;align-items:center;justify-content:center;font-size:1.3rem;margin-bottom:20px;
-    color:#151108;font-weight:700;
+    color:#ffffff;font-weight:700;
   }
   .card h3{font-size:1.2rem;margin-bottom:10px;}
   .card p{color:var(--text-dim);font-size:0.95rem;}
@@ -117,11 +129,12 @@
   .about-wrap{display:grid;grid-template-columns:1fr 1.1fr;gap:56px;align-items:center;}
   .about-photo{
     aspect-ratio:4/5;border-radius:20px;overflow:hidden;
-    background:linear-gradient(135deg, rgba(201,162,74,0.25), rgba(201,162,74,0.05));
+    background:linear-gradient(135deg, rgba(236,72,153,0.25), rgba(236,72,153,0.05));
     border:1px solid var(--border);
     display:flex;align-items:center;justify-content:center;
     font-size:4rem;color:var(--gold-light);
   }
+  .about-photo img{width:100%;height:100%;object-fit:cover;}
   .about h2{font-size:clamp(1.6rem,3vw,2.2rem);margin-bottom:18px;font-weight:800;}
   .about p{color:var(--text-dim);margin-bottom:16px;}
   .stats{display:flex;gap:40px;margin-top:32px;flex-wrap:wrap;}
@@ -136,7 +149,7 @@
     position:absolute;top:-18px;right:28px;
     width:36px;height:36px;border-radius:50%;
     background:linear-gradient(135deg,var(--gold-light),var(--gold));
-    color:#151108;font-weight:800;display:flex;align-items:center;justify-content:center;
+    color:#ffffff;font-weight:800;display:flex;align-items:center;justify-content:center;
   }
   .step h3{margin-bottom:8px;font-size:1.1rem;}
   .step p{color:var(--text-dim);font-size:0.95rem;}
@@ -151,7 +164,7 @@
 
   /* CTA band */
   .cta-band{
-    background:linear-gradient(135deg, rgba(201,162,74,0.12), rgba(201,162,74,0.02));
+    background:linear-gradient(135deg, rgba(236,72,153,0.12), rgba(236,72,153,0.02));
     border-top:1px solid var(--border);border-bottom:1px solid var(--border);
     text-align:center;
   }
@@ -193,8 +206,12 @@
     width:58px;height:58px;border-radius:50%;
     background:linear-gradient(135deg,var(--gold-light),var(--gold));
     display:flex;align-items:center;justify-content:center;
-    box-shadow:0 8px 24px rgba(201,162,74,0.4);
+    box-shadow:0 8px 24px rgba(236,72,153,0.4);
     font-size:1.5rem;
+  }
+
+  @media (max-width:1240px){
+    .container{padding:0 24px;}
   }
 
   @media (max-width:900px){
@@ -204,6 +221,14 @@
     .about-photo{aspect-ratio:16/9;}
     section{padding:64px 0;}
     .hero{padding:150px 0 80px;}
+  }
+
+  @media (max-width:480px){
+    .hero-ctas{flex-direction:column;align-items:stretch;}
+    .hero-checks{gap:14px;}
+    .container{padding:0 16px;}
+    section{padding:48px 0;}
+    .card-body, form{padding:22px;}
   }
 </style>
 </head>
@@ -246,34 +271,52 @@
     <p class="sec-sub">אנחנו מכירים את בוקרשט מבפנים, ויודעים לחבר אתכם למקומות ולחוויות שיעשו את החופשה.</p>
     <div class="grid">
       <div class="card">
-        <div class="icon">★</div>
-        <h3>ליווי VIP אישי</h3>
-        <p>תכנון וליווי אישי בעברית, עם מענה זמין לאורך כל החופשה.</p>
+        <img class="card-img" src="https://images.unsplash.com/photo-1522255272218-7ac5249be344?w=800&q=80&auto=format&fit=crop" alt="ליווי VIP אישי" loading="lazy">
+        <div class="card-body">
+          <div class="icon">★</div>
+          <h3>ליווי VIP אישי</h3>
+          <p>תכנון וליווי אישי בעברית, עם מענה זמין לאורך כל החופשה.</p>
+        </div>
       </div>
       <div class="card">
-        <div class="icon">♫</div>
-        <h3>אטרקציות וחיי לילה</h3>
-        <p>מועדונים, ברים, הופעות וחוויות במקומות הנכונים בעיר.</p>
+        <img class="card-img" src="https://images.unsplash.com/photo-1723096111835-b3a2bc9e6b53?w=800&q=80&auto=format&fit=crop" alt="אטרקציות וחיי לילה" loading="lazy">
+        <div class="card-body">
+          <div class="icon">♫</div>
+          <h3>אטרקציות וחיי לילה</h3>
+          <p>מועדונים, ברים, הופעות וחוויות במקומות הנכונים בעיר.</p>
+        </div>
       </div>
       <div class="card">
-        <div class="icon">🍽</div>
-        <h3>מסעדות מומלצות</h3>
-        <p>הזמנת שולחנות והכוונה למסעדות המבוקשות בבוקרשט.</p>
+        <img class="card-img" src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800&q=80&auto=format&fit=crop" alt="מסעדות מומלצות" loading="lazy">
+        <div class="card-body">
+          <div class="icon">🍽</div>
+          <h3>מסעדות מומלצות</h3>
+          <p>הזמנת שולחנות והכוונה למסעדות המבוקשות בבוקרשט.</p>
+        </div>
       </div>
       <div class="card">
-        <div class="icon">🚘</div>
-        <h3>לימוזינות והסעות</h3>
-        <p>איסוף משדה התעופה, נסיעות פרטיות ולימוזינות לאירועים.</p>
+        <img class="card-img" src="https://images.unsplash.com/photo-1552561018-5fea54c08479?w=800&q=80&auto=format&fit=crop" alt="לימוזינות והסעות" loading="lazy">
+        <div class="card-body">
+          <div class="icon">🚘</div>
+          <h3>לימוזינות והסעות</h3>
+          <p>איסוף משדה התעופה, נסיעות פרטיות ולימוזינות לאירועים.</p>
+        </div>
       </div>
       <div class="card">
-        <div class="icon">🎉</div>
-        <h3>מסיבות ואירועים</h3>
-        <p>כניסה למקומות חמים וחבילות בילוי לזוגות ולקבוצות.</p>
+        <img class="card-img" src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=800&q=80&auto=format&fit=crop" alt="מסיבות ואירועים" loading="lazy">
+        <div class="card-body">
+          <div class="icon">🎉</div>
+          <h3>מסיבות ואירועים</h3>
+          <p>כניסה למקומות חמים וחבילות בילוי לזוגות ולקבוצות.</p>
+        </div>
       </div>
       <div class="card">
-        <div class="icon">365</div>
-        <h3>המלצות 365</h3>
-        <p>כתובת אחת לכל שאלה, מהרגע שנוחתים ועד שחוזרים הביתה.</p>
+        <img class="card-img" src="https://images.unsplash.com/photo-1531887259712-aa6e090e9289?w=800&q=80&auto=format&fit=crop" alt="המלצות 365" loading="lazy">
+        <div class="card-body">
+          <div class="icon">365</div>
+          <h3>המלצות 365</h3>
+          <p>כתובת אחת לכל שאלה, מהרגע שנוחתים ועד שחוזרים הביתה.</p>
+        </div>
       </div>
     </div>
   </div>
