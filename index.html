@@ -163,12 +163,29 @@
   .step p{color:var(--text-dim);font-size:0.95rem;}
 
   /* Instagram reels */
-  .reels-grid{display:flex;flex-wrap:wrap;justify-content:center;gap:24px;}
-  .reel-embed{
-    width:100%;max-width:300px;border-radius:16px;overflow:hidden;
-    border:1px solid var(--border);background:var(--card);
+  .reels-wrap{position:relative;max-width:1200px;margin:0 auto;}
+  .reels-grid{
+    display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;
+    justify-content:center;padding:8px 4px 12px;scrollbar-width:none;
   }
-  .reel-embed iframe{border-radius:16px !important;}
+  .reels-grid::-webkit-scrollbar{display:none;}
+  .reel-card{flex:0 0 auto;width:176px;scroll-snap-align:start;}
+  .reel-card a{display:block;}
+  .reel-card img{
+    width:176px;height:313px;object-fit:cover;border-radius:14px;
+    border:1px solid var(--border);display:block;transition:transform .25s, border-color .25s;
+  }
+  .reel-card:hover img{transform:scale(1.03);border-color:var(--gold);}
+  .reels-nav{
+    position:absolute;top:50%;transform:translateY(-50%);
+    width:40px;height:40px;border-radius:50%;
+    background:var(--card);border:1px solid var(--border);color:var(--gold-light);
+    font-size:1.2rem;cursor:pointer;display:flex;align-items:center;justify-content:center;
+    z-index:2;transition:border-color .2s, color .2s;
+  }
+  .reels-nav:hover{border-color:var(--gold);}
+  .reels-nav.prev{right:-52px;}
+  .reels-nav.next{left:-52px;}
 
   /* Reviews carousel */
   .reviews-carousel{position:relative;max-width:1000px;margin:0 auto;}
@@ -258,6 +275,10 @@
     .carousel-btn.prev{right:0;}
     .carousel-btn.next{left:0;}
     .review-page.active{grid-template-columns:1fr;}
+    .reels-wrap{max-width:100%;}
+    .reels-nav.prev{right:0;}
+    .reels-nav.next{left:0;}
+    .reels-grid{padding-left:52px;padding-right:52px;}
     .review{padding:28px 60px;}
   }
 
@@ -387,12 +408,36 @@
     <span class="sec-eyebrow">עוקבים אחרינו</span>
     <h2 class="sec-title">רגעים מהעיר, ישר מהאינסטגרם</h2>
     <p class="sec-sub">קצת מהאווירה שמחכה לכם בבוקרשט — עקבו אחרינו <a href="https://www.instagram.com/bucha_rest365/" target="_blank" rel="noopener">@bucha_rest365</a></p>
-    <div class="reels-grid">
-      <div class="reel-embed"><blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DZgsofrILJm/" data-instgrm-version="14"></blockquote></div>
-      <div class="reel-embed"><blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DS80aCWjEUB/" data-instgrm-version="14"></blockquote></div>
-      <div class="reel-embed"><blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DSPot70jKSA/" data-instgrm-version="14"></blockquote></div>
-      <div class="reel-embed"><blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DQ9yCuSDOVC/" data-instgrm-version="14"></blockquote></div>
-      <div class="reel-embed"><blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DNbJnR7s_ZK/" data-instgrm-version="14"></blockquote></div>
+    <div class="reels-wrap">
+      <button class="reels-nav prev" aria-label="רילס קודם">›</button>
+      <div class="reels-grid" id="reelsGrid">
+        <div class="reel-card">
+          <a href="https://www.instagram.com/reel/DZgsofrILJm/" target="_blank" rel="noopener">
+            <img src="reel1.jpg" alt="רילס מהאינסטגרם - Bucharest 365" loading="lazy">
+          </a>
+        </div>
+        <div class="reel-card">
+          <a href="https://www.instagram.com/reel/DS80aCWjEUB/" target="_blank" rel="noopener">
+            <img src="reel2.jpg" alt="רילס מהאינסטגרם - Bucharest 365" loading="lazy">
+          </a>
+        </div>
+        <div class="reel-card">
+          <a href="https://www.instagram.com/reel/DSPot70jKSA/" target="_blank" rel="noopener">
+            <img src="reel3.jpg" alt="רילס מהאינסטגרם - Bucharest 365" loading="lazy">
+          </a>
+        </div>
+        <div class="reel-card">
+          <a href="https://www.instagram.com/reel/DQ9yCuSDOVC/" target="_blank" rel="noopener">
+            <img src="reel4.jpg" alt="רילס מהאינסטגרם - Bucharest 365" loading="lazy">
+          </a>
+        </div>
+        <div class="reel-card">
+          <a href="https://www.instagram.com/reel/DNbJnR7s_ZK/" target="_blank" rel="noopener">
+            <img src="reel5.jpg" alt="רילס מהאינסטגרם - Bucharest 365" loading="lazy">
+          </a>
+        </div>
+      </div>
+      <button class="reels-nav next" aria-label="רילס הבא">‹</button>
     </div>
   </div>
 </section>
@@ -587,9 +632,23 @@ function sendToWhatsApp(e){
 
   resetTimer();
 })();
-</script>
 
-<script async src="https://www.instagram.com/embed.js"></script>
+(function(){
+  const grid = document.getElementById('reelsGrid');
+  const prevBtn = document.querySelector('.reels-nav.prev');
+  const nextBtn = document.querySelector('.reels-nav.next');
+  if(!grid || !prevBtn || !nextBtn) return;
+  const rtl = getComputedStyle(document.documentElement).direction === 'rtl';
+  const dir = rtl ? -1 : 1;
+  function scrollAmount(){
+    const card = grid.querySelector('.reel-card');
+    const gap = 16;
+    return card ? (card.offsetWidth + gap) * 2 : 200;
+  }
+  nextBtn.addEventListener('click', ()=> grid.scrollBy({left: dir * scrollAmount(), behavior:'smooth'}));
+  prevBtn.addEventListener('click', ()=> grid.scrollBy({left: -dir * scrollAmount(), behavior:'smooth'}));
+})();
+</script>
 
 </body>
 </html>
