@@ -222,9 +222,12 @@
 
   /* Reviews carousel */
   .reviews-carousel{position:relative;max-width:1000px;margin:0 auto;}
-  .reviews-track{position:relative;min-height:220px;overflow:hidden;}
-  .reviews-track-inner{display:flex;direction:ltr;transition:transform .5s cubic-bezier(.4,0,.2,1);}
-  .review-page{direction:rtl;flex:0 0 100%;width:100%;display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
+  .reviews-track{
+    display:flex;gap:24px;overflow-x:auto;scroll-snap-type:x mandatory;
+    scroll-behavior:smooth;-webkit-overflow-scrolling:touch;scrollbar-width:none;
+  }
+  .reviews-track::-webkit-scrollbar{display:none;}
+  .reviews-track .review{scroll-snap-align:start;flex:0 0 calc((100% - 48px)/3);min-width:0;}
   .review{background:var(--card);border:2px solid var(--border);border-radius:16px;padding:28px;text-align:center;box-shadow:var(--neon-box-soft);}
   .stars{color:var(--gold-light);margin-bottom:14px;letter-spacing:2px;text-shadow:0 0 5px var(--gold-light);}
   .review p{color:var(--text-dim);margin-bottom:18px;font-size:0.95rem;}
@@ -308,7 +311,7 @@
     .reviews-carousel{max-width:100%;}
     .carousel-btn.prev{right:0;}
     .carousel-btn.next{left:0;}
-    .review-page{grid-template-columns:1fr;}
+    .reviews-track .review{flex:0 0 100%;}
     .reels-wrap{max-width:100%;}
     .reels-nav.prev{right:0;}
     .reels-nav.next{left:0;}
@@ -336,7 +339,7 @@
     <a href="#top" class="logo"><img src="logo.png" alt="Bucharest 365" class="logo-img" data-edit="logo-img"> Bucharest 365 <span>| VIP</span></a>
     <nav>
       <a href="#services">שירותים</a>
-      <a href="#about">למה גולן כ</a>
+      <a href="#about">למה גולן</a>
       <a href="#reviews">ממליצים</a>
       <a href="#faq">שאלות נפוצות</a>
     </nav>
@@ -512,49 +515,47 @@
     <h2 class="sec-title">חוויות שנשארות</h2>
     <div class="reviews-carousel">
       <button class="carousel-btn prev" aria-label="ביקורת קודמת">›</button>
-      <div class="reviews-track">
-        <div class="reviews-track-inner">
-        <div class="review-page">
-          <div class="review">
-            <div class="stars">★★★★★</div>
-            <p>"גולן כ סידר לנו סוף שבוע ברמה אחרת. כל מקום היה בול, בלי לחכות ובלי להתעסק עם כלום."</p>
-            <div class="who"><b>אורן מ.</b><span>סופ״ש חברים</span></div>
-          </div>
-          <div class="review">
-            <div class="stars">★★★★★</div>
-            <p>"השירות היה אישי ומהיר. המסעדות והבילויים היו בדיוק בסגנון שחיפשנו."</p>
-            <div class="who"><b>שני ורועי</b><span>חופשה זוגית</span></div>
-          </div>
-          <div class="review">
-            <div class="stars">★★★★★</div>
-            <p>"הגענו קבוצה גדולה והכול תיקתק — הסעות, שולחנות ומועדונים. הרגשנו שדואגים לנו."</p>
-            <div class="who"><b>דניאל א.</b><span>קבוצת חברים</span></div>
-          </div>
+      <div class="reviews-track" id="reviewsTrack">
+        <div class="review">
+          <div class="stars">★★★★★</div>
+          <p>"גולן כ סידר לנו סוף שבוע ברמה אחרת. כל מקום היה בול, בלי לחכות ובלי להתעסק עם כלום."</p>
+          <div class="who"><b>אורן מ.</b><span>סופ״ש חברים</span></div>
         </div>
-        <div class="review-page">
-          <div class="review">
-            <div class="stars">★★★★★</div>
-            <p>"ארגנו לנו מסיבת יום הולדת מושלמת — מקום מדהים, הכול היה מסודר מראש וללא שום דאגות."</p>
-            <div class="who"><b>מיכל ב.</b><span>יום הולדת</span></div>
-          </div>
-          <div class="review">
-            <div class="stars">★★★★★</div>
-            <p>"הגענו לירח דבש והרגשנו שיש לנו סוכן אישי בעיר. כל המלצה הייתה קולעת בול."</p>
-            <div class="who"><b>אלון וטל</b><span>ירח דבש</span></div>
-          </div>
-          <div class="review">
-            <div class="stars">★★★★★</div>
-            <p>"מסיבת רווקים בלתי נשכחת. הכניסות למועדונים, השולחנות, הכול פשוט זרם בלי מאמץ."</p>
-            <div class="who"><b>רועי כהן</b><span>מסיבת רווקים</span></div>
-          </div>
+        <div class="review">
+          <div class="stars">★★★★★</div>
+          <p>"השירות היה אישי ומהיר. המסעדות והבילויים היו בדיוק בסגנון שחיפשנו."</p>
+          <div class="who"><b>שני ורועי</b><span>חופשה זוגית</span></div>
         </div>
+        <div class="review">
+          <div class="stars">★★★★★</div>
+          <p>"הגענו קבוצה גדולה והכול תיקתק — הסעות, שולחנות ומועדונים. הרגשנו שדואגים לנו."</p>
+          <div class="who"><b>דניאל א.</b><span>קבוצת חברים</span></div>
+        </div>
+        <div class="review">
+          <div class="stars">★★★★★</div>
+          <p>"ארגנו לנו מסיבת יום הולדת מושלמת — מקום מדהים, הכול היה מסודר מראש וללא שום דאגות."</p>
+          <div class="who"><b>מיכל ב.</b><span>יום הולדת</span></div>
+        </div>
+        <div class="review">
+          <div class="stars">★★★★★</div>
+          <p>"הגענו לירח דבש והרגשנו שיש לנו סוכן אישי בעיר. כל המלצה הייתה קולעת בול."</p>
+          <div class="who"><b>אלון וטל</b><span>ירח דבש</span></div>
+        </div>
+        <div class="review">
+          <div class="stars">★★★★★</div>
+          <p>"מסיבת רווקים בלתי נשכחת. הכניסות למועדונים, השולחנות, הכול פשוט זרם בלי מאמץ."</p>
+          <div class="who"><b>רועי כהן</b><span>מסיבת רווקים</span></div>
         </div>
       </div>
       <button class="carousel-btn next" aria-label="ביקורת הבאה">‹</button>
     </div>
-    <div class="carousel-dots">
-      <button class="dot active" data-index="0" aria-label="קבוצת ביקורות 1"></button>
-      <button class="dot" data-index="1" aria-label="קבוצת ביקורות 2"></button>
+    <div class="carousel-dots" id="reviewsDots">
+      <button class="dot active" data-index="0" aria-label="ביקורת 1"></button>
+      <button class="dot" data-index="1" aria-label="ביקורת 2"></button>
+      <button class="dot" data-index="2" aria-label="ביקורת 3"></button>
+      <button class="dot" data-index="3" aria-label="ביקורת 4"></button>
+      <button class="dot" data-index="4" aria-label="ביקורת 5"></button>
+      <button class="dot" data-index="5" aria-label="ביקורת 6"></button>
     </div>
   </div>
 </section>
@@ -656,28 +657,56 @@ function sendToWhatsApp(e){
 }
 
 (function(){
-  const track = document.querySelector('.reviews-track-inner');
-  const slides = document.querySelectorAll('.review-page');
-  const dots = document.querySelectorAll('.carousel-dots .dot');
-  const prevBtn = document.querySelector('.carousel-btn.prev');
-  const nextBtn = document.querySelector('.carousel-btn.next');
-  if(!track || !slides.length) return;
-  let idx = 0, timer;
+  const track = document.getElementById('reviewsTrack');
+  const dots = document.querySelectorAll('#reviewsDots .dot');
+  const prevBtn = document.querySelector('.reviews-carousel .carousel-btn.prev');
+  const nextBtn = document.querySelector('.reviews-carousel .carousel-btn.next');
+  if(!track) return;
+  const cards = Array.from(track.querySelectorAll('.review'));
+  if(!cards.length) return;
 
-  function show(i){
-    idx = (i + slides.length) % slides.length;
-    track.style.transform = 'translateX(' + (-idx * 100) + '%)';
-    dots.forEach((d,j)=>d.classList.toggle('active', j===idx));
+  const rtl = getComputedStyle(document.documentElement).direction === 'rtl';
+  const dirSign = rtl ? -1 : 1;
+
+  function cardStep(){
+    const gap = parseFloat(getComputedStyle(track).columnGap || getComputedStyle(track).gap) || 24;
+    return cards[0].getBoundingClientRect().width + gap;
   }
-  function next(){ show(idx+1); }
-  function prev(){ show(idx-1); }
-  function resetTimer(){ clearInterval(timer); timer = setInterval(next, 5000); }
+  function scrollByCards(n){
+    track.scrollBy({left: dirSign * n * cardStep(), behavior:'smooth'});
+  }
+  function scrollToCard(j){
+    const target = cards[j];
+    if(!target) return;
+    const rect = target.getBoundingClientRect();
+    const trackRect = track.getBoundingClientRect();
+    track.scrollTo({left: track.scrollLeft + (rect.left - trackRect.left), behavior:'smooth'});
+  }
+  function updateDots(){
+    const trackRect = track.getBoundingClientRect();
+    let closest = 0, minDist = Infinity;
+    cards.forEach((c,j)=>{
+      const d = Math.abs(c.getBoundingClientRect().left - trackRect.left);
+      if(d < minDist){ minDist = d; closest = j; }
+    });
+    dots.forEach((d,j)=> d.classList.toggle('active', j===closest));
+  }
 
-  nextBtn.addEventListener('click', ()=>{ next(); resetTimer(); });
-  prevBtn.addEventListener('click', ()=>{ prev(); resetTimer(); });
-  dots.forEach((d,j)=> d.addEventListener('click', ()=>{ show(j); resetTimer(); }));
+  let scrollTimer;
+  track.addEventListener('scroll', ()=>{
+    clearTimeout(scrollTimer);
+    scrollTimer = setTimeout(updateDots, 100);
+  });
 
-  show(0);
+  // Arrows swapped per request: the "prev" button now advances forward,
+  // and the "next" button moves backward.
+  let timer;
+  function resetTimer(){ clearInterval(timer); timer = setInterval(()=> scrollByCards(1), 5000); }
+
+  prevBtn.addEventListener('click', ()=>{ scrollByCards(1); resetTimer(); });
+  nextBtn.addEventListener('click', ()=>{ scrollByCards(-1); resetTimer(); });
+  dots.forEach((d,j)=> d.addEventListener('click', ()=>{ scrollToCard(j); resetTimer(); }));
+
   resetTimer();
 })();
 
