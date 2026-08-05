@@ -77,6 +77,21 @@
 
   .note{background:rgba(255,20,254,0.06);border:1px solid var(--border);border-radius:12px;padding:16px 20px;margin-bottom:24px;font-size:0.85rem;color:var(--text-dim);}
   .note b{color:var(--gold-light);}
+
+  /* Reels manager */
+  .reel-row{display:flex;align-items:center;gap:14px;flex-wrap:wrap;border:1px solid var(--border);border-radius:12px;padding:14px;margin-bottom:12px;}
+  .reel-row.changed{border-color:var(--wa-green);}
+  .reel-row .thumb{width:64px;height:100px;border-radius:8px;object-fit:cover;border:1px solid var(--border);background:var(--bg-alt);flex-shrink:0;}
+  .reel-row .meta{flex:1;min-width:220px;display:flex;flex-direction:column;gap:8px;}
+  .reel-row .meta label{font-size:0.8rem;color:var(--text-dim);}
+  .reel-row input[type=text]{width:100%;padding:9px 12px;border-radius:8px;background:var(--bg-alt);border:1px solid var(--border);color:var(--text);font-family:inherit;font-size:0.85rem;}
+  .reel-row input[type=text]:focus{outline:none;border-color:var(--gold);}
+  .reel-row input[type=file]{font-size:0.78rem;color:var(--text-dim);}
+  .reel-row .del-btn{background:transparent;border:1px solid rgba(255,107,107,0.5);color:#ff6b6b;padding:8px 14px;border-radius:8px;cursor:pointer;font-size:0.8rem;flex-shrink:0;}
+  .reel-row .del-btn:hover{background:rgba(255,107,107,0.1);}
+  .reel-row .new-badge{background:var(--wa-green);color:#fff;font-size:0.7rem;padding:2px 8px;border-radius:999px;margin-inline-start:6px;}
+  .add-reel-btn{background:transparent;border:1px dashed var(--border);color:var(--gold-light);padding:12px;border-radius:10px;cursor:pointer;width:100%;font-size:0.9rem;font-weight:600;}
+  .add-reel-btn:hover{border-color:var(--gold);box-shadow:var(--neon-box-soft);}
 </style>
 </head>
 <body>
@@ -224,7 +239,137 @@ const IMAGE_FIELDS = [
   {key:'about-img', label:'תמונת גולן כ (עלינו)', group:'עלינו', fixedName:true},
 ];
 
-const GROUP_ORDER = ['הירו','לוגו','כרטיסי שירות','עלינו','שאלות נפוצות (עמוד הבית)','פוטר'];
+const GROUP_ORDER = ['הירו','לוגו','כרטיסי שירות','עלינו','רילים מאינסטגרם','שאלות נפוצות (עמוד הבית)','פוטר'];
+
+/* ---------- Reels manager ---------- */
+let reelsState = [];   // {num, key, link, file, cardEl, isNew}
+let reelCounter = 0;   // never reused, even after removal
+
+function loadReelsState(){
+  reelsState = [];
+  const grid = doc.getElementById('reelsGrid');
+  if(!grid) return;
+  const cards = Array.from(grid.querySelectorAll('.reel-card'));
+  cards.forEach((cardEl, i)=>{
+    const a = cardEl.querySelector('a');
+    const num = i + 1;
+    reelsState.push({
+      num,
+      key: 'reel' + num,
+      link: a ? (a.getAttribute('href') || '') : '',
+      file: null,
+      cardEl,
+      isNew:false
+    });
+  });
+  reelCounter = cards.length;
+}
+
+function renderReelsGroup(container){
+  const box = document.createElement('div');
+  box.className = 'group';
+  box.innerHTML = '<h2>רילים מאינסטגרם</h2>';
+  const list = document.createElement('div');
+  list.id = 'reels-list';
+  box.appendChild(list);
+  const addBtn = document.createElement('button');
+  addBtn.className = 'add-reel-btn';
+  addBtn.textContent = '+ הוספת רילס חדש';
+  addBtn.onclick = addReel;
+  box.appendChild(addBtn);
+  container.appendChild(box);
+  renderReelsList();
+}
+
+function renderReelsList(){
+  const list = document.getElementById('reels-list');
+  if(!list) return;
+  list.innerHTML = '';
+  reelsState.forEach((reel, idx)=>{
+    const row = document.createElement('div');
+    row.className = 'reel-row' + (reel._changed ? ' changed' : '');
+    const thumbSrc = reel.file ? URL.createObjectURL(reel.file) : ('reel' + reel.num + '.jpg');
+    row.innerHTML =
+      '<img class="thumb" src="' + thumbSrc + '" onerror="this.style.opacity=0.3">' +
+      '<div class="meta">' +
+        '<label>קישור לרילס באינסטגרם' + (reel.isNew ? ' <span class="new-badge">חדש</span>' : '') + '</label>' +
+        '<input type="text" dir="ltr" placeholder="https://www.instagram.com/reel/..." value="' + (reel.link || '').replace(/"/g,'&quot;') + '" oninput="handleReelLinkChange(' + idx + ', this.value)">' +
+        '<label style="margin-top:4px;">תמונת תצוגה (אופציונלי אם לא משנים)</label>' +
+        '<input type="file" accept="image/*" onchange="handleReelImageChange(' + idx + ', this)">' +
+      '</div>' +
+      '<button type="button" class="del-btn" onclick="removeReel(' + idx + ')">מחיקה</button>';
+    list.appendChild(row);
+  });
+}
+
+function handleReelLinkChange(idx, value){
+  const reel = reelsState[idx];
+  if(!reel) return;
+  reel.link = value;
+  reel._changed = true;
+  const a = reel.cardEl.querySelector('a');
+  if(a) a.setAttribute('href', value);
+  markReelRowChanged(idx);
+  updateChangedCount();
+}
+
+function handleReelImageChange(idx, input){
+  const reel = reelsState[idx];
+  const file = input.files[0];
+  if(!reel || !file) return;
+  reel.file = file;
+  reel._changed = true;
+  const img = reel.cardEl.querySelector('img');
+  if(img) img.setAttribute('src', 'reel' + reel.num + '.jpg');
+  markReelRowChanged(idx);
+  renderReelsList();
+  updateChangedCount();
+}
+
+function markReelRowChanged(idx){
+  const list = document.getElementById('reels-list');
+  if(!list) return;
+  const row = list.children[idx];
+  if(row) row.classList.add('changed');
+}
+
+function addReel(){
+  const grid = doc.getElementById('reelsGrid');
+  if(!grid) return;
+  reelCounter += 1;
+  const num = reelCounter;
+  const cardEl = doc.createElement('div');
+  cardEl.className = 'reel-card';
+  cardEl.setAttribute('data-reel', 'reel' + num);
+  const a = doc.createElement('a');
+  a.setAttribute('href', '#');
+  a.setAttribute('target', '_blank');
+  a.setAttribute('rel', 'noopener');
+  const img = doc.createElement('img');
+  img.setAttribute('src', 'reel' + num + '.jpg');
+  img.setAttribute('alt', 'רילס מהאינסטגרם - Bucharest 365');
+  a.appendChild(img);
+  cardEl.appendChild(a);
+  grid.appendChild(cardEl);
+
+  reelsState.push({num, key:'reel'+num, link:'', file:null, cardEl, isNew:true, _changed:true});
+  renderReelsList();
+  updateChangedCount();
+}
+
+function removeReel(idx){
+  const reel = reelsState[idx];
+  if(!reel) return;
+  if(!confirm('למחוק את הרילס הזה מהאתר?')) return;
+  if(reel.cardEl && reel.cardEl.parentNode) reel.cardEl.parentNode.removeChild(reel.cardEl);
+  reelsState.splice(idx, 1);
+  renderReelsList();
+  updateChangedCount();
+}
+
+function countReelChanges(){
+  return reelsState.filter(r=>r._changed).length;
+}
 
 async function loadContent(){
   const statusEl = document.getElementById('editor-status');
@@ -242,6 +387,7 @@ async function loadContent(){
     const aboutEl = doc.querySelector('[data-edit="about-img"]');
     if(aboutEl) fixedFilenames['about-img'] = aboutEl.getAttribute('src');
 
+    loadReelsState();
     buildForm();
     statusEl.textContent = 'התוכן נטען בהצלחה מהאתר החי. עורכים למטה ↓';
     statusEl.classList.add('ready');
@@ -292,7 +438,13 @@ function buildForm(){
     groups[field.group].appendChild(wrap);
   });
 
-  GROUP_ORDER.forEach(g=>{ if(groups[g].children.length > 1) container.appendChild(groups[g]); });
+  GROUP_ORDER.forEach(g=>{
+    if(g === 'רילים מאינסטגרם'){
+      renderReelsGroup(container);
+      return;
+    }
+    if(groups[g].children.length > 1) container.appendChild(groups[g]);
+  });
 }
 
 function handleTextChange(key, value){
@@ -322,7 +474,7 @@ function handleImageChange(key, input){
 }
 
 function updateChangedCount(){
-  const n = Object.keys(pendingTextChanges).length + Object.keys(pendingFiles).length;
+  const n = Object.keys(pendingTextChanges).length + Object.keys(pendingFiles).length + countReelChanges();
   document.getElementById('changed-count').textContent = n;
 }
 
@@ -357,25 +509,39 @@ function downloadFile(file, filename){
 
 function exportAll(){
   if(!doc){ alert('התוכן עדיין נטען, רגע...'); return; }
-  const totalChanges = Object.keys(pendingTextChanges).length + Object.keys(pendingFiles).length;
+
+  const newReelsMissingImage = reelsState.filter(r=>r.isNew && !r.file);
+  if(newReelsMissingImage.length){
+    alert('הוספתם רילס חדש בלי להעלות תמונת תצוגה עבורו. יש להעלות תמונה או למחוק את הרילס לפני ההורדה.');
+    return;
+  }
+
+  const totalChanges = Object.keys(pendingTextChanges).length + Object.keys(pendingFiles).length + countReelChanges();
   if(totalChanges === 0){ alert('אין שינויים להורדה עדיין.'); return; }
 
   downloadBlob(serializeDoc(), 'index.html', 'text/html');
 
   let delay = 400;
+  const downloadedNames = [];
+
   Object.entries(pendingFiles).forEach(([key, file])=>{
     const field = IMAGE_FIELDS.find(f=>f.key===key);
     const filename = (field.fixedName || field.isBg) ? fixedFilenames[key] : field.targetName;
     setTimeout(()=> downloadFile(file, filename), delay);
+    downloadedNames.push(filename);
+    delay += 400;
+  });
+
+  reelsState.forEach(reel=>{
+    if(!reel.file) return;
+    const filename = 'reel' + reel.num + '.jpg';
+    setTimeout(()=> downloadFile(reel.file, filename), delay);
+    downloadedNames.push(filename);
     delay += 400;
   });
 
   setTimeout(()=>{
-    alert('הקבצים ירדו להורדות שלכם:\nindex.html' + Object.keys(pendingFiles).map(k=>{
-      const field = IMAGE_FIELDS.find(f=>f.key===k);
-      const fn = (field.fixedName || field.isBg) ? fixedFilenames[k] : field.targetName;
-      return '\n' + fn;
-    }).join('') + '\n\nשלחו לי את הקבצים האלה בצ\'אט כדי שאעלה אותם לאתר החי.');
+    alert('הקבצים ירדו להורדות שלכם:\nindex.html' + downloadedNames.map(fn=>'\n'+fn).join('') + '\n\nשלחו לי את הקבצים האלה בצ\'אט כדי שאעלה אותם לאתר החי.');
   }, delay + 200);
 }
 </script>
