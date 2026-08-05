@@ -14,20 +14,20 @@
     --bg:#0b0b0f;
     --bg-alt:#111116;
     --card:#16161c;
-    --gold:#C210BC;
-    --gold-light:#E493E1;
+    --gold:#FF14FE;
+    --gold-light:#FFA9FE;
     --text:#f2f0ea;
     --text-dim:#a8a5ad;
-    --border:rgba(194,16,188,0.35);
+    --border:rgba(255,20,254,0.35);
     --glow:rgba(255,255,255,0.55);
     --max-w:1200px;
-    --neon-text:0 0 4px rgba(255,255,255,0.9), 0 0 12px var(--gold-light), 0 0 26px var(--gold), 0 0 48px rgba(194,16,188,0.55);
-    --neon-box:0 0 8px rgba(194,16,188,0.6), 0 0 22px rgba(194,16,188,0.4), 0 0 46px rgba(194,16,188,0.2);
-    --neon-box-soft:0 0 10px rgba(194,16,188,0.35), 0 0 26px rgba(194,16,188,0.18);
+    --neon-text:0 0 4px rgba(255,255,255,0.9), 0 0 12px var(--gold-light), 0 0 26px var(--gold), 0 0 48px rgba(255,20,254,0.55);
+    --neon-box:0 0 8px rgba(255,20,254,0.6), 0 0 22px rgba(255,20,254,0.4), 0 0 46px rgba(255,20,254,0.2);
+    --neon-box-soft:0 0 10px rgba(255,20,254,0.35), 0 0 26px rgba(255,20,254,0.18);
   }
   @keyframes neonPulse{
-    0%,100%{filter:drop-shadow(0 0 10px var(--gold-light)) drop-shadow(0 0 26px var(--gold)) drop-shadow(0 0 46px rgba(194,16,188,0.6));}
-    50%{filter:drop-shadow(0 0 16px var(--gold-light)) drop-shadow(0 0 38px var(--gold)) drop-shadow(0 0 64px rgba(194,16,188,0.8));}
+    0%,100%{filter:drop-shadow(0 0 10px var(--gold-light)) drop-shadow(0 0 26px var(--gold)) drop-shadow(0 0 46px rgba(255,20,254,0.6));}
+    50%{filter:drop-shadow(0 0 16px var(--gold-light)) drop-shadow(0 0 38px var(--gold)) drop-shadow(0 0 64px rgba(255,20,254,0.8));}
   }
   *{box-sizing:border-box;margin:0;padding:0;}
   html{scroll-behavior:smooth;}
@@ -69,7 +69,7 @@
     transition:transform .2s, box-shadow .2s;
     box-shadow:var(--neon-box);
   }
-  .btn:hover{transform:translateY(-2px);box-shadow:0 0 10px rgba(194,16,188,0.7), 0 0 30px rgba(194,16,188,0.55), 0 0 60px rgba(194,16,188,0.3);}
+  .btn:hover{transform:translateY(-2px);box-shadow:0 0 10px rgba(255,20,254,0.7), 0 0 30px rgba(255,20,254,0.55), 0 0 60px rgba(255,20,254,0.3);}
   .btn-outline{
     display:inline-block;padding:11px 27px;border-radius:999px;
     border:1px solid var(--border);color:var(--text);font-size:0.95rem;
@@ -82,10 +82,10 @@
     padding:220px 0 140px;
     position:relative;
     background:
-      radial-gradient(ellipse 80% 60% at 70% 0%, rgba(194,16,188,0.25), transparent),
-      radial-gradient(ellipse 60% 50% at 10% 20%, rgba(194,16,188,0.12), transparent),
+      radial-gradient(ellipse 80% 60% at 70% 0%, rgba(255,20,254,0.25), transparent),
+      radial-gradient(ellipse 60% 50% at 10% 20%, rgba(255,20,254,0.12), transparent),
       linear-gradient(rgba(11,11,15,0.88), rgba(11,11,15,0.94)),
-      url('https://images.unsplash.com/photo-1706209015879-06c839635494?w=1920&q=80&auto=format&fit=crop');
+      url('https://images.unsplash.com/photo-1550951196-1992d5cb8c2a?w=1920&q=80&auto=format&fit=crop');
     background-size:cover;
     background-position:center;
     text-align:center;
@@ -151,7 +151,7 @@
   .about-wrap{display:grid;grid-template-columns:1fr 1.1fr;gap:56px;align-items:center;}
   .about-photo{
     aspect-ratio:4/5;border-radius:20px;overflow:hidden;
-    background:linear-gradient(135deg, rgba(194,16,188,0.25), rgba(194,16,188,0.05));
+    background:linear-gradient(135deg, rgba(255,20,254,0.25), rgba(255,20,254,0.05));
     border:1px solid var(--border);
     display:flex;align-items:center;justify-content:center;
     font-size:4rem;color:var(--gold-light);
@@ -227,11 +227,11 @@
   .carousel-btn.next{left:-60px;}
   .carousel-dots{display:flex;justify-content:center;gap:10px;margin-top:28px;}
   .dot{width:9px;height:9px;border-radius:50%;background:var(--border);border:none;cursor:pointer;padding:0;transition:.25s;}
-  .dot.active{background:var(--gold);width:24px;border-radius:5px;box-shadow:0 0 10px var(--gold), 0 0 20px rgba(194,16,188,0.6);}
+  .dot.active{background:var(--gold);width:24px;border-radius:5px;box-shadow:0 0 10px var(--gold), 0 0 20px rgba(255,20,254,0.6);}
 
   /* CTA band */
   .cta-band{
-    background:linear-gradient(135deg, rgba(194,16,188,0.12), rgba(194,16,188,0.02));
+    background:linear-gradient(135deg, rgba(255,20,254,0.12), rgba(255,20,254,0.02));
     border-top:1px solid var(--border);border-bottom:1px solid var(--border);
     text-align:center;
   }
