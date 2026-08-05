@@ -222,10 +222,9 @@
 
   /* Reviews carousel */
   .reviews-carousel{position:relative;max-width:1000px;margin:0 auto;}
-  .reviews-track{position:relative;min-height:220px;}
-  .review-page{display:none;grid-template-columns:repeat(3,1fr);gap:24px;animation:fadeIn .4s ease;}
-  .review-page.active{display:grid;}
-  @keyframes fadeIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+  .reviews-track{position:relative;min-height:220px;overflow:hidden;}
+  .reviews-track-inner{display:flex;direction:ltr;transition:transform .5s cubic-bezier(.4,0,.2,1);}
+  .review-page{direction:rtl;flex:0 0 100%;width:100%;display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
   .review{background:var(--card);border:2px solid var(--border);border-radius:16px;padding:28px;text-align:center;box-shadow:var(--neon-box-soft);}
   .stars{color:var(--gold-light);margin-bottom:14px;letter-spacing:2px;text-shadow:0 0 5px var(--gold-light);}
   .review p{color:var(--text-dim);margin-bottom:18px;font-size:0.95rem;}
@@ -309,7 +308,7 @@
     .reviews-carousel{max-width:100%;}
     .carousel-btn.prev{right:0;}
     .carousel-btn.next{left:0;}
-    .review-page.active{grid-template-columns:1fr;}
+    .review-page{grid-template-columns:1fr;}
     .reels-wrap{max-width:100%;}
     .reels-nav.prev{right:0;}
     .reels-nav.next{left:0;}
@@ -514,7 +513,8 @@
     <div class="reviews-carousel">
       <button class="carousel-btn prev" aria-label="ביקורת קודמת">›</button>
       <div class="reviews-track">
-        <div class="review-page active">
+        <div class="reviews-track-inner">
+        <div class="review-page">
           <div class="review">
             <div class="stars">★★★★★</div>
             <p>"גולן כ סידר לנו סוף שבוע ברמה אחרת. כל מקום היה בול, בלי לחכות ובלי להתעסק עם כלום."</p>
@@ -547,6 +547,7 @@
             <p>"מסיבת רווקים בלתי נשכחת. הכניסות למועדונים, השולחנות, הכול פשוט זרם בלי מאמץ."</p>
             <div class="who"><b>רועי כהן</b><span>מסיבת רווקים</span></div>
           </div>
+        </div>
         </div>
       </div>
       <button class="carousel-btn next" aria-label="ביקורת הבאה">‹</button>
@@ -655,16 +656,17 @@ function sendToWhatsApp(e){
 }
 
 (function(){
+  const track = document.querySelector('.reviews-track-inner');
   const slides = document.querySelectorAll('.review-page');
   const dots = document.querySelectorAll('.carousel-dots .dot');
   const prevBtn = document.querySelector('.carousel-btn.prev');
   const nextBtn = document.querySelector('.carousel-btn.next');
-  if(!slides.length) return;
+  if(!track || !slides.length) return;
   let idx = 0, timer;
 
   function show(i){
     idx = (i + slides.length) % slides.length;
-    slides.forEach((s,j)=>s.classList.toggle('active', j===idx));
+    track.style.transform = 'translateX(' + (-idx * 100) + '%)';
     dots.forEach((d,j)=>d.classList.toggle('active', j===idx));
   }
   function next(){ show(idx+1); }
@@ -675,6 +677,7 @@ function sendToWhatsApp(e){
   prevBtn.addEventListener('click', ()=>{ prev(); resetTimer(); });
   dots.forEach((d,j)=> d.addEventListener('click', ()=>{ show(j); resetTimer(); }));
 
+  show(0);
   resetTimer();
 })();
 
