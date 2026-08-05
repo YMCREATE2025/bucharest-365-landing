@@ -71,17 +71,22 @@
 
   /* Hero */
   .hero{
-    padding:220px 0 140px;
+    padding:220px 0 100px;
     position:relative;
     background:
       radial-gradient(ellipse 80% 60% at 70% 0%, rgba(236,72,153,0.25), transparent),
       radial-gradient(ellipse 60% 50% at 10% 20%, rgba(236,72,153,0.12), transparent),
-      linear-gradient(rgba(11,11,15,0.88), rgba(11,11,15,0.94)),
+      linear-gradient(rgba(11,11,15,0.94), rgba(11,11,15,0.97)),
       url('https://images.unsplash.com/photo-1706209015879-06c839635494?w=1920&q=80&auto=format&fit=crop');
     background-size:cover;
     background-position:center;
     text-align:center;
   }
+  .hero-image{
+    max-width:960px;margin:0 auto 48px;border-radius:20px;overflow:hidden;
+    border:1px solid var(--border);box-shadow:0 24px 60px rgba(0,0,0,0.55);
+  }
+  .hero-image img{width:100%;display:block;}
   .eyebrow{
     display:inline-block;font-size:0.85rem;color:var(--gold-light);
     letter-spacing:2px;text-transform:uppercase;margin-bottom:20px;
@@ -259,6 +264,9 @@
     <div class="hero-ctas">
       <a class="btn" href="https://wa.me/972544709642?text=היי%20גולן,%20אני%20מתכנן%20חופשה%20בבוקרשט" target="_blank" rel="noopener">דברו איתנו ב־WhatsApp ←</a>
       <a class="btn-outline" href="#services">לכל השירותים ↓</a>
+    </div>
+    <div class="hero-image">
+      <img src="hero.jpg" alt="Bucharest 365 - חיי הלילה של בוקרשט, לימוזינות, VIP ומסיבות" loading="eager">
     </div>
     <div class="hero-checks">
       <div><span>✓</span> שירות בעברית</div>
