@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>פאנל ניהול | Bucharest 365</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Hebrew:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0b0b0f; --bg-alt:#111116; --card:#16161c;
+    --gold:#FF14FE; --gold-light:#FFA9FE;
+    --wa-green:#25D366; --wa-green-dark:#128C7E;
+    --text:#f2f0ea; --text-dim:#a8a5ad;
+    --border:rgba(255,20,254,0.35);
+    --neon-box-soft:0 0 4px rgba(255,169,254,0.16), 0 0 9px rgba(255,20,254,0.16), 0 0 18px rgba(255,20,254,0.08);
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{background:var(--bg);color:var(--text);font-family:'Noto Sans Hebrew','Segoe UI',Arial,sans-serif;line-height:1.6;min-height:100vh;}
+  .wrap{max-width:1100px;margin:0 auto;padding:32px 20px 80px;}
+  a{color:var(--gold-light);}
+
+  /* Login screen */
+  #login-screen{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;}
+  .login-box{background:var(--card);border:2px solid var(--border);border-radius:16px;padding:40px 32px;max-width:380px;width:100%;box-shadow:var(--neon-box-soft);text-align:center;}
+  .login-box h1{font-size:1.3rem;margin-bottom:8px;}
+  .login-box p{color:var(--text-dim);font-size:0.85rem;margin-bottom:24px;}
+  .login-box input{width:100%;padding:13px 16px;border-radius:10px;background:var(--bg-alt);border:1px solid var(--border);color:var(--text);font-size:1.1rem;letter-spacing:4px;text-align:center;margin-bottom:16px;}
+  .login-box input:focus{outline:none;border-color:var(--gold);}
+  .login-box button{width:100%;padding:13px;border-radius:10px;border:none;cursor:pointer;font-weight:700;font-size:0.95rem;background:linear-gradient(135deg,var(--gold-light),var(--gold));color:#fff;}
+  #login-error{color:#ff6b6b;font-size:0.85rem;margin-top:12px;display:none;}
+
+  /* Dashboard */
+  #dashboard{display:none;}
+  header.top{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:28px;padding-bottom:20px;border-bottom:1px solid var(--border);}
+  header.top h1{font-size:1.4rem;}
+  header.top .sub{color:var(--text-dim);font-size:0.85rem;}
+  .logout-btn{background:transparent;border:1px solid var(--border);color:var(--text-dim);padding:9px 18px;border-radius:999px;cursor:pointer;font-size:0.85rem;}
+  .logout-btn:hover{color:var(--gold-light);border-color:var(--gold);}
+
+  .cards-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-bottom:32px;}
+  .stat-card{background:var(--card);border:2px solid var(--border);border-radius:14px;padding:20px;box-shadow:var(--neon-box-soft);}
+  .stat-card .num{font-size:2rem;font-weight:800;color:var(--gold-light);text-shadow:0 0 8px rgba(255,20,254,0.3);}
+  .stat-card .lbl{color:var(--text-dim);font-size:0.85rem;margin-top:4px;}
+  .links-card{background:var(--card);border:2px solid var(--border);border-radius:14px;padding:20px;box-shadow:var(--neon-box-soft);}
+  .links-card h3{font-size:0.95rem;margin-bottom:10px;color:var(--gold-light);}
+  .links-card a{display:block;font-size:0.85rem;margin-bottom:6px;}
+
+  .editor-status{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px 20px;margin-bottom:24px;font-size:0.9rem;color:var(--text-dim);}
+  .editor-status.ready{border-color:rgba(37,211,102,0.4);}
+  .editor-status b{color:var(--gold-light);}
+
+  .group{background:var(--card);border:2px solid var(--border);border-radius:16px;padding:24px 26px;margin-bottom:22px;box-shadow:var(--neon-box-soft);}
+  .group h2{font-size:1.1rem;margin-bottom:18px;color:var(--gold-light);text-shadow:0 0 6px rgba(255,20,254,0.25);}
+  .field{margin-bottom:16px;}
+  .field label{display:block;font-size:0.85rem;color:var(--text-dim);margin-bottom:6px;}
+  .field textarea, .field input[type=text]{
+    width:100%;padding:11px 14px;border-radius:8px;background:var(--bg-alt);border:1px solid var(--border);
+    color:var(--text);font-family:inherit;font-size:0.92rem;resize:vertical;
+  }
+  .field textarea:focus, .field input:focus{outline:none;border-color:var(--gold);}
+  .field.changed textarea, .field.changed input[type=text]{border-color:var(--wa-green);}
+
+  .img-field{display:flex;align-items:center;gap:14px;flex-wrap:wrap;}
+  .img-field .thumb{width:72px;height:72px;border-radius:10px;object-fit:cover;border:1px solid var(--border);background:var(--bg-alt);flex-shrink:0;}
+  .img-field .meta{flex:1;min-width:180px;}
+  .img-field .meta label{display:block;font-size:0.85rem;color:var(--text-dim);margin-bottom:6px;}
+  .img-field input[type=file]{font-size:0.8rem;color:var(--text-dim);max-width:220px;}
+  .img-field.changed .thumb{border-color:var(--wa-green);}
+
+  .publish-bar{position:sticky;bottom:0;background:rgba(11,11,15,0.95);backdrop-filter:blur(10px);border-top:1px solid var(--border);padding:18px 0;margin-top:20px;display:flex;gap:12px;flex-wrap:wrap;align-items:center;justify-content:space-between;}
+  .publish-bar .btn{padding:13px 26px;border-radius:999px;border:none;cursor:pointer;font-weight:700;font-size:0.95rem;color:#fff;}
+  .btn-publish{background:linear-gradient(135deg,var(--wa-green),var(--wa-green-dark));}
+  .btn-preview{background:transparent;border:1px solid var(--border) !important;color:var(--text);}
+  .changed-count{color:var(--text-dim);font-size:0.85rem;}
+  .changed-count b{color:var(--gold-light);}
+
+  .note{background:rgba(255,20,254,0.06);border:1px solid var(--border);border-radius:12px;padding:16px 20px;margin-bottom:24px;font-size:0.85rem;color:var(--text-dim);}
+  .note b{color:var(--gold-light);}
+</style>
+</head>
+<body>
+
+<div id="login-screen">
+  <div class="login-box">
+    <h1>פאנל ניהול</h1>
+    <p>Bucharest 365 — הזינו סיסמה כדי להמשיך</p>
+    <input type="password" id="pw-input" placeholder="••••••••" inputmode="numeric" autofocus>
+    <button onclick="tryLogin()">כניסה</button>
+    <div id="login-error">סיסמה שגויה, נסו שוב</div>
+  </div>
+</div>
+
+<div id="dashboard">
+  <div class="wrap">
+    <header class="top">
+      <div>
+        <h1>פאנל ניהול — Bucharest 365</h1>
+        <div class="sub">ניהול תוכן, תמונות וסטטיסטיקות לדף הנחיתה</div>
+      </div>
+      <button class="logout-btn" onclick="logout()">התנתקות</button>
+    </header>
+
+    <div class="cards-row">
+      <div class="stat-card">
+        <div class="num" id="visit-count">...</div>
+        <div class="lbl">כניסות נמדדות לדף הבית</div>
+      </div>
+      <div class="links-card">
+        <h3>קישורים מהירים</h3>
+        <a href="index.html" target="_blank">🌐 האתר החי</a>
+        <a href="faq.html" target="_blank">❓ דף שאלות ותשובות</a>
+        <a href="https://github.com/YMCREATE2025/bucharest-365-landing" target="_blank">🗂️ הריפו בגיטהאב</a>
+        <a href="https://wa.me/972544709642" target="_blank">💬 וואטסאפ</a>
+      </div>
+    </div>
+
+    <div class="note">
+      <b>איך זה עובד:</b> הפאנל טוען את התוכן החי של האתר. עורכים טקסטים ומחליפים תמונות כאן, ובסוף לוחצים "הורדת קבצים לפרסום". זה מוריד את קובץ ה-index.html המעודכן ואת התמונות שהוחלפו. שולחים לי (בצ'אט) את הקבצים האלה ואני מעלה אותם לאתר החי בתוך דקה.
+    </div>
+
+    <div class="editor-status" id="editor-status">טוען את תוכן האתר…</div>
+
+    <div id="editor-groups"></div>
+  </div>
+
+  <div class="publish-bar">
+    <div class="wrap" style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;justify-content:space-between;width:100%;padding:0;">
+      <div class="changed-count">שינויים ממתינים: <b id="changed-count">0</b></div>
+      <div style="display:flex;gap:10px;">
+        <button class="btn btn-preview" onclick="previewChanges()">תצוגה מקדימה</button>
+        <button class="btn btn-publish" onclick="exportAll()">הורדת קבצים לפרסום</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const PASSWORD = '5546677';
+const SESSION_KEY = 'b365_admin_ok';
+
+function tryLogin(){
+  const val = document.getElementById('pw-input').value;
+  if(val === PASSWORD){
+    sessionStorage.setItem(SESSION_KEY, '1');
+    showDashboard();
+  } else {
+    document.getElementById('login-error').style.display = 'block';
+  }
+}
+document.getElementById('pw-input').addEventListener('keydown', e=>{ if(e.key==='Enter') tryLogin(); });
+
+function logout(){
+  sessionStorage.removeItem(SESSION_KEY);
+  location.reload();
+}
+
+function showDashboard(){
+  document.getElementById('login-screen').style.display = 'none';
+  document.getElementById('dashboard').style.display = 'block';
+  loadStats();
+  loadContent();
+}
+
+if(sessionStorage.getItem(SESSION_KEY) === '1'){ showDashboard(); }
+
+/* ---------- Stats ---------- */
+async function loadStats(){
+  const el = document.getElementById('visit-count');
+  try{
+    const r = await fetch('https://api.counterapi.dev/v1/bucharest365vip2026/index-visits');
+    const data = await r.json();
+    el.textContent = (data && typeof data.count === 'number') ? data.count.toLocaleString('he-IL') : '0';
+  }catch(e){
+    el.textContent = '—';
+    el.nextElementSibling.textContent = 'הסטטיסטיקה לא זמינה כרגע';
+  }
+}
+
+/* ---------- Content editor ---------- */
+let doc = null;
+const pendingTextChanges = {};
+const pendingFiles = {};
+const fixedFilenames = {};
+
+const TEXT_FIELDS = [
+  {key:'hero-title-line1', label:'הירו — כותרת (שורה 1)', group:'הירו'},
+  {key:'hero-title-accent', label:'הירו — כותרת מודגשת (שורה 2)', group:'הירו'},
+  {key:'hero-lead', label:'הירו — טקסט משנה', group:'הירו'},
+  {key:'card1-title', label:'כרטיס 1 — כותרת', group:'כרטיסי שירות'},
+  {key:'card1-desc', label:'כרטיס 1 — תיאור', group:'כרטיסי שירות'},
+  {key:'card2-title', label:'כרטיס 2 — כותרת', group:'כרטיסי שירות'},
+  {key:'card2-desc', label:'כרטיס 2 — תיאור', group:'כרטיסי שירות'},
+  {key:'card3-title', label:'כרטיס 3 — כותרת', group:'כרטיסי שירות'},
+  {key:'card3-desc', label:'כרטיס 3 — תיאור', group:'כרטיסי שירות'},
+  {key:'card4-title', label:'כרטיס 4 — כותרת', group:'כרטיסי שירות'},
+  {key:'card4-desc', label:'כרטיס 4 — תיאור', group:'כרטיסי שירות'},
+  {key:'card5-title', label:'כרטיס 5 — כותרת', group:'כרטיסי שירות'},
+  {key:'card5-desc', label:'כרטיס 5 — תיאור', group:'כרטיסי שירות'},
+  {key:'card6-title', label:'כרטיס 6 — כותרת', group:'כרטיסי שירות'},
+  {key:'card6-desc', label:'כרטיס 6 — תיאור', group:'כרטיסי שירות'},
+  {key:'about-p1', label:'עלינו — פסקה 1', group:'עלינו'},
+  {key:'about-p2', label:'עלינו — פסקה 2', group:'עלינו'},
+  {key:'faq1-q', label:'שאלה 1 — שאלה', group:'שאלות נפוצות (עמוד הבית)'},
+  {key:'faq1-a', label:'שאלה 1 — תשובה', group:'שאלות נפוצות (עמוד הבית)'},
+  {key:'faq2-q', label:'שאלה 2 — שאלה', group:'שאלות נפוצות (עמוד הבית)'},
+  {key:'faq2-a', label:'שאלה 2 — תשובה', group:'שאלות נפוצות (עמוד הבית)'},
+  {key:'faq3-q', label:'שאלה 3 — שאלה', group:'שאלות נפוצות (עמוד הבית)'},
+  {key:'faq3-a', label:'שאלה 3 — תשובה', group:'שאלות נפוצות (עמוד הבית)'},
+  {key:'faq4-q', label:'שאלה 4 — שאלה', group:'שאלות נפוצות (עמוד הבית)'},
+  {key:'faq4-a', label:'שאלה 4 — תשובה', group:'שאלות נפוצות (עמוד הבית)'},
+  {key:'footer-tagline', label:'פוטר — משפט', group:'פוטר'},
+];
+
+const IMAGE_FIELDS = [
+  {key:'logo-img', label:'לוגו (כותרת + פוטר)', group:'לוגו', fixedName:true},
+  {key:'hero-bg-img', label:'תמונת רקע להירו', group:'הירו', fixedName:true, isBg:true},
+  {key:'card1-img', label:'תמונת כרטיס 1', group:'כרטיסי שירות', targetName:'card1.jpg'},
+  {key:'card2-img', label:'תמונת כרטיס 2', group:'כרטיסי שירות', targetName:'card2.jpg'},
+  {key:'card3-img', label:'תמונת כרטיס 3', group:'כרטיסי שירות', targetName:'card3.jpg'},
+  {key:'card4-img', label:'תמונת כרטיס 4', group:'כרטיסי שירות', targetName:'card4.jpg'},
+  {key:'card5-img', label:'תמונת כרטיס 5', group:'כרטיסי שירות', targetName:'card5.jpg'},
+  {key:'card6-img', label:'תמונת כרטיס 6', group:'כרטיסי שירות', targetName:'card6.jpg'},
+  {key:'about-img', label:'תמונת גולן כ (עלינו)', group:'עלינו', fixedName:true},
+];
+
+const GROUP_ORDER = ['הירו','לוגו','כרטיסי שירות','עלינו','שאלות נפוצות (עמוד הבית)','פוטר'];
+
+async function loadContent(){
+  const statusEl = document.getElementById('editor-status');
+  try{
+    const r = await fetch('index.html?t=' + Date.now(), {cache:'no-store'});
+    if(!r.ok) throw new Error('fetch failed');
+    const html = await r.text();
+    doc = new DOMParser().parseFromString(html, 'text/html');
+
+    // capture fixed filenames
+    const heroSection = doc.querySelector('[data-edit-bg]');
+    if(heroSection) fixedFilenames['hero-bg-img'] = heroSection.getAttribute('data-bg-filename') || 'hero-bg.jpg';
+    const logoEl = doc.querySelector('[data-edit="logo-img"]');
+    if(logoEl) fixedFilenames['logo-img'] = logoEl.getAttribute('src');
+    const aboutEl = doc.querySelector('[data-edit="about-img"]');
+    if(aboutEl) fixedFilenames['about-img'] = aboutEl.getAttribute('src');
+
+    buildForm();
+    statusEl.textContent = 'התוכן נטען בהצלחה מהאתר החי. עורכים למטה ↓';
+    statusEl.classList.add('ready');
+  }catch(e){
+    statusEl.textContent = 'שגיאה בטעינת תוכן האתר. רעננו את הדף ונסו שוב.';
+  }
+}
+
+function buildForm(){
+  const container = document.getElementById('editor-groups');
+  container.innerHTML = '';
+  const groups = {};
+  GROUP_ORDER.forEach(g => groups[g] = document.createElement('div'));
+
+  GROUP_ORDER.forEach(g=>{
+    const box = groups[g];
+    box.className = 'group';
+    box.innerHTML = '<h2>' + g + '</h2>';
+  });
+
+  // images first within their group, then texts
+  IMAGE_FIELDS.forEach(field=>{
+    const el = doc.querySelector('[data-edit="' + field.key + '"], [data-edit-bg="' + field.key + '"]');
+    if(!el) return;
+    const currentSrc = field.isBg ? fixedFilenames[field.key] : el.getAttribute('src');
+    const wrap = document.createElement('div');
+    wrap.className = 'field img-field';
+    wrap.id = 'field-' + field.key;
+    wrap.innerHTML =
+      '<img class="thumb" src="' + currentSrc + '" onerror="this.style.opacity=0.3">' +
+      '<div class="meta">' +
+        '<label>' + field.label + '</label>' +
+        '<input type="file" accept="image/*" onchange="handleImageChange(\'' + field.key + '\', this)">' +
+      '</div>';
+    groups[field.group].appendChild(wrap);
+  });
+
+  TEXT_FIELDS.forEach(field=>{
+    const el = doc.querySelector('[data-edit="' + field.key + '"]');
+    if(!el) return;
+    const wrap = document.createElement('div');
+    wrap.className = 'field';
+    wrap.id = 'field-' + field.key;
+    const isLong = field.key.endsWith('-desc') || field.key.endsWith('-a') || field.key.startsWith('about-p') || field.key === 'hero-lead';
+    wrap.innerHTML =
+      '<label>' + field.label + '</label>' +
+      '<textarea rows="' + (isLong ? 3 : 2) + '" oninput="handleTextChange(\'' + field.key + '\', this.value)">' + el.textContent.trim() + '</textarea>';
+    groups[field.group].appendChild(wrap);
+  });
+
+  GROUP_ORDER.forEach(g=>{ if(groups[g].children.length > 1) container.appendChild(groups[g]); });
+}
+
+function handleTextChange(key, value){
+  const el = doc.querySelector('[data-edit="' + key + '"]');
+  if(!el) return;
+  el.textContent = value;
+  pendingTextChanges[key] = value;
+  document.getElementById('field-' + key).classList.add('changed');
+  updateChangedCount();
+}
+
+function handleImageChange(key, input){
+  const file = input.files[0];
+  if(!file) return;
+  pendingFiles[key] = file;
+  const url = URL.createObjectURL(file);
+  const wrap = document.getElementById('field-' + key);
+  wrap.classList.add('changed');
+  wrap.querySelector('.thumb').src = url;
+
+  const field = IMAGE_FIELDS.find(f=>f.key===key);
+  if(field && !field.fixedName && !field.isBg){
+    const el = doc.querySelector('[data-edit="' + key + '"]');
+    if(el) el.setAttribute('src', field.targetName);
+  }
+  updateChangedCount();
+}
+
+function updateChangedCount(){
+  const n = Object.keys(pendingTextChanges).length + Object.keys(pendingFiles).length;
+  document.getElementById('changed-count').textContent = n;
+}
+
+function serializeDoc(){
+  return '<!DOCTYPE html>\n' + doc.documentElement.outerHTML;
+}
+
+function previewChanges(){
+  if(!doc){ alert('התוכן עדיין נטען, רגע...'); return; }
+  const blob = new Blob([serializeDoc()], {type:'text/html'});
+  window.open(URL.createObjectURL(blob), '_blank');
+}
+
+function downloadBlob(content, filename, type){
+  const blob = new Blob([content], {type});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+}
+
+function downloadFile(file, filename){
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(file);
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+}
+
+function exportAll(){
+  if(!doc){ alert('התוכן עדיין נטען, רגע...'); return; }
+  const totalChanges = Object.keys(pendingTextChanges).length + Object.keys(pendingFiles).length;
+  if(totalChanges === 0){ alert('אין שינויים להורדה עדיין.'); return; }
+
+  downloadBlob(serializeDoc(), 'index.html', 'text/html');
+
+  let delay = 400;
+  Object.entries(pendingFiles).forEach(([key, file])=>{
+    const field = IMAGE_FIELDS.find(f=>f.key===key);
+    const filename = (field.fixedName || field.isBg) ? fixedFilenames[key] : field.targetName;
+    setTimeout(()=> downloadFile(file, filename), delay);
+    delay += 400;
+  });
+
+  setTimeout(()=>{
+    alert('הקבצים ירדו להורדות שלכם:\nindex.html' + Object.keys(pendingFiles).map(k=>{
+      const field = IMAGE_FIELDS.find(f=>f.key===k);
+      const fn = (field.fixedName || field.isBg) ? fixedFilenames[k] : field.targetName;
+      return '\n' + fn;
+    }).join('') + '\n\nשלחו לי את הקבצים האלה בצ\'אט כדי שאעלה אותם לאתר החי.');
+  }, delay + 200);
+}
+</script>
+
+</body>
+</html>

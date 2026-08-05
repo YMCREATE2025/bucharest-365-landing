@@ -92,6 +92,10 @@
     background-position:center;
     text-align:center;
   }
+  .hero-logo{
+    width:110px;height:110px;object-fit:contain;display:block;margin:0 auto 20px;
+    filter:drop-shadow(0 0 18px rgba(255,20,254,0.35)) drop-shadow(0 0 8px rgba(255,169,254,0.25));
+  }
   .eyebrow{
     display:inline-block;font-size:0.85rem;color:var(--gold-light);
     letter-spacing:2px;text-transform:uppercase;margin-bottom:20px;
@@ -324,7 +328,7 @@
 
 <header>
   <div class="container">
-    <a href="#top" class="logo"><img src="logo.png" alt="Bucharest 365" class="logo-img"> Bucharest 365 <span>| VIP</span></a>
+    <a href="#top" class="logo"><img src="logo.png" alt="Bucharest 365" class="logo-img" data-edit="logo-img"> Bucharest 365 <span>| VIP</span></a>
     <nav>
       <a href="#services">שירותים</a>
       <a href="#about">למה גולן כ</a>
@@ -335,11 +339,12 @@
   </div>
 </header>
 
-<section id="top" class="hero">
+<section id="top" class="hero" data-edit-bg="hero-bg-img" data-bg-filename="hero-bg.jpg">
   <div class="container">
+    <img src="logo.png" alt="Bucharest 365" class="hero-logo" data-edit="logo-img">
     <span class="eyebrow">✦ החוויה שלכם בבוקרשט מתחילה כאן</span>
-    <h1>בוקרשט עם גולן כ, <span class="accent">תתכוננו לחוויה כמו שמגיע לכם!</span></h1>
-    <p class="lead one-line">ליווי VIP אישי, מקומות נבחרים ושירות בעברית — כדי שאתם תגיעו ליהנות, ואנחנו נדאג לכל השאר.</p>
+    <h1><span data-edit="hero-title-line1">בוקרשט עם גולן כ,</span> <span class="accent" data-edit="hero-title-accent">תתכוננו לחוויה כמו שמגיע לכם!</span></h1>
+    <p class="lead one-line" data-edit="hero-lead">ליווי VIP אישי, מקומות נבחרים ושירות בעברית — כדי שאתם תגיעו ליהנות, ואנחנו נדאג לכל השאר.</p>
     <div class="hero-ctas">
       <a class="btn" href="https://wa.me/972544709642?text=היי%20גולן%20כ,%20אני%20מתכנן%20חופשה%20בבוקרשט" target="_blank" rel="noopener">דברו איתנו ב־WhatsApp ←</a>
       <a class="btn-outline" href="#services">לכל השירותים ↓</a>
@@ -360,56 +365,56 @@
     <div class="grid">
       <div class="card">
         <div class="card-media">
-          <img class="card-img" src="https://images.unsplash.com/photo-1522255272218-7ac5249be344?w=800&q=80&auto=format&fit=crop" alt="ליווי VIP אישי" loading="lazy">
-          <div class="card-title-overlay"><div class="icon">★</div><h3>ליווי VIP אישי</h3></div>
+          <img class="card-img" src="https://images.unsplash.com/photo-1522255272218-7ac5249be344?w=800&q=80&auto=format&fit=crop" alt="ליווי VIP אישי" loading="lazy" data-edit="card1-img" data-edit-filename="card1.jpg">
+          <div class="card-title-overlay"><div class="icon">★</div><h3 data-edit="card1-title">ליווי VIP אישי</h3></div>
         </div>
         <div class="card-body">
-          <p>תכנון וליווי אישי בעברית, עם מענה זמין לאורך כל החופשה.</p>
+          <p data-edit="card1-desc">תכנון וליווי אישי בעברית, עם מענה זמין לאורך כל החופשה.</p>
         </div>
       </div>
       <div class="card">
         <div class="card-media">
-          <img class="card-img" src="https://images.unsplash.com/photo-1723096111835-b3a2bc9e6b53?w=800&q=80&auto=format&fit=crop" alt="אטרקציות וחיי לילה" loading="lazy">
-          <div class="card-title-overlay"><div class="icon">♫</div><h3>אטרקציות וחיי לילה</h3></div>
+          <img class="card-img" src="https://images.unsplash.com/photo-1723096111835-b3a2bc9e6b53?w=800&q=80&auto=format&fit=crop" alt="אטרקציות וחיי לילה" loading="lazy" data-edit="card2-img" data-edit-filename="card2.jpg">
+          <div class="card-title-overlay"><div class="icon">♫</div><h3 data-edit="card2-title">אטרקציות וחיי לילה</h3></div>
         </div>
         <div class="card-body">
-          <p>מועדונים, ברים, הופעות וחוויות במקומות הנכונים בעיר.</p>
+          <p data-edit="card2-desc">מועדונים, ברים, הופעות וחוויות במקומות הנכונים בעיר.</p>
         </div>
       </div>
       <div class="card">
         <div class="card-media">
-          <img class="card-img" src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800&q=80&auto=format&fit=crop" alt="מסעדות מומלצות" loading="lazy">
-          <div class="card-title-overlay"><div class="icon">🍽</div><h3>מסעדות מומלצות</h3></div>
+          <img class="card-img" src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800&q=80&auto=format&fit=crop" alt="מסעדות מומלצות" loading="lazy" data-edit="card3-img" data-edit-filename="card3.jpg">
+          <div class="card-title-overlay"><div class="icon">🍽</div><h3 data-edit="card3-title">מסעדות מומלצות</h3></div>
         </div>
         <div class="card-body">
-          <p>הזמנת שולחנות והכוונה למסעדות המבוקשות בבוקרשט.</p>
+          <p data-edit="card3-desc">הזמנת שולחנות והכוונה למסעדות המבוקשות בבוקרשט.</p>
         </div>
       </div>
       <div class="card">
         <div class="card-media">
-          <img class="card-img" src="https://images.unsplash.com/photo-1552561018-5fea54c08479?w=800&q=80&auto=format&fit=crop" alt="לימוזינות והסעות" loading="lazy">
-          <div class="card-title-overlay"><div class="icon">🚘</div><h3>לימוזינות והסעות</h3></div>
+          <img class="card-img" src="https://images.unsplash.com/photo-1552561018-5fea54c08479?w=800&q=80&auto=format&fit=crop" alt="לימוזינות והסעות" loading="lazy" data-edit="card4-img" data-edit-filename="card4.jpg">
+          <div class="card-title-overlay"><div class="icon">🚘</div><h3 data-edit="card4-title">לימוזינות והסעות</h3></div>
         </div>
         <div class="card-body">
-          <p>איסוף משדה התעופה, נסיעות פרטיות ולימוזינות לאירועים.</p>
+          <p data-edit="card4-desc">איסוף משדה התעופה, נסיעות פרטיות ולימוזינות לאירועים.</p>
         </div>
       </div>
       <div class="card">
         <div class="card-media">
-          <img class="card-img" src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=800&q=80&auto=format&fit=crop" alt="מסיבות ואירועים" loading="lazy">
-          <div class="card-title-overlay"><div class="icon">🎉</div><h3>מסיבות ואירועים</h3></div>
+          <img class="card-img" src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=800&q=80&auto=format&fit=crop" alt="מסיבות ואירועים" loading="lazy" data-edit="card5-img" data-edit-filename="card5.jpg">
+          <div class="card-title-overlay"><div class="icon">🎉</div><h3 data-edit="card5-title">מסיבות ואירועים</h3></div>
         </div>
         <div class="card-body">
-          <p>כניסה למקומות חמים וחבילות בילוי לזוגות ולקבוצות.</p>
+          <p data-edit="card5-desc">כניסה למקומות חמים וחבילות בילוי לזוגות ולקבוצות.</p>
         </div>
       </div>
       <div class="card">
         <div class="card-media">
-          <img class="card-img" src="https://images.unsplash.com/photo-1531887259712-aa6e090e9289?w=800&q=80&auto=format&fit=crop" alt="המלצות 365" loading="lazy">
-          <div class="card-title-overlay"><div class="icon">365</div><h3>המלצות 365</h3></div>
+          <img class="card-img" src="https://images.unsplash.com/photo-1531887259712-aa6e090e9289?w=800&q=80&auto=format&fit=crop" alt="המלצות 365" loading="lazy" data-edit="card6-img" data-edit-filename="card6.jpg">
+          <div class="card-title-overlay"><div class="icon">365</div><h3 data-edit="card6-title">המלצות 365</h3></div>
         </div>
         <div class="card-body">
-          <p>כתובת אחת לכל שאלה, מהרגע שנוחתים ועד שחוזרים הביתה.</p>
+          <p data-edit="card6-desc">כתובת אחת לכל שאלה, מהרגע שנוחתים ועד שחוזרים הביתה.</p>
         </div>
       </div>
     </div>
@@ -418,12 +423,12 @@
 
 <section id="about" class="about">
   <div class="container about-wrap">
-    <div class="about-photo"><img src="golan-photo.jpg" alt="גולן כ - Bucharest 365" loading="lazy"></div>
+    <div class="about-photo"><img src="golan-photo.jpg" alt="גולן כ - Bucharest 365" loading="lazy" data-edit="about-img"></div>
     <div>
       <span class="sec-eyebrow" style="text-align:right;display:block;">Bucharest 365 by Golan K</span>
       <h2>מישהו מקומי שדואג לכם אישית</h2>
-      <p>מאחורי Bucharest 365 עומד גולן כ - ניסיון של שנים בשטח, מקצוענות בכל פרט וזמינות אמיתית שנותנים לכם ביטחון מלא לאורך כל החופשה.</p>
-      <p>במקום להרכיב לבד ולהסתכן בהפתעות, אתם מקבלים ליווי אישי צמוד: איש קשר אחד ומקצועי שמקשיב, מתכנן, מזמין ונמצא איתכם בכל רגע.</p>
+      <p data-edit="about-p1">מאחורי Bucharest 365 עומד גולן כ - ניסיון של שנים בשטח, מקצוענות בכל פרט וזמינות אמיתית שנותנים לכם ביטחון מלא לאורך כל החופשה.</p>
+      <p data-edit="about-p2">במקום להרכיב לבד ולהסתכן בהפתעות, אתם מקבלים ליווי אישי צמוד: איש קשר אחד ומקצועי שמקשיב, מתכנן, מזמין ונמצא איתכם בכל רגע.</p>
       <div class="stats">
         <div class="stat"><b>365</b><span>ימים של זמינות</span></div>
         <div class="stat"><b>VIP</b><span>יחס אישי</span></div>
@@ -562,20 +567,20 @@
     <h2 class="sec-title">שאלות נפוצות</h2>
     <div style="max-width:720px;margin:0 auto;">
       <div class="faq-item">
-        <h3>למי השירות מתאים?</h3>
-        <p>לזוגות, קבוצות חברים, מסיבות ואירועים, וגם למי שמגיע בפעם הראשונה ורוצה ליהנות בלי לבזבז זמן.</p>
+        <h3 data-edit="faq1-q">למי השירות מתאים?</h3>
+        <p data-edit="faq1-a">לזוגות, קבוצות חברים, מסיבות ואירועים, וגם למי שמגיע בפעם הראשונה ורוצה ליהנות בלי לבזבז זמן.</p>
       </div>
       <div class="faq-item">
-        <h3>כמה זמן מראש כדאי לפנות?</h3>
-        <p>מומלץ לפנות מוקדם ככל האפשר, במיוחד לסופי שבוע. ננסה לעזור גם בבקשות מהיום להיום.</p>
+        <h3 data-edit="faq2-q">כמה זמן מראש כדאי לפנות?</h3>
+        <p data-edit="faq2-a">מומלץ לפנות מוקדם ככל האפשר, במיוחד לסופי שבוע. ננסה לעזור גם בבקשות מהיום להיום.</p>
       </div>
       <div class="faq-item">
-        <h3>אפשר להזמין רק שירות אחד?</h3>
-        <p>כן. אפשר להזמין הסעה, מסעדה, לימוזינה או בילוי בודד, ואפשר לבנות מעטפת מלאה לחופשה.</p>
+        <h3 data-edit="faq3-q">אפשר להזמין רק שירות אחד?</h3>
+        <p data-edit="faq3-a">כן. אפשר להזמין הסעה, מסעדה, לימוזינה או בילוי בודד, ואפשר לבנות מעטפת מלאה לחופשה.</p>
       </div>
       <div class="faq-item">
-        <h3>איך מתחילים?</h3>
-        <p>שולחים WhatsApp עם תאריכים, מספר משתתפים וסגנון החופשה, ומקבלים הצעה מותאמת.</p>
+        <h3 data-edit="faq4-q">איך מתחילים?</h3>
+        <p data-edit="faq4-a">שולחים WhatsApp עם תאריכים, מספר משתתפים וסגנון החופשה, ומקבלים הצעה מותאמת.</p>
       </div>
     </div>
   </div>
@@ -616,8 +621,8 @@
   <div class="container">
     <div class="footer-wrap">
       <div>
-        <div class="logo"><img src="logo.png" alt="Bucharest 365" class="logo-img"> Bucharest 365</div>
-        <p>בילויים וחוויות בבוקרשט ברמת VIP עם גולן כ.</p>
+        <div class="logo"><img src="logo.png" alt="Bucharest 365" class="logo-img" data-edit="logo-img"> Bucharest 365</div>
+        <p data-edit="footer-tagline">בילויים וחוויות בבוקרשט ברמת VIP עם גולן כ.</p>
       </div>
       <div class="footer-links">
         <a href="#services">שירותים</a>
@@ -682,6 +687,9 @@ function sendToWhatsApp(e){
   nextBtn.addEventListener('click', ()=> grid.scrollBy({left: dir * scrollAmount(), behavior:'smooth'}));
   prevBtn.addEventListener('click', ()=> grid.scrollBy({left: -dir * scrollAmount(), behavior:'smooth'}));
 })();
+
+/* Visit counter - anonymous page-view tracking for the admin dashboard */
+fetch('https://api.counterapi.dev/v1/bucharest365vip2026/index-visits/up').catch(()=>{});
 </script>
 
 </body>
