@@ -162,6 +162,14 @@
   .step h3{margin-bottom:8px;font-size:1.1rem;}
   .step p{color:var(--text-dim);font-size:0.95rem;}
 
+  /* Instagram reels */
+  .reels-grid{display:flex;flex-wrap:wrap;justify-content:center;gap:24px;}
+  .reel-embed{
+    width:100%;max-width:300px;border-radius:16px;overflow:hidden;
+    border:1px solid var(--border);background:var(--card);
+  }
+  .reel-embed iframe{border-radius:16px !important;}
+
   /* Reviews carousel */
   .reviews-carousel{position:relative;max-width:1000px;margin:0 auto;}
   .reviews-track{position:relative;min-height:220px;}
@@ -374,6 +382,21 @@
   </div>
 </section>
 
+<section id="reels">
+  <div class="container">
+    <span class="sec-eyebrow">עוקבים אחרינו</span>
+    <h2 class="sec-title">רגעים מהעיר, ישר מהאינסטגרם</h2>
+    <p class="sec-sub">קצת מהאווירה שמחכה לכם בבוקרשט — עקבו אחרינו <a href="https://www.instagram.com/bucha_rest365/" target="_blank" rel="noopener">@bucha_rest365</a></p>
+    <div class="reels-grid">
+      <div class="reel-embed"><blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DZgsofrILJm/" data-instgrm-version="14"></blockquote></div>
+      <div class="reel-embed"><blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DS80aCWjEUB/" data-instgrm-version="14"></blockquote></div>
+      <div class="reel-embed"><blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DSPot70jKSA/" data-instgrm-version="14"></blockquote></div>
+      <div class="reel-embed"><blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DQ9yCuSDOVC/" data-instgrm-version="14"></blockquote></div>
+      <div class="reel-embed"><blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DNbJnR7s_ZK/" data-instgrm-version="14"></blockquote></div>
+    </div>
+  </div>
+</section>
+
 <section id="process">
   <div class="container">
     <span class="sec-eyebrow">פשוט, אישי ומדויק</span>
@@ -565,6 +588,8 @@ function sendToWhatsApp(e){
   resetTimer();
 })();
 </script>
+
+<script async src="https://www.instagram.com/embed.js"></script>
 
 </body>
 </html>
