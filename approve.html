@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>אישור ביקורת | Bucharest 365</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" type="image/png" href="logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Hebrew:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0b0b0f;
+    --bg-alt:#111116;
+    --card:#16161c;
+    --gold:#FF14FE;
+    --gold-light:#FFA9FE;
+    --wa-green:#25D366;
+    --wa-green-dark:#128C7E;
+    --text:#f2f0ea;
+    --text-dim:#a8a5ad;
+    --border:rgba(255,20,254,0.35);
+    --neon-text:0 0 2px rgba(255,255,255,0.45), 0 0 6px var(--gold-light), 0 0 13px var(--gold), 0 0 24px rgba(255,20,254,0.28);
+    --neon-box-soft:0 0 4px rgba(255,169,254,0.16), 0 0 9px rgba(255,20,254,0.16), 0 0 18px rgba(255,20,254,0.08);
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{
+    background:var(--bg);color:var(--text);
+    font-family:'Noto Sans Hebrew','Segoe UI',Arial,sans-serif;
+    line-height:1.6;min-height:100vh;
+    display:flex;flex-direction:column;align-items:center;
+    padding:28px 18px 60px;
+  }
+  a{color:inherit;}
+  .logo{font-size:1.15rem;font-weight:700;color:var(--gold-light);display:flex;align-items:center;gap:10px;text-shadow:var(--neon-text);margin-bottom:28px;}
+  .logo-img{height:38px;width:38px;object-fit:contain;}
+  .card{
+    background:var(--card);border:2px solid var(--border);border-radius:20px;
+    box-shadow:var(--neon-box-soft);padding:30px 26px;max-width:480px;width:100%;
+  }
+  .eyebrow{
+    display:block;font-size:0.8rem;color:var(--gold-light);letter-spacing:1.5px;
+    text-transform:uppercase;margin-bottom:14px;text-align:center;
+  }
+  .stars{color:var(--gold-light);font-size:1.3rem;text-shadow:0 0 8px var(--gold-light);text-align:center;margin-bottom:14px;direction:ltr;}
+  .quote{font-size:1.05rem;color:var(--text);margin-bottom:18px;text-align:center;}
+  .who{text-align:center;color:var(--text-dim);font-size:0.9rem;}
+  .who b{color:var(--text);display:block;font-size:1rem;margin-bottom:2px;}
+  .btn{
+    display:block;width:100%;margin-top:26px;padding:16px;border-radius:14px;border:none;
+    background:linear-gradient(135deg,var(--wa-green),var(--wa-green-dark));
+    color:#fff;font-weight:700;font-size:1.05rem;cursor:pointer;
+    box-shadow:0 0 4px rgba(37,211,102,0.3), 0 0 11px rgba(37,211,102,0.2), 0 0 23px rgba(37,211,102,0.1);
+  }
+  .btn:disabled{opacity:0.55;cursor:not-allowed;}
+  .status{margin-top:18px;text-align:center;font-size:0.92rem;color:var(--text-dim);min-height:1.4em;}
+  .status.ok{color:#7CE0A0;}
+  .status.err{color:#FF8A8A;}
+  .error-box{max-width:480px;width:100%;text-align:center;color:var(--text-dim);}
+</style>
+</head>
+<body>
+
+<a href="index.html" class="logo"><img src="logo.png" alt="Bucharest 365" class="logo-img"> Bucharest 365</a>
+
+<div id="content"></div>
+
+<script>
+const WORKER_URL = 'PENDING_WORKER_URL'; // יוחלף לאחר הקמת ה-Worker
+const APPROVE_SECRET = 'k1l0ZCQlixkpREts2YZ_otJ1Q7HZAmjT';
+
+function b64DecodeUnicode(str){
+  return decodeURIComponent(atob(str).split('').map(function(c){
+    return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+  }).join(''));
+}
+function starsStr(n){ n = n || 5; return '★'.repeat(n) + '☆'.repeat(Math.max(0,5-n)); }
+function esc(s){ const d = document.createElement('div'); d.textContent = s || ''; return d.innerHTML; }
+
+const content = document.getElementById('content');
+const params = new URLSearchParams(location.search);
+const raw = params.get('d');
+let review = null;
+
+try{
+  if(raw) review = JSON.parse(b64DecodeUnicode(raw));
+}catch(e){ review = null; }
+
+if(!review || !review.name || !review.text){
+  content.innerHTML = '<div class="error-box"><p>הקישור לא תקין או שפג תוקפו.</p></div>';
+}else{
+  content.innerHTML =
+    '<div class="card">' +
+      '<span class="eyebrow">ביקורת ממתינה לאישור</span>' +
+      '<div class="stars">' + starsStr(review.rating) + '</div>' +
+      '<p class="quote">"' + esc(review.text) + '"</p>' +
+      '<div class="who"><b>' + esc(review.name) + '</b>' + (review.occasion ? '<span>' + esc(review.occasion) + '</span>' : '') + '</div>' +
+      '<button class="btn" id="approve-btn">✅ אשר ופרסם באתר</button>' +
+      '<div class="status" id="status"></div>' +
+    '</div>';
+
+  document.getElementById('approve-btn').addEventListener('click', async function(){
+    const btn = this;
+    const statusEl = document.getElementById('status');
+    btn.disabled = true;
+    statusEl.className = 'status';
+    statusEl.textContent = 'מפרסם...';
+    try{
+      const res = await fetch(WORKER_URL, {
+        method: 'POST',
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify({
+          secret: APPROVE_SECRET,
+          name: review.name,
+          occasion: review.occasion || '',
+          rating: review.rating || 5,
+          text: review.text,
+          date: review.date || new Date().toISOString().slice(0,10)
+        })
+      });
+      if(!res.ok) throw new Error(await res.text());
+      statusEl.className = 'status ok';
+      statusEl.textContent = '✅ פורסם! הביקורת תופיע באתר תוך דקה.';
+      btn.style.display = 'none';
+    }catch(err){
+      statusEl.className = 'status err';
+      statusEl.textContent = '❌ שגיאה בפרסום. נסו שוב בעוד רגע.';
+      btn.disabled = false;
+    }
+  });
+}
+</script>
+
+</body>
+</html>

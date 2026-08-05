@@ -251,12 +251,22 @@ document.getElementById('review-form').addEventListener('submit', function(e){
   if(rating === 0){ alert('נא לבחור דירוג בכוכבים'); return; }
 
   const stars = '★'.repeat(rating) + '☆'.repeat(5 - rating);
+
+  function b64EncodeUnicode(str){
+    return btoa(encodeURIComponent(str).replace(/%([0-9A-F]{2})/g, function(match, p1){
+      return String.fromCharCode('0x' + p1);
+    }));
+  }
+  const payload = { name: name, occasion: occasion, rating: rating, text: text, date: new Date().toISOString().slice(0,10) };
+  const encoded = b64EncodeUnicode(JSON.stringify(payload));
+  const approveUrl = 'https://bucharest365.vip/approve.html?d=' + encodeURIComponent(encoded);
+
   let msg = 'ביקורת חדשה מהאתר לאישור ⭐\n\n';
   msg += 'שם: ' + name + '\n';
   if(occasion) msg += 'סוג חוויה: ' + occasion + '\n';
   msg += 'דירוג: ' + stars + '\n\n';
   msg += '"' + text + '"\n\n';
-  msg += '(לאישור פרסום באתר - יש לאשר לי בהודעה חוזרת)';
+  msg += 'לאישור ופרסום באתר, לחצו כאן:\n' + approveUrl;
 
   const url = 'https://wa.me/' + WA_NUMBER + '?text=' + encodeURIComponent(msg);
   window.open(url, '_blank');

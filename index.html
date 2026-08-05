@@ -527,48 +527,10 @@
     <h2 class="sec-title">חוויות שלעולם לא ישכחו</h2>
     <div class="reviews-carousel">
       <button class="carousel-btn prev" aria-label="ביקורת קודמת">›</button>
-      <div class="reviews-track" id="reviewsTrack">
-        <div class="review">
-          <div class="stars">★★★★★</div>
-          <p>"גולן כ סידר לנו סוף שבוע ברמה אחרת. כל מקום היה בול, בלי לחכות ובלי להתעסק עם כלום."</p>
-          <div class="who"><b>אורן מ.</b><span>סופ״ש חברים</span></div>
-        </div>
-        <div class="review">
-          <div class="stars">★★★★★</div>
-          <p>"השירות היה אישי ומהיר. המסעדות והבילויים היו בדיוק בסגנון שחיפשנו."</p>
-          <div class="who"><b>שני ורועי</b><span>חופשה זוגית</span></div>
-        </div>
-        <div class="review">
-          <div class="stars">★★★★★</div>
-          <p>"הגענו קבוצה גדולה והכול תיקתק — הסעות, שולחנות ומועדונים. הרגשנו שדואגים לנו."</p>
-          <div class="who"><b>דניאל א.</b><span>קבוצת חברים</span></div>
-        </div>
-        <div class="review">
-          <div class="stars">★★★★★</div>
-          <p>"ארגנו לנו מסיבת יום הולדת מושלמת — מקום מדהים, הכול היה מסודר מראש וללא שום דאגות."</p>
-          <div class="who"><b>מיכל ב.</b><span>יום הולדת</span></div>
-        </div>
-        <div class="review">
-          <div class="stars">★★★★★</div>
-          <p>"הגענו לירח דבש והרגשנו שיש לנו סוכן אישי בעיר. כל המלצה הייתה קולעת בול."</p>
-          <div class="who"><b>אלון וטל</b><span>ירח דבש</span></div>
-        </div>
-        <div class="review">
-          <div class="stars">★★★★★</div>
-          <p>"מסיבת רווקים בלתי נשכחת. הכניסות למועדונים, השולחנות, הכול פשוט זרם בלי מאמץ."</p>
-          <div class="who"><b>רועי כהן</b><span>מסיבת רווקים</span></div>
-        </div>
-      </div>
+      <div class="reviews-track" id="reviewsTrack"></div>
       <button class="carousel-btn next" aria-label="ביקורת הבאה">‹</button>
     </div>
-    <div class="carousel-dots" id="reviewsDots">
-      <button class="dot active" data-index="0" aria-label="ביקורת 1"></button>
-      <button class="dot" data-index="1" aria-label="ביקורת 2"></button>
-      <button class="dot" data-index="2" aria-label="ביקורת 3"></button>
-      <button class="dot" data-index="3" aria-label="ביקורת 4"></button>
-      <button class="dot" data-index="4" aria-label="ביקורת 5"></button>
-      <button class="dot" data-index="5" aria-label="ביקורת 6"></button>
-    </div>
+    <div class="carousel-dots" id="reviewsDots"></div>
   </div>
 </section>
 
@@ -670,56 +632,97 @@ function sendToWhatsApp(e){
 
 (function(){
   const track = document.getElementById('reviewsTrack');
-  const dots = document.querySelectorAll('#reviewsDots .dot');
+  const dotsWrap = document.getElementById('reviewsDots');
   const prevBtn = document.querySelector('.reviews-carousel .carousel-btn.prev');
   const nextBtn = document.querySelector('.reviews-carousel .carousel-btn.next');
   if(!track) return;
-  const cards = Array.from(track.querySelectorAll('.review'));
-  if(!cards.length) return;
 
-  const rtl = getComputedStyle(document.documentElement).direction === 'rtl';
-  const dirSign = rtl ? -1 : 1;
+  // Fallback data used only if reviews.json can't be fetched (e.g. offline).
+  const FALLBACK_REVIEWS = [
+    {name:"אורן מ.", occasion:"סופ״ש חברים", rating:5, text:"גולן כ סידר לנו סוף שבוע ברמה אחרת. כל מקום היה בול, בלי לחכות ובלי להתעסק עם כלום."},
+    {name:"שני ורועי", occasion:"חופשה זוגית", rating:5, text:"השירות היה אישי ומהיר. המסעדות והבילויים היו בדיוק בסגנון שחיפשנו."},
+    {name:"דניאל א.", occasion:"קבוצת חברים", rating:5, text:"הגענו קבוצה גדולה והכול תיקתק — הסעות, שולחנות ומועדונים. הרגשנו שדואגים לנו."},
+    {name:"מיכל ב.", occasion:"יום הולדת", rating:5, text:"ארגנו לנו מסיבת יום הולדת מושלמת — מקום מדהים, הכול היה מסודר מראש וללא שום דאגות."},
+    {name:"אלון וטל", occasion:"ירח דבש", rating:5, text:"הגענו לירח דבש והרגשנו שיש לנו סוכן אישי בעיר. כל המלצה הייתה קולעת בול."},
+    {name:"רועי כהן", occasion:"מסיבת רווקים", rating:5, text:"מסיבת רווקים בלתי נשכחת. הכניסות למועדונים, השולחנות, הכול פשוט זרם בלי מאמץ."}
+  ];
 
-  function cardStep(){
-    const gap = parseFloat(getComputedStyle(track).columnGap || getComputedStyle(track).gap) || 24;
-    return cards[0].getBoundingClientRect().width + gap;
-  }
-  function scrollByCards(n){
-    track.scrollBy({left: dirSign * n * cardStep(), behavior:'smooth'});
-  }
-  function scrollToCard(j){
-    const target = cards[j];
-    if(!target) return;
-    const rect = target.getBoundingClientRect();
-    const trackRect = track.getBoundingClientRect();
-    track.scrollTo({left: track.scrollLeft + (rect.left - trackRect.left), behavior:'smooth'});
-  }
-  function updateDots(){
-    const trackRect = track.getBoundingClientRect();
-    let closest = 0, minDist = Infinity;
-    cards.forEach((c,j)=>{
-      const d = Math.abs(c.getBoundingClientRect().left - trackRect.left);
-      if(d < minDist){ minDist = d; closest = j; }
+  function starsStr(n){ n = n || 5; return '★'.repeat(n) + '☆'.repeat(Math.max(0,5-n)); }
+  function esc(s){ const d = document.createElement('div'); d.textContent = s || ''; return d.innerHTML; }
+
+  function renderReviews(reviews){
+    track.innerHTML = '';
+    dotsWrap.innerHTML = '';
+    reviews.forEach((r, j)=>{
+      const div = document.createElement('div');
+      div.className = 'review';
+      div.innerHTML = '<div class="stars">' + starsStr(r.rating) + '</div>' +
+        '<p>"' + esc(r.text) + '"</p>' +
+        '<div class="who"><b>' + esc(r.name) + '</b><span>' + esc(r.occasion) + '</span></div>';
+      track.appendChild(div);
+      const dot = document.createElement('button');
+      dot.className = 'dot' + (j===0 ? ' active' : '');
+      dot.dataset.index = j;
+      dot.setAttribute('aria-label', 'ביקורת ' + (j+1));
+      dotsWrap.appendChild(dot);
     });
-    dots.forEach((d,j)=> d.classList.toggle('active', j===closest));
+    initCarousel();
   }
 
-  let scrollTimer;
-  track.addEventListener('scroll', ()=>{
-    clearTimeout(scrollTimer);
-    scrollTimer = setTimeout(updateDots, 100);
-  });
+  function initCarousel(){
+    const cards = Array.from(track.querySelectorAll('.review'));
+    const dots = Array.from(dotsWrap.querySelectorAll('.dot'));
+    if(!cards.length) return;
 
-  // Arrows swapped per request: the "prev" button now advances forward,
-  // and the "next" button moves backward.
-  let timer;
-  function resetTimer(){ clearInterval(timer); timer = setInterval(()=> scrollByCards(1), 5000); }
+    const rtl = getComputedStyle(document.documentElement).direction === 'rtl';
+    const dirSign = rtl ? -1 : 1;
 
-  prevBtn.addEventListener('click', ()=>{ scrollByCards(1); resetTimer(); });
-  nextBtn.addEventListener('click', ()=>{ scrollByCards(-1); resetTimer(); });
-  dots.forEach((d,j)=> d.addEventListener('click', ()=>{ scrollToCard(j); resetTimer(); }));
+    function cardStep(){
+      const gap = parseFloat(getComputedStyle(track).columnGap || getComputedStyle(track).gap) || 24;
+      return cards[0].getBoundingClientRect().width + gap;
+    }
+    function scrollByCards(n){
+      track.scrollBy({left: dirSign * n * cardStep(), behavior:'smooth'});
+    }
+    function scrollToCard(j){
+      const target = cards[j];
+      if(!target) return;
+      const rect = target.getBoundingClientRect();
+      const trackRect = track.getBoundingClientRect();
+      track.scrollTo({left: track.scrollLeft + (rect.left - trackRect.left), behavior:'smooth'});
+    }
+    function updateDots(){
+      const trackRect = track.getBoundingClientRect();
+      let closest = 0, minDist = Infinity;
+      cards.forEach((c,j)=>{
+        const d = Math.abs(c.getBoundingClientRect().left - trackRect.left);
+        if(d < minDist){ minDist = d; closest = j; }
+      });
+      dots.forEach((d,j)=> d.classList.toggle('active', j===closest));
+    }
 
-  resetTimer();
+    let scrollTimer;
+    track.addEventListener('scroll', ()=>{
+      clearTimeout(scrollTimer);
+      scrollTimer = setTimeout(updateDots, 100);
+    });
+
+    // Arrows swapped per request: the "prev" button now advances forward,
+    // and the "next" button moves backward.
+    let timer;
+    function resetTimer(){ clearInterval(timer); timer = setInterval(()=> scrollByCards(1), 5000); }
+
+    prevBtn.onclick = ()=>{ scrollByCards(1); resetTimer(); };
+    nextBtn.onclick = ()=>{ scrollByCards(-1); resetTimer(); };
+    dots.forEach((d,j)=> d.onclick = ()=>{ scrollToCard(j); resetTimer(); });
+
+    resetTimer();
+  }
+
+  fetch('reviews.json?v=' + Date.now(), {cache:'no-store'})
+    .then(r => r.ok ? r.json() : Promise.reject())
+    .then(data => renderReviews(Array.isArray(data) && data.length ? data : FALLBACK_REVIEWS))
+    .catch(()=> renderReviews(FALLBACK_REVIEWS));
 })();
 
 (function(){
