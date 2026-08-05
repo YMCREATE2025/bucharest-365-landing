@@ -183,7 +183,7 @@ if(sessionStorage.getItem(SESSION_KEY) === '1'){ showDashboard(); }
 async function loadStats(){
   const el = document.getElementById('visit-count');
   try{
-    const r = await fetch('https://api.counterapi.dev/v1/bucharest365vip2026/index-visits');
+    const r = await fetch('https://api.counterapi.dev/v1/bucharest365vip2026/index-visits/');
     const data = await r.json();
     el.textContent = (data && typeof data.count === 'number') ? data.count.toLocaleString('he-IL') : '0';
   }catch(e){
