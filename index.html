@@ -163,14 +163,14 @@
   .step p{color:var(--text-dim);font-size:0.95rem;}
 
   /* Reviews carousel */
-  .reviews-carousel{position:relative;max-width:640px;margin:0 auto;}
+  .reviews-carousel{position:relative;max-width:1000px;margin:0 auto;}
   .reviews-track{position:relative;min-height:220px;}
-  .review-slide{display:none;animation:fadeIn .4s ease;}
-  .review-slide.active{display:block;}
+  .review-page{display:none;grid-template-columns:repeat(3,1fr);gap:24px;animation:fadeIn .4s ease;}
+  .review-page.active{display:grid;}
   @keyframes fadeIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
-  .review{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:32px;text-align:center;}
+  .review{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:28px;text-align:center;}
   .stars{color:var(--gold-light);margin-bottom:14px;letter-spacing:2px;}
-  .review p{color:var(--text-dim);margin-bottom:18px;font-size:1rem;}
+  .review p{color:var(--text-dim);margin-bottom:18px;font-size:0.95rem;}
   .review .who b{display:block;font-size:0.95rem;}
   .review .who span{color:var(--text-dim);font-size:0.85rem;}
   .carousel-btn{
@@ -249,6 +249,7 @@
     .reviews-carousel{max-width:100%;}
     .carousel-btn.prev{right:0;}
     .carousel-btn.next{left:0;}
+    .review-page.active{grid-template-columns:1fr;}
     .review{padding:28px 60px;}
   }
 
@@ -401,42 +402,34 @@
     <div class="reviews-carousel">
       <button class="carousel-btn prev" aria-label="ביקורת קודמת">›</button>
       <div class="reviews-track">
-        <div class="review-slide active">
+        <div class="review-page active">
           <div class="review">
             <div class="stars">★★★★★</div>
             <p>"גולן סידר לנו סוף שבוע ברמה אחרת. כל מקום היה בול, בלי לחכות ובלי להתעסק עם כלום."</p>
             <div class="who"><b>אורן מ.</b><span>סופ״ש חברים</span></div>
           </div>
-        </div>
-        <div class="review-slide">
           <div class="review">
             <div class="stars">★★★★★</div>
             <p>"השירות היה אישי ומהיר. המסעדות והבילויים היו בדיוק בסגנון שחיפשנו."</p>
             <div class="who"><b>שני ורועי</b><span>חופשה זוגית</span></div>
           </div>
-        </div>
-        <div class="review-slide">
           <div class="review">
             <div class="stars">★★★★★</div>
             <p>"הגענו קבוצה גדולה והכול תיקתק — הסעות, שולחנות ומועדונים. הרגשנו שדואגים לנו."</p>
             <div class="who"><b>דניאל א.</b><span>קבוצת חברים</span></div>
           </div>
         </div>
-        <div class="review-slide">
+        <div class="review-page">
           <div class="review">
             <div class="stars">★★★★★</div>
             <p>"ארגנו לנו מסיבת יום הולדת מושלמת — מקום מדהים, הכול היה מסודר מראש וללא שום דאגות."</p>
             <div class="who"><b>מיכל ב.</b><span>יום הולדת</span></div>
           </div>
-        </div>
-        <div class="review-slide">
           <div class="review">
             <div class="stars">★★★★★</div>
             <p>"הגענו לירח דבש והרגשנו שיש לנו סוכן אישי בעיר. כל המלצה הייתה קולעת בול."</p>
             <div class="who"><b>אלון וטל</b><span>ירח דבש</span></div>
           </div>
-        </div>
-        <div class="review-slide">
           <div class="review">
             <div class="stars">★★★★★</div>
             <p>"מסיבת רווקים בלתי נשכחת. הכניסות למועדונים, השולחנות, הכול פשוט זרם בלי מאמץ."</p>
@@ -447,12 +440,8 @@
       <button class="carousel-btn next" aria-label="ביקורת הבאה">‹</button>
     </div>
     <div class="carousel-dots">
-      <button class="dot active" data-index="0" aria-label="ביקורת 1"></button>
-      <button class="dot" data-index="1" aria-label="ביקורת 2"></button>
-      <button class="dot" data-index="2" aria-label="ביקורת 3"></button>
-      <button class="dot" data-index="3" aria-label="ביקורת 4"></button>
-      <button class="dot" data-index="4" aria-label="ביקורת 5"></button>
-      <button class="dot" data-index="5" aria-label="ביקורת 6"></button>
+      <button class="dot active" data-index="0" aria-label="קבוצת ביקורות 1"></button>
+      <button class="dot" data-index="1" aria-label="קבוצת ביקורות 2"></button>
     </div>
   </div>
 </section>
@@ -553,7 +542,7 @@ function sendToWhatsApp(e){
 }
 
 (function(){
-  const slides = document.querySelectorAll('.review-slide');
+  const slides = document.querySelectorAll('.review-page');
   const dots = document.querySelectorAll('.carousel-dots .dot');
   const prevBtn = document.querySelector('.carousel-btn.prev');
   const nextBtn = document.querySelector('.carousel-btn.next');
