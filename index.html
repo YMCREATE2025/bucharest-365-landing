@@ -145,14 +145,15 @@
   }
   .card-title-overlay h3{color:#ffffff;font-size:clamp(1.6rem,3.2vw,2.3rem);font-weight:800;margin:0;line-height:1.15;text-shadow:0 2px 6px rgba(0,0,0,0.9), 0 4px 16px rgba(0,0,0,0.85), 0 0 30px rgba(0,0,0,0.6);}
   .card-body{padding:28px;}
-  .card .icon{
-    width:48px;height:48px;border-radius:12px;
+  .icon{
+    width:48px;height:48px;border-radius:12px;flex-shrink:0;
     background:linear-gradient(135deg,var(--gold-light),var(--gold));
     display:flex;align-items:center;justify-content:center;font-size:1.3rem;margin-bottom:20px;
     color:#ffffff;font-weight:700;
     box-shadow:var(--neon-box-soft);
   }
   .card-title-overlay .icon{margin-bottom:12px;}
+  .contact-info .icon{margin-bottom:0;}
   .card p{color:var(--text-dim);font-size:0.95rem;}
 
   /* About */
@@ -586,8 +587,8 @@
       <span class="sec-eyebrow" style="text-align:right;display:block;">בואו נדבר</span>
       <h2>מה החופשה שלכם צריכה כדי להיות מושלמת?</h2>
       <p>הפרטים ייפתחו ישירות ב־WhatsApp.</p>
-      <div class="row">📞 <a href="tel:+972544709642">972-54-470-9642+</a></div>
-      <div class="row">📸 <a href="https://www.instagram.com/bucha_rest365/" target="_blank" rel="noopener">@bucha_rest365</a></div>
+      <div class="row"><div class="icon">📞</div> <a href="tel:+972544709642">972-54-470-9642+</a></div>
+      <div class="row"><div class="icon">📷</div> <a href="https://www.instagram.com/bucha_rest365/" target="_blank" rel="noopener">@bucha_rest365</a></div>
     </div>
     <form onsubmit="sendToWhatsApp(event)">
       <div class="field">
