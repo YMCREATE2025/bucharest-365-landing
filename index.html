@@ -134,9 +134,16 @@
   }
   .card:hover{box-shadow:var(--neon-box);}
   .card:hover{transform:translateY(-6px);border-color:var(--gold);}
+  .card-media{position:relative;}
   .card-img{
     width:100%;aspect-ratio:16/10;object-fit:cover;display:block;
   }
+  .card-title-overlay{
+    position:absolute;bottom:0;left:0;right:0;
+    padding:18px 20px 14px;
+    background:linear-gradient(to top, rgba(0,0,0,0.88), rgba(0,0,0,0.35) 65%, transparent);
+  }
+  .card-title-overlay h3{color:#ffffff;font-size:1.15rem;font-weight:800;margin:0;text-shadow:0 2px 8px rgba(0,0,0,0.7);}
   .card-body{padding:28px;}
   .card .icon{
     width:48px;height:48px;border-radius:12px;
@@ -145,7 +152,6 @@
     color:#ffffff;font-weight:700;
     box-shadow:var(--neon-box-soft);
   }
-  .card h3{font-size:1.2rem;margin-bottom:10px;}
   .card p{color:var(--text-dim);font-size:0.95rem;}
 
   /* About */
@@ -319,7 +325,7 @@
     <a href="#top" class="logo"><img src="logo.png" alt="Bucharest 365" class="logo-img"> Bucharest 365 <span>| VIP</span></a>
     <nav>
       <a href="#services">שירותים</a>
-      <a href="#about">למה גולן ק</a>
+      <a href="#about">למה גולן כ</a>
       <a href="#reviews">ממליצים</a>
       <a href="#faq">שאלות נפוצות</a>
     </nav>
@@ -330,10 +336,10 @@
 <section id="top" class="hero">
   <div class="container">
     <span class="eyebrow">✦ החוויה שלכם בבוקרשט מתחילה כאן</span>
-    <h1>בוקרשט עם גולן ק, <span class="accent">תתכוננו לחוויה כמו שמגיע לכם!</span></h1>
+    <h1>בוקרשט עם גולן כ, <span class="accent">תתכוננו לחוויה כמו שמגיע לכם!</span></h1>
     <p class="lead one-line">ליווי VIP אישי, מקומות נבחרים ושירות בעברית — כדי שאתם תגיעו ליהנות, ואנחנו נדאג לכל השאר.</p>
     <div class="hero-ctas">
-      <a class="btn" href="https://wa.me/972544709642?text=היי%20גולן%20ק,%20אני%20מתכנן%20חופשה%20בבוקרשט" target="_blank" rel="noopener">דברו איתנו ב־WhatsApp ←</a>
+      <a class="btn" href="https://wa.me/972544709642?text=היי%20גולן%20כ,%20אני%20מתכנן%20חופשה%20בבוקרשט" target="_blank" rel="noopener">דברו איתנו ב־WhatsApp ←</a>
       <a class="btn-outline" href="#services">לכל השירותים ↓</a>
     </div>
     <div class="hero-checks">
@@ -351,50 +357,62 @@
     <p class="sec-sub one-line">אנחנו מכירים את בוקרשט מבפנים, ויודעים לחבר אתכם למקומות ולחוויות שיעשו את החופשה.</p>
     <div class="grid">
       <div class="card">
-        <img class="card-img" src="https://images.unsplash.com/photo-1522255272218-7ac5249be344?w=800&q=80&auto=format&fit=crop" alt="ליווי VIP אישי" loading="lazy">
+        <div class="card-media">
+          <img class="card-img" src="https://images.unsplash.com/photo-1522255272218-7ac5249be344?w=800&q=80&auto=format&fit=crop" alt="ליווי VIP אישי" loading="lazy">
+          <div class="card-title-overlay"><h3>ליווי VIP אישי</h3></div>
+        </div>
         <div class="card-body">
           <div class="icon">★</div>
-          <h3>ליווי VIP אישי</h3>
           <p>תכנון וליווי אישי בעברית, עם מענה זמין לאורך כל החופשה.</p>
         </div>
       </div>
       <div class="card">
-        <img class="card-img" src="https://images.unsplash.com/photo-1723096111835-b3a2bc9e6b53?w=800&q=80&auto=format&fit=crop" alt="אטרקציות וחיי לילה" loading="lazy">
+        <div class="card-media">
+          <img class="card-img" src="https://images.unsplash.com/photo-1723096111835-b3a2bc9e6b53?w=800&q=80&auto=format&fit=crop" alt="אטרקציות וחיי לילה" loading="lazy">
+          <div class="card-title-overlay"><h3>אטרקציות וחיי לילה</h3></div>
+        </div>
         <div class="card-body">
           <div class="icon">♫</div>
-          <h3>אטרקציות וחיי לילה</h3>
           <p>מועדונים, ברים, הופעות וחוויות במקומות הנכונים בעיר.</p>
         </div>
       </div>
       <div class="card">
-        <img class="card-img" src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800&q=80&auto=format&fit=crop" alt="מסעדות מומלצות" loading="lazy">
+        <div class="card-media">
+          <img class="card-img" src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800&q=80&auto=format&fit=crop" alt="מסעדות מומלצות" loading="lazy">
+          <div class="card-title-overlay"><h3>מסעדות מומלצות</h3></div>
+        </div>
         <div class="card-body">
           <div class="icon">🍽</div>
-          <h3>מסעדות מומלצות</h3>
           <p>הזמנת שולחנות והכוונה למסעדות המבוקשות בבוקרשט.</p>
         </div>
       </div>
       <div class="card">
-        <img class="card-img" src="https://images.unsplash.com/photo-1552561018-5fea54c08479?w=800&q=80&auto=format&fit=crop" alt="לימוזינות והסעות" loading="lazy">
+        <div class="card-media">
+          <img class="card-img" src="https://images.unsplash.com/photo-1552561018-5fea54c08479?w=800&q=80&auto=format&fit=crop" alt="לימוזינות והסעות" loading="lazy">
+          <div class="card-title-overlay"><h3>לימוזינות והסעות</h3></div>
+        </div>
         <div class="card-body">
           <div class="icon">🚘</div>
-          <h3>לימוזינות והסעות</h3>
           <p>איסוף משדה התעופה, נסיעות פרטיות ולימוזינות לאירועים.</p>
         </div>
       </div>
       <div class="card">
-        <img class="card-img" src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=800&q=80&auto=format&fit=crop" alt="מסיבות ואירועים" loading="lazy">
+        <div class="card-media">
+          <img class="card-img" src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=800&q=80&auto=format&fit=crop" alt="מסיבות ואירועים" loading="lazy">
+          <div class="card-title-overlay"><h3>מסיבות ואירועים</h3></div>
+        </div>
         <div class="card-body">
           <div class="icon">🎉</div>
-          <h3>מסיבות ואירועים</h3>
           <p>כניסה למקומות חמים וחבילות בילוי לזוגות ולקבוצות.</p>
         </div>
       </div>
       <div class="card">
-        <img class="card-img" src="https://images.unsplash.com/photo-1531887259712-aa6e090e9289?w=800&q=80&auto=format&fit=crop" alt="המלצות 365" loading="lazy">
+        <div class="card-media">
+          <img class="card-img" src="https://images.unsplash.com/photo-1531887259712-aa6e090e9289?w=800&q=80&auto=format&fit=crop" alt="המלצות 365" loading="lazy">
+          <div class="card-title-overlay"><h3>המלצות 365</h3></div>
+        </div>
         <div class="card-body">
           <div class="icon">365</div>
-          <h3>המלצות 365</h3>
           <p>כתובת אחת לכל שאלה, מהרגע שנוחתים ועד שחוזרים הביתה.</p>
         </div>
       </div>
@@ -404,12 +422,12 @@
 
 <section id="about" class="about">
   <div class="container about-wrap">
-    <div class="about-photo"><img src="golan-photo.jpg" alt="גולן ק - Bucharest 365" loading="lazy"></div>
+    <div class="about-photo"><img src="golan-photo.jpg" alt="גולן כ - Bucharest 365" loading="lazy"></div>
     <div>
       <span class="sec-eyebrow" style="text-align:right;display:block;">Bucharest 365 by Golan K</span>
       <h2>מישהו מקומי שדואג לכם אישית</h2>
-      <p>מאחורי Bucharest 365 עומד גולן ק, שחי את העיר, מכיר את המקומות הנכונים ויודע להפוך בקשה לחוויה.</p>
-      <p>במקום להרכיב לבד את החופשה, אתם מקבלים איש קשר אחד שמקשיב, מתכנן, מזמין ומלווה.</p>
+      <p>מאחורי Bucharest 365 עומד גולן כ - ניסיון של שנים בשטח, מקצוענות בכל פרט וזמינות אמיתית שנותנים לכם ביטחון מלא לאורך כל החופשה.</p>
+      <p>במקום להרכיב לבד ולהסתכן בהפתעות, אתם מקבלים ליווי אישי צמוד: איש קשר אחד ומקצועי שמקשיב, מתכנן, מזמין ונמצא איתכם בכל רגע.</p>
       <div class="stats">
         <div class="stat"><b>365</b><span>ימים של זמינות</span></div>
         <div class="stat"><b>VIP</b><span>יחס אישי</span></div>
@@ -492,7 +510,7 @@
         <div class="review-page active">
           <div class="review">
             <div class="stars">★★★★★</div>
-            <p>"גולן ק סידר לנו סוף שבוע ברמה אחרת. כל מקום היה בול, בלי לחכות ובלי להתעסק עם כלום."</p>
+            <p>"גולן כ סידר לנו סוף שבוע ברמה אחרת. כל מקום היה בול, בלי לחכות ובלי להתעסק עם כלום."</p>
             <div class="who"><b>אורן מ.</b><span>סופ״ש חברים</span></div>
           </div>
           <div class="review">
@@ -603,7 +621,7 @@
     <div class="footer-wrap">
       <div>
         <div class="logo"><img src="logo.png" alt="Bucharest 365" class="logo-img"> Bucharest 365</div>
-        <p>בילויים וחוויות בבוקרשט ברמת VIP עם גולן ק.</p>
+        <p>בילויים וחוויות בבוקרשט ברמת VIP עם גולן כ.</p>
       </div>
       <div class="footer-links">
         <a href="#services">שירותים</a>
@@ -625,7 +643,7 @@ function sendToWhatsApp(e){
   const phone = document.getElementById('f-phone').value;
   const dates = document.getElementById('f-dates').value;
   const req = document.getElementById('f-req').value;
-  const text = `היי גולן ק, שמי ${name}, הטלפון שלי ${phone}. מתכננים להגיע: ${dates || 'לא צוין'}. נשמח לעזרה עם: ${req || 'לא צוין'}`;
+  const text = `היי גולן כ, שמי ${name}, הטלפון שלי ${phone}. מתכננים להגיע: ${dates || 'לא צוין'}. נשמח לעזרה עם: ${req || 'לא צוין'}`;
   window.open(`https://wa.me/972544709642?text=${encodeURIComponent(text)}`, '_blank');
 }
 
