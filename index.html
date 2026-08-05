@@ -23,7 +23,7 @@
     --max-w:1200px;
     --neon-text:0 0 2px rgba(255,255,255,0.45), 0 0 6px var(--gold-light), 0 0 13px var(--gold), 0 0 24px rgba(255,20,254,0.28);
     --neon-box:0 0 4px rgba(255,20,254,0.3), 0 0 11px rgba(255,20,254,0.2), 0 0 23px rgba(255,20,254,0.1);
-    --neon-box-soft:0 0 5px rgba(255,20,254,0.18), 0 0 13px rgba(255,20,254,0.09);
+    --neon-box-soft:0 0 4px rgba(255,169,254,0.16), 0 0 9px rgba(255,20,254,0.16), 0 0 18px rgba(255,20,254,0.08);
   }
   @keyframes neonPulse{
     0%,100%{filter:drop-shadow(0 0 5px var(--gold-light)) drop-shadow(0 0 13px var(--gold)) drop-shadow(0 0 23px rgba(255,20,254,0.3));}
@@ -126,7 +126,7 @@
   /* Services grid */
   .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
   .card{
-    background:var(--card);border:1px solid var(--border);border-radius:16px;
+    background:var(--card);border:2px solid var(--border);border-radius:16px;
     overflow:hidden;transition:transform .25s, border-color .25s, box-shadow .25s;
     box-shadow:var(--neon-box-soft);
   }
@@ -152,7 +152,7 @@
   .about-photo{
     aspect-ratio:4/5;border-radius:20px;overflow:hidden;
     background:linear-gradient(135deg, rgba(255,20,254,0.25), rgba(255,20,254,0.05));
-    border:1px solid var(--border);
+    border:2px solid var(--border);
     display:flex;align-items:center;justify-content:center;
     font-size:4rem;color:var(--gold-light);
     box-shadow:var(--neon-box-soft);
@@ -166,7 +166,7 @@
 
   /* Process */
   .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;counter-reset:step;}
-  .step{position:relative;padding:32px 28px 28px;background:var(--card);border:1px solid var(--border);border-radius:16px;box-shadow:var(--neon-box-soft);}
+  .step{position:relative;padding:32px 28px 28px;background:var(--card);border:2px solid var(--border);border-radius:16px;box-shadow:var(--neon-box-soft);}
   .step:before{
     counter-increment:step;content:counter(step);
     position:absolute;top:-18px;right:28px;
@@ -189,7 +189,7 @@
   .reel-card a{display:block;}
   .reel-card img{
     width:176px;height:313px;object-fit:cover;border-radius:14px;
-    border:1px solid var(--border);display:block;transition:transform .25s, border-color .25s, box-shadow .25s;
+    border:2px solid var(--border);display:block;transition:transform .25s, border-color .25s, box-shadow .25s;
     box-shadow:var(--neon-box-soft);
   }
   .reel-card:hover img{transform:scale(1.03);border-color:var(--gold);box-shadow:var(--neon-box);}
@@ -210,7 +210,7 @@
   .review-page{display:none;grid-template-columns:repeat(3,1fr);gap:24px;animation:fadeIn .4s ease;}
   .review-page.active{display:grid;}
   @keyframes fadeIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
-  .review{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:28px;text-align:center;box-shadow:var(--neon-box-soft);}
+  .review{background:var(--card);border:2px solid var(--border);border-radius:16px;padding:28px;text-align:center;box-shadow:var(--neon-box-soft);}
   .stars{color:var(--gold-light);margin-bottom:14px;letter-spacing:2px;text-shadow:0 0 5px var(--gold-light);}
   .review p{color:var(--text-dim);margin-bottom:18px;font-size:0.95rem;}
   .review .who b{display:block;font-size:0.95rem;}
@@ -248,7 +248,7 @@
   .contact-info h2{font-size:clamp(1.6rem,3vw,2.2rem);margin-bottom:16px;font-weight:800;}
   .contact-info p{color:var(--text-dim);margin-bottom:24px;}
   .contact-info .row{display:flex;align-items:center;gap:12px;margin-bottom:14px;color:var(--text-dim);}
-  form{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:32px;box-shadow:var(--neon-box-soft);}
+  form{background:var(--card);border:2px solid var(--border);border-radius:16px;padding:32px;box-shadow:var(--neon-box-soft);}
   .field{margin-bottom:18px;}
   .field label{display:block;font-size:0.9rem;color:var(--text-dim);margin-bottom:8px;}
   .field input{
@@ -317,7 +317,7 @@
     <a href="#top" class="logo"><img src="logo.png" alt="Bucharest 365" class="logo-img"> Bucharest 365 <span>| VIP</span></a>
     <nav>
       <a href="#services">שירותים</a>
-      <a href="#about">למה אנחנו</a>
+      <a href="#about">למה גולן</a>
       <a href="#reviews">ממליצים</a>
       <a href="#faq">שאלות נפוצות</a>
     </nav>
@@ -606,6 +606,7 @@
       <div class="footer-links">
         <a href="#services">שירותים</a>
         <a href="#reviews">ממליצים</a>
+        <a href="faq.html">שאלות ותשובות מורחב</a>
         <a href="#contact">צור קשר</a>
       </div>
     </div>
