@@ -314,7 +314,16 @@
     section{padding:64px 0;}
     #reels{padding-bottom:16px;}
     #process{padding-top:16px;}
-    .hero{padding:150px 0 40px;}
+    .hero{
+      padding:150px 0 40px;
+      background:
+        radial-gradient(ellipse 80% 60% at 70% 0%, rgba(255,20,254,0.13), transparent),
+        radial-gradient(ellipse 60% 50% at 10% 20%, rgba(255,20,254,0.06), transparent),
+        linear-gradient(rgba(11,11,15,0.55), rgba(11,11,15,0.68)),
+        url('hero-bg.jpg');
+      background-size:cover;
+      background-position:25% center;
+    }
     .reviews-carousel{max-width:100%;}
     .carousel-btn.prev{right:0;}
     .carousel-btn.next{left:0;}
