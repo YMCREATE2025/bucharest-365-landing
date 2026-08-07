@@ -699,6 +699,21 @@
 <a class="whatsapp-fab" href="https://wa.me/972544709642" target="_blank" rel="noopener" title="דברו איתנו">💬</a>
 
 <script>
+/* Once the Google Sheet lead-log web app is deployed, replace this with the real URL. */
+const LEADS_WEBHOOK_URL = 'PENDING_LEADS_WEBHOOK_URL';
+
+function logLead(name, phone, dates, req){
+  if(LEADS_WEBHOOK_URL === 'PENDING_LEADS_WEBHOOK_URL') return;
+  try{
+    fetch(LEADS_WEBHOOK_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: {'Content-Type': 'text/plain'},
+      body: JSON.stringify({name, phone, dates, req})
+    }).catch(()=>{});
+  }catch(e){}
+}
+
 function sendToWhatsApp(e){
   e.preventDefault();
   const name = document.getElementById('f-name').value;
@@ -708,6 +723,7 @@ function sendToWhatsApp(e){
   const text = `היי גולן כ', שמי ${name}, הטלפון שלי ${phone}. מתכננים להגיע: ${dates || 'לא צוין'}. נשמח לעזרה עם: ${req || 'לא צוין'}`;
   trackEvent('contact-form-submits');
   trackEvent('whatsapp-clicks');
+  logLead(name, phone, dates, req);
   window.open(`https://wa.me/972544709642?text=${encodeURIComponent(text)}`, '_blank');
 }
 
