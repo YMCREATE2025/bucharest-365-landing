@@ -208,14 +208,19 @@ async function loadStats(){
   await Promise.all(STAT_COUNTERS.map(async c=>{
     const card = document.getElementById('stat-' + c.key);
     const numEl = card.querySelector('.num');
+    const controller = new AbortController();
+    const timeout = setTimeout(()=> controller.abort(), 5000);
     try{
-      const r = await fetch('https://api.counterapi.dev/v1/bucharest365vip2026/' + c.key + '/');
+      const r = await fetch('https://api.counterapi.dev/v1/bucharest365vip2026/' + c.key + '/', {signal: controller.signal});
       if(!r.ok) throw new Error('bad response');
       const data = await r.json();
       const count = (data && typeof data.count === 'number') ? data.count : 0;
       numEl.textContent = count.toLocaleString('he-IL');
     }catch(e){
+      // Counter doesn't exist yet (nobody has triggered this event) or request timed out - just show 0.
       numEl.textContent = '0';
+    }finally{
+      clearTimeout(timeout);
     }
   }));
 }
