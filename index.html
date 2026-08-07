@@ -285,7 +285,12 @@
 
   /* CTA band */
   .cta-band{
-    background:linear-gradient(135deg, rgba(255,20,254,0.12), rgba(255,20,254,0.02));
+    background:
+      linear-gradient(135deg, rgba(255,20,254,0.12), rgba(255,20,254,0.02)),
+      linear-gradient(rgba(11,11,15,0.88), rgba(11,11,15,0.94)),
+      url('hero-bg.jpg');
+    background-size:cover;
+    background-position:center;
     border-top:1px solid var(--border);border-bottom:1px solid var(--border);
     text-align:center;
   }
