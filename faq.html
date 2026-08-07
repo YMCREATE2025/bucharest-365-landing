@@ -435,5 +435,19 @@
 
 <a class="whatsapp-fab" href="https://wa.me/972544709642" target="_blank" rel="noopener" title="דברו איתנו">💬</a>
 
+<script>
+/* Visit + click tracking - anonymous stats for the admin dashboard */
+function trackEvent(name){
+  try{ fetch('https://api.counterapi.dev/v1/bucharest365vip2026/' + name + '/up').catch(()=>{}); }catch(e){}
+}
+trackEvent('faq-visits');
+document.querySelectorAll('a[href*="wa.me"]').forEach(function(a){
+  a.addEventListener('click', function(){ trackEvent('whatsapp-clicks'); });
+});
+document.querySelectorAll('a[href*="instagram.com"]').forEach(function(a){
+  a.addEventListener('click', function(){ trackEvent('instagram-clicks'); });
+});
+</script>
+
 </body>
 </html>

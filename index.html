@@ -706,6 +706,8 @@ function sendToWhatsApp(e){
   const dates = document.getElementById('f-dates').value;
   const req = document.getElementById('f-req').value;
   const text = `היי גולן כ', שמי ${name}, הטלפון שלי ${phone}. מתכננים להגיע: ${dates || 'לא צוין'}. נשמח לעזרה עם: ${req || 'לא צוין'}`;
+  trackEvent('contact-form-submits');
+  trackEvent('whatsapp-clicks');
   window.open(`https://wa.me/972544709642?text=${encodeURIComponent(text)}`, '_blank');
 }
 
@@ -820,8 +822,23 @@ function sendToWhatsApp(e){
   prevBtn.addEventListener('click', ()=> grid.scrollBy({left: -dir * scrollAmount(), behavior:'smooth'}));
 })();
 
-/* Visit counter - anonymous page-view tracking for the admin dashboard */
-fetch('https://api.counterapi.dev/v1/bucharest365vip2026/index-visits/up').catch(()=>{});
+/* Visit + click tracking - anonymous stats for the admin dashboard */
+function trackEvent(name){
+  try{ fetch('https://api.counterapi.dev/v1/bucharest365vip2026/' + name + '/up').catch(()=>{}); }catch(e){}
+}
+trackEvent('index-visits');
+
+document.querySelectorAll('a[href*="wa.me"]').forEach(function(a){
+  a.addEventListener('click', function(){ trackEvent('whatsapp-clicks'); });
+});
+document.querySelectorAll('a[href*="instagram.com"]').forEach(function(a){
+  a.addEventListener('click', function(){ trackEvent('instagram-clicks'); });
+});
+const bachelorBtn = document.querySelector('#bachelor-party a.btn');
+if(bachelorBtn) bachelorBtn.addEventListener('click', function(){ trackEvent('bachelor-party-clicks'); });
+document.querySelectorAll('.reel-card a').forEach(function(a){
+  a.addEventListener('click', function(){ trackEvent('reel-clicks'); });
+});
 </script>
 
 </body>
