@@ -266,7 +266,13 @@
   .reviews-track::-webkit-scrollbar{display:none;}
   .reviews-track .review{scroll-snap-align:start;flex:0 0 calc((100% - 48px)/3);min-width:0;}
   .review{background:var(--card);border:2px solid var(--border);border-radius:16px;padding:28px;text-align:center;box-shadow:var(--neon-box-soft);}
-  .stars{color:var(--gold-light);margin-bottom:14px;letter-spacing:2px;text-shadow:0 0 5px var(--gold-light);}
+  .stars{
+    background:linear-gradient(180deg,#FFF6D5 0%,#FFD966 40%,#C8901A 100%);
+    -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+    color:#FFD966;
+    margin-bottom:14px;letter-spacing:2px;
+    text-shadow:0 0 6px rgba(255,217,102,0.45), 0 0 14px rgba(255,180,50,0.22);
+  }
   .review p{color:var(--text-dim);margin-bottom:18px;font-size:0.95rem;}
   .review .who b{display:block;font-size:0.95rem;}
   .review .who span{color:var(--text-dim);font-size:0.85rem;}
@@ -854,8 +860,16 @@ function sendToWhatsApp(e){
 })();
 
 /* Visit + click tracking - anonymous stats for the admin dashboard */
+const EVENTS_WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbwrVs80pZghxPROWNBuyqzfZLoWJ58E4rKQma7ZUrPMpvB58OZ38myKyV7_RnwFWJr8XQ/exec';
 function trackEvent(name){
-  try{ fetch('https://api.counterapi.dev/v1/bucharest365vip2026/' + name + '/up').catch(()=>{}); }catch(e){}
+  try{
+    fetch(EVENTS_WEBHOOK_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: {'Content-Type': 'text/plain'},
+      body: JSON.stringify({kind: 'event', name: name})
+    }).catch(function(){});
+  }catch(e){}
 }
 trackEvent('index-visits');
 

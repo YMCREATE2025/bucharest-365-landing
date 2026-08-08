@@ -437,8 +437,16 @@
 
 <script>
 /* Visit + click tracking - anonymous stats for the admin dashboard */
+const EVENTS_WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbwrVs80pZghxPROWNBuyqzfZLoWJ58E4rKQma7ZUrPMpvB58OZ38myKyV7_RnwFWJr8XQ/exec';
 function trackEvent(name){
-  try{ fetch('https://api.counterapi.dev/v1/bucharest365vip2026/' + name + '/up').catch(()=>{}); }catch(e){}
+  try{
+    fetch(EVENTS_WEBHOOK_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: {'Content-Type': 'text/plain'},
+      body: JSON.stringify({kind: 'event', name: name})
+    }).catch(function(){});
+  }catch(e){}
 }
 trackEvent('faq-visits');
 document.querySelectorAll('a[href*="wa.me"]').forEach(function(a){

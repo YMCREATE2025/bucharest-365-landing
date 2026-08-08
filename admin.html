@@ -78,6 +78,25 @@
   .note{background:rgba(255,20,254,0.06);border:1px solid var(--border);border-radius:12px;padding:16px 20px;margin-bottom:24px;font-size:0.85rem;color:var(--text-dim);}
   .note b{color:var(--gold-light);}
 
+  /* Stats period breakdown */
+  .stats-card{background:var(--card);border:2px solid var(--border);border-radius:16px;padding:24px 26px;margin-bottom:24px;box-shadow:var(--neon-box-soft);}
+  .stats-card-head{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:18px;}
+  .stats-card-head h2{font-size:1.1rem;color:var(--gold-light);text-shadow:0 0 6px rgba(255,20,254,0.25);}
+  .stats-view-toggle{display:flex;gap:8px;}
+  .stats-view-btn{background:transparent;border:1px solid var(--border);color:var(--text-dim);padding:8px 16px;border-radius:999px;cursor:pointer;font-size:0.82rem;font-family:inherit;}
+  .stats-view-btn:hover{color:var(--gold-light);border-color:var(--gold);}
+  .stats-view-btn.active{background:linear-gradient(135deg,var(--gold-light),var(--gold));color:#fff;border-color:transparent;}
+  .stats-export-btn{background:transparent;border:1px solid rgba(37,211,102,0.5);color:var(--wa-green);padding:8px 16px;border-radius:999px;cursor:pointer;font-size:0.82rem;font-family:inherit;}
+  .stats-export-btn:hover{background:rgba(37,211,102,0.1);}
+  .stats-table-wrap{overflow-x:auto;}
+  table.stats-table{width:100%;border-collapse:collapse;font-size:0.82rem;white-space:nowrap;}
+  table.stats-table th, table.stats-table td{padding:9px 12px;text-align:center;border-bottom:1px solid var(--border);}
+  table.stats-table th{color:var(--text-dim);font-weight:600;font-size:0.78rem;}
+  table.stats-table th:first-child, table.stats-table td:first-child{text-align:right;color:var(--text);font-weight:600;}
+  table.stats-table td{color:var(--text-dim);}
+  table.stats-table tr:last-child td{border-bottom:none;}
+  table.stats-table td b{color:var(--gold-light);}
+
   /* Reels manager */
   .reel-row{display:flex;align-items:center;gap:14px;flex-wrap:wrap;border:1px solid var(--border);border-radius:12px;padding:14px;margin-bottom:12px;}
   .reel-row.changed{border-color:var(--wa-green);}
@@ -129,6 +148,23 @@
     </div>
     <div style="text-align:left;margin:-16px 0 24px;">
       <button class="logout-btn" onclick="loadStats()" style="font-size:0.8rem;padding:7px 14px;">🔄 רענון סטטיסטיקות</button>
+    </div>
+
+    <div class="stats-card">
+      <div class="stats-card-head">
+        <h2>פירוט סטטיסטיקות לפי תקופה</h2>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;">
+          <div class="stats-view-toggle">
+            <button class="stats-view-btn" data-view="day" onclick="setStatsView('day')">יומי</button>
+            <button class="stats-view-btn" data-view="month" onclick="setStatsView('month')">חודשי</button>
+            <button class="stats-view-btn" data-view="year" onclick="setStatsView('year')">שנתי</button>
+          </div>
+          <button class="stats-export-btn" onclick="exportEventsCSV()">⬇️ ייצוא נתונים ל-CSV</button>
+        </div>
+      </div>
+      <div class="stats-table-wrap">
+        <table class="stats-table" id="stats-period-table"></table>
+      </div>
     </div>
 
     <div class="note">
@@ -191,6 +227,10 @@ const STAT_COUNTERS = [
   {key:'reel-clicks', label:'לחיצות על רילים', icon:'🎬'},
 ];
 
+const EVENTS_URL = 'https://script.google.com/macros/s/AKfycbwrVs80pZghxPROWNBuyqzfZLoWJ58E4rKQma7ZUrPMpvB58OZ38myKyV7_RnwFWJr8XQ/exec';
+let allEvents = []; // {ts: Date, name: string}
+let statsView = 'day'; // 'day' | 'month' | 'year'
+
 async function loadStats(){
   const container = document.getElementById('stats-cards');
   const linksCard = container.querySelector('.links-card');
@@ -205,24 +245,105 @@ async function loadStats(){
     container.insertBefore(card, linksCard);
   });
 
-  await Promise.all(STAT_COUNTERS.map(async c=>{
-    const card = document.getElementById('stat-' + c.key);
-    const numEl = card.querySelector('.num');
-    const controller = new AbortController();
-    const timeout = setTimeout(()=> controller.abort(), 5000);
-    try{
-      const r = await fetch('https://api.counterapi.dev/v1/bucharest365vip2026/' + c.key + '/', {signal: controller.signal});
-      if(!r.ok) throw new Error('bad response');
-      const data = await r.json();
-      const count = (data && typeof data.count === 'number') ? data.count : 0;
-      numEl.textContent = count.toLocaleString('he-IL');
-    }catch(e){
-      // Counter doesn't exist yet (nobody has triggered this event) or request timed out - just show 0.
-      numEl.textContent = '0';
-    }finally{
-      clearTimeout(timeout);
-    }
-  }));
+  const controller = new AbortController();
+  const timeout = setTimeout(()=> controller.abort(), 8000);
+  try{
+    const r = await fetch(EVENTS_URL, {signal: controller.signal});
+    if(!r.ok) throw new Error('bad response');
+    const data = await r.json();
+    allEvents = (data.events || []).map(e=> ({ts: new Date(e.ts), name: e.name}));
+  }catch(e){
+    allEvents = [];
+  }finally{
+    clearTimeout(timeout);
+  }
+
+  STAT_COUNTERS.forEach(c=>{
+    const numEl = document.querySelector('#stat-' + c.key + ' .num');
+    const count = allEvents.filter(e=> e.name === c.key).length;
+    if(numEl) numEl.textContent = count.toLocaleString('he-IL');
+  });
+
+  renderPeriodTable();
+}
+
+function periodKey(date, view){
+  const y = date.getFullYear();
+  const m = String(date.getMonth() + 1).padStart(2,'0');
+  const d = String(date.getDate()).padStart(2,'0');
+  if(view === 'day') return y + '-' + m + '-' + d;
+  if(view === 'month') return y + '-' + m;
+  return String(y);
+}
+
+function periodLabel(key, view){
+  if(view === 'year') return key;
+  const parts = key.split('-');
+  if(view === 'month'){
+    const months = ['ינואר','פברואר','מרץ','אפריל','מאי','יוני','יולי','אוגוסט','ספטמבר','אוקטובר','נובמבר','דצמבר'];
+    return months[parseInt(parts[1],10) - 1] + ' ' + parts[0];
+  }
+  return parts[2] + '/' + parts[1] + '/' + parts[0];
+}
+
+function setStatsView(view){
+  statsView = view;
+  document.querySelectorAll('.stats-view-btn').forEach(b=> b.classList.toggle('active', b.dataset.view === view));
+  renderPeriodTable();
+}
+
+function renderPeriodTable(){
+  const table = document.getElementById('stats-period-table');
+  if(!table) return;
+  document.querySelectorAll('.stats-view-btn').forEach(b=> b.classList.toggle('active', b.dataset.view === statsView));
+
+  const grouped = {};
+  allEvents.forEach(e=>{
+    const key = periodKey(e.ts, statsView);
+    if(!grouped[key]) grouped[key] = {};
+    grouped[key][e.name] = (grouped[key][e.name] || 0) + 1;
+  });
+
+  const limit = statsView === 'day' ? 30 : (statsView === 'month' ? 24 : 10);
+  const periods = Object.keys(grouped).sort().reverse().slice(0, limit);
+
+  let html = '<thead><tr><th>תקופה</th>';
+  STAT_COUNTERS.forEach(c=> html += '<th title="' + c.label + '">' + c.icon + '</th>');
+  html += '<th>סה"כ</th></tr></thead><tbody>';
+
+  if(periods.length === 0){
+    html += '<tr><td colspan="' + (STAT_COUNTERS.length + 2) + '" style="text-align:center;color:var(--text-dim);">אין נתונים עדיין</td></tr>';
+  } else {
+    periods.forEach(key=>{
+      const row = grouped[key];
+      let total = 0;
+      let cells = '';
+      STAT_COUNTERS.forEach(c=>{
+        const v = row[c.key] || 0;
+        total += v;
+        cells += '<td>' + (v || '–') + '</td>';
+      });
+      html += '<tr><td>' + periodLabel(key, statsView) + '</td>' + cells + '<td><b>' + total + '</b></td></tr>';
+    });
+  }
+  html += '</tbody>';
+  table.innerHTML = html;
+}
+
+function exportEventsCSV(){
+  let csv = '﻿תאריך ושעה,סוג אירוע\n';
+  allEvents.slice().sort((a,b)=> a.ts - b.ts).forEach(e=>{
+    csv += '"' + e.ts.toLocaleString('he-IL') + '","' + e.name + '"\n';
+  });
+  const blob = new Blob([csv], {type:'text/csv;charset=utf-8;'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'bucharest365-events-' + new Date().toISOString().slice(0,10) + '.csv';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
 }
 
 /* ---------- Content editor ---------- */
