@@ -97,6 +97,12 @@
     border:1px solid var(--border);color:var(--text);font-size:0.95rem;
     transition:border-color .2s, color .2s, box-shadow .2s;
   }
+  .pkg-more-btn{
+    display:inline-block;margin-top:14px;padding:8px 18px;border-radius:999px;
+    background:transparent;border:1px solid;font-size:0.82rem;font-weight:700;
+    cursor:pointer;font-family:inherit;transition:opacity .2s;
+  }
+  .pkg-more-btn:hover{opacity:0.8;}
   .btn-outline:hover{border-color:var(--gold);color:var(--gold-light);box-shadow:var(--neon-box-soft);}
   .btn-instagram{
     display:inline-block;padding:12px 28px;border-radius:999px;
@@ -397,7 +403,7 @@
     <a href="#bachelor-party" data-edit="promo-bar-text">🎉 דברו איתנו על החבילות המשתלמות שלנו (מעל 5 אנשים)מסיבת רווקים? 🎉</a>
   </div>
   <div class="container">
-    <a href="https://bucharest365.vip/#top" class="logo"><img src="logo.png" alt="Bucharest365" class="logo-img" data-edit="logo-img"> BUCHAREST365.vip</a>
+    <a href="https://bucharest365.vip/#top" class="logo"><img src="logo.png" alt="Bucharest365" class="logo-img" data-edit="logo-img"> BUCHAREST<span style="font-weight:400;">365</span>.vip</a>
     <nav>
       <a href="#services">שירותים</a>
       <a href="#about">למה גולן</a>
@@ -527,10 +533,11 @@
         <ul style="margin:0;padding:0;list-style:none;">
           <li style="color:#d8d8de;font-size:0.9rem;padding-right:20px;position:relative;margin-bottom:8px;"><span style="position:absolute;right:0;color:#c9cad0;">✦</span>איסוף מהשדה התעופה בלימוזינה מפוארת עם רקדנית ושמפניות</li>
           <li style="color:#d8d8de;font-size:0.9rem;padding-right:20px;position:relative;margin-bottom:8px;"><span style="position:absolute;right:0;color:#c9cad0;">✦</span>לילה במועדון לגברים הכי טוב בעיר עם שתייה חופשית כל הלילה</li>
-          <li style="color:#d8d8de;font-size:0.9rem;padding-right:20px;position:relative;margin-bottom:8px;"><span style="position:absolute;right:0;color:#c9cad0;">✦</span>דאנס בר עם שולחן ובקבוקים לבחירתכם</li>
-          <li style="color:#d8d8de;font-size:0.9rem;padding-right:20px;position:relative;margin-bottom:8px;"><span style="position:absolute;right:0;color:#c9cad0;">✦</span>בודי מסאז' זוגי לפני החזרה לשדה התעופה</li>
-          <li style="color:#d8d8de;font-size:0.9rem;padding-right:20px;position:relative;"><span style="position:absolute;right:0;color:#c9cad0;">✦</span>מינימום 6 אנשים</li>
+          <li class="pkg-extra" style="display:none;color:#d8d8de;font-size:0.9rem;padding-right:20px;position:relative;margin-bottom:8px;"><span style="position:absolute;right:0;color:#c9cad0;">✦</span>דאנס בר עם שולחן ובקבוקים לבחירתכם</li>
+          <li class="pkg-extra" style="display:none;color:#d8d8de;font-size:0.9rem;padding-right:20px;position:relative;margin-bottom:8px;"><span style="position:absolute;right:0;color:#c9cad0;">✦</span>בודי מסאז' זוגי לפני החזרה לשדה התעופה</li>
+          <li class="pkg-extra" style="display:none;color:#d8d8de;font-size:0.9rem;padding-right:20px;position:relative;"><span style="position:absolute;right:0;color:#c9cad0;">✦</span>מינימום 6 אנשים</li>
         </ul>
+        <button type="button" class="pkg-more-btn" style="color:#c9cad0;border-color:rgba(200,201,206,0.5);" onclick="togglePkgDetails(this)">עוד פרטים ↓</button>
       </div>
       <div class="card" style="padding:32px 28px;border-color:rgba(255,215,120,0.55);box-shadow:0 0 4px rgba(255,215,120,0.25), 0 0 11px rgba(255,215,120,0.15), 0 0 23px rgba(255,215,120,0.08);background:linear-gradient(rgba(10,8,12,0.55),rgba(10,8,12,0.82)),url('bachelor-bg-gold.jpg') center/cover;">
         <h3 style="color:#FFD966;font-size:1.4rem;font-weight:800;margin-bottom:10px;text-shadow:0 0 6px rgba(255,215,120,0.5);text-align:left;">Bucharest365 Gold</h3>
@@ -538,10 +545,11 @@
         <ul style="margin:0;padding:0;list-style:none;">
           <li style="color:#f3e6c2;font-size:0.9rem;padding-right:20px;position:relative;margin-bottom:8px;"><span style="position:absolute;right:0;color:#FFD966;">✦</span>שתי לימוזינות מפוארות עם רקדניות מהשדה התעופה</li>
           <li style="color:#f3e6c2;font-size:0.9rem;padding-right:20px;position:relative;margin-bottom:8px;"><span style="position:absolute;right:0;color:#FFD966;">✦</span>שולחנות VIP בשני מועדונים עם בקבוקים ופרימיום</li>
-          <li style="color:#f3e6c2;font-size:0.9rem;padding-right:20px;position:relative;margin-bottom:8px;"><span style="position:absolute;right:0;color:#FFD966;">✦</span>לילה במועדון לגברים היוקרתי ביותר בבוקרשט עם שולחן VIP ובקבוק פרימיום</li>
-          <li style="color:#f3e6c2;font-size:0.9rem;padding-right:20px;position:relative;margin-bottom:8px;"><span style="position:absolute;right:0;color:#FFD966;">✦</span>בודי מסאז' זוגי</li>
-          <li style="color:#f3e6c2;font-size:0.9rem;padding-right:20px;position:relative;"><span style="position:absolute;right:0;color:#FFD966;">✦</span>מינימום 6 אנשים</li>
+          <li class="pkg-extra" style="display:none;color:#f3e6c2;font-size:0.9rem;padding-right:20px;position:relative;margin-bottom:8px;"><span style="position:absolute;right:0;color:#FFD966;">✦</span>לילה במועדון לגברים היוקרתי ביותר בבוקרשט עם שולחן VIP ובקבוק פרימיום</li>
+          <li class="pkg-extra" style="display:none;color:#f3e6c2;font-size:0.9rem;padding-right:20px;position:relative;margin-bottom:8px;"><span style="position:absolute;right:0;color:#FFD966;">✦</span>בודי מסאז' זוגי</li>
+          <li class="pkg-extra" style="display:none;color:#f3e6c2;font-size:0.9rem;padding-right:20px;position:relative;"><span style="position:absolute;right:0;color:#FFD966;">✦</span>מינימום 6 אנשים</li>
         </ul>
+        <button type="button" class="pkg-more-btn" style="color:#FFD966;border-color:rgba(255,215,120,0.5);" onclick="togglePkgDetails(this)">עוד פרטים ↓</button>
       </div>
     </div>
     <div class="cta-row">
@@ -600,7 +608,7 @@
     <h2 class="sec-title">3 צעדים לחופשה מושלמת</h2>
     <div class="steps">
       <div class="step">
-        <h3>מספרים לנו</h3>
+        <h3>אתם מדברים איתנו</h3>
         <p>תאריכים, הרכב הקבוצה ומה אתם אוהבים.</p>
       </div>
       <div class="step">
@@ -704,7 +712,7 @@
   <div class="container">
     <div class="footer-wrap">
       <div style="display:flex;align-items:center;flex-wrap:wrap;gap:14px;">
-        <div class="logo" style="margin-bottom:0;"><img src="logo.png" alt="Bucharest365" class="logo-img" data-edit="logo-img"> BUCHAREST365.vip</div>
+        <div class="logo" style="margin-bottom:0;"><img src="logo.png" alt="Bucharest365" class="logo-img" data-edit="logo-img"> BUCHAREST<span style="font-weight:400;">365</span>.vip</div>
         <p data-edit="footer-tagline" style="margin:0;">בילויים וחוויות בבוקרשט ברמת VIP עם גולן כ'.</p>
       </div>
       <div class="footer-links">
@@ -873,6 +881,19 @@ function trackEvent(name){
   }catch(e){}
 }
 trackEvent('index-visits');
+
+function togglePkgDetails(btn){
+  const card = btn.closest('.card');
+  if(!card) return;
+  const extras = card.querySelectorAll('.pkg-extra');
+  const isHidden = extras.length && extras[0].style.display === 'none';
+  extras.forEach(function(li){ li.style.display = isHidden ? 'block' : 'none'; });
+  btn.textContent = isHidden ? 'הצג פחות ↑' : 'עוד פרטים ↓';
+  if(isHidden){
+    trackEvent('bachelor-details-clicks');
+    setTimeout(function(){ btn.scrollIntoView({behavior:'smooth', block:'nearest'}); }, 60);
+  }
+}
 
 document.querySelectorAll('a[href*="wa.me"]').forEach(function(a){
   a.addEventListener('click', function(){ trackEvent('whatsapp-clicks'); });
