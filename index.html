@@ -203,6 +203,14 @@
     box-shadow:var(--neon-box-soft);
   }
   .card-title-overlay .icon{margin-bottom:12px;}
+  .corner-logo{
+    position:absolute;top:14px;left:14px;z-index:2;
+    width:40px;height:40px;border-radius:50%;object-fit:cover;
+    border:2px solid rgba(255,255,255,0.85);
+    box-shadow:0 2px 10px rgba(0,0,0,0.55);
+    background:#0c0c14;
+  }
+  .about-photo .corner-logo{top:18px;left:18px;width:52px;height:52px;}
   .contact-info .icon{margin-bottom:0;}
   .card p{color:var(--text-dim);font-size:0.95rem;}
 
@@ -210,6 +218,7 @@
   .about{background:var(--bg-alt);}
   .about-wrap{display:grid;grid-template-columns:1fr 1.1fr;gap:56px;align-items:center;}
   .about-photo{
+    position:relative;
     aspect-ratio:4/5;border-radius:20px;overflow:hidden;
     background:linear-gradient(135deg, rgba(255,20,254,0.25), rgba(255,20,254,0.05));
     border:2px solid var(--border);
@@ -456,6 +465,7 @@
       <div class="card">
         <div class="card-media">
           <img class="card-img" src="card1g.jpg" alt="ליווי VIP אישי" loading="lazy" data-edit="card1-img" data-edit-filename="card1g.jpg">
+          <img class="corner-logo" src="logo.png" alt="Bucharest365">
           <div class="card-title-overlay"><div class="icon">★</div><h3 data-edit="card1-title">ליווי VIP אישי</h3></div>
         </div>
         <div class="card-body">
@@ -465,6 +475,7 @@
       <div class="card">
         <div class="card-media">
           <img class="card-img" src="card2c.jpg" alt="מסיבות רווקים" loading="lazy" data-edit="card2-img" data-edit-filename="card2c.jpg">
+          <img class="corner-logo" src="logo.png" alt="Bucharest365">
           <div class="card-title-overlay"><div class="icon">🎉</div><h3 data-edit="card2-title">מסיבות רווקים</h3></div>
         </div>
         <div class="card-body">
@@ -474,6 +485,7 @@
       <div class="card">
         <div class="card-media">
           <img class="card-img" src="card5.jpg" alt="אטרקציות וחיי לילה" loading="lazy" data-edit="card3-img" data-edit-filename="card3.jpg">
+          <img class="corner-logo" src="logo.png" alt="Bucharest365">
           <div class="card-title-overlay"><div class="icon">♫</div><h3 data-edit="card3-title">אטרקציות וחיי לילה</h3></div>
         </div>
         <div class="card-body">
@@ -483,6 +495,7 @@
       <div class="card">
         <div class="card-media">
           <img class="card-img" src="card4c.jpg" alt="לימוזינות והסעות" loading="lazy" data-edit="card4-img" data-edit-filename="card4c.jpg">
+          <img class="corner-logo" src="logo.png" alt="Bucharest365">
           <div class="card-title-overlay"><div class="icon">🚘</div><h3 data-edit="card4-title">לימוזינות והסעות</h3></div>
         </div>
         <div class="card-body">
@@ -492,6 +505,7 @@
       <div class="card">
         <div class="card-media">
           <img class="card-img" src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800&q=80&auto=format&fit=crop" alt="מסעדות מומלצות" loading="lazy" data-edit="card5-img" data-edit-filename="card5.jpg">
+          <img class="corner-logo" src="logo.png" alt="Bucharest365">
           <div class="card-title-overlay"><div class="icon">🍽</div><h3 data-edit="card5-title">מסעדות מומלצות</h3></div>
         </div>
         <div class="card-body">
@@ -501,6 +515,7 @@
       <div class="card">
         <div class="card-media">
           <img class="card-img" src="card3.jpg" alt="המלצות 365" loading="lazy" data-edit="card6-img" data-edit-filename="card3.jpg">
+          <img class="corner-logo" src="logo.png" alt="Bucharest365">
           <div class="card-title-overlay"><div class="icon">365</div><h3 data-edit="card6-title">המלצות 365</h3></div>
         </div>
         <div class="card-body">
@@ -513,7 +528,7 @@
 
 <section id="about" class="about">
   <div class="container about-wrap">
-    <div class="about-photo"><img src="golan-photo.jpg" alt="גולן כ' - Bucharest365" loading="lazy" data-edit="about-img"></div>
+    <div class="about-photo"><img src="golan-photo.jpg" alt="גולן כ' - Bucharest365" loading="lazy" data-edit="about-img"><img class="corner-logo" src="logo.png" alt="Bucharest365"></div>
     <div>
       <span class="sec-eyebrow" style="text-align:right;display:block;">Bucharest365 by Golan K</span>
       <h2>הי, אני גולן, כבר 10 שנים בחיי לילה בבוקרשט ואני דואג לכם אישית</h2>
