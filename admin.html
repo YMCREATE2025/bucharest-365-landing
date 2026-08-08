@@ -308,7 +308,7 @@ function renderPeriodTable(){
   const periods = Object.keys(grouped).sort().reverse().slice(0, limit);
 
   let html = '<thead><tr><th>תקופה</th>';
-  STAT_COUNTERS.forEach(c=> html += '<th title="' + c.label + '">' + c.icon + '</th>');
+  STAT_COUNTERS.forEach(c=> html += "<th title='" + c.label.replace(/'/g,"&#39;") + "'>" + c.icon + '</th>');
   html += '<th>סה"כ</th></tr></thead><tbody>';
 
   if(periods.length === 0){
