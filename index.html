@@ -246,13 +246,24 @@
   }
   .reels-grid::-webkit-scrollbar{display:none;}
   .reel-card{flex:0 0 auto;width:176px;scroll-snap-align:start;}
-  .reel-card a{display:block;}
+  .reel-card a{display:block;position:relative;}
   .reel-card img{
     width:176px;height:313px;object-fit:cover;border-radius:14px;
     border:2px solid var(--border);display:block;transition:transform .25s, border-color .25s, box-shadow .25s;
     box-shadow:var(--neon-box-soft);
   }
   .reel-card:hover img{transform:scale(1.03);border-color:var(--gold);box-shadow:var(--neon-box);}
+  .reel-card a::after{
+    content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+    width:46px;height:46px;border-radius:50%;
+    background:rgba(0,0,0,0.45);border:1.5px solid rgba(255,255,255,0.85);
+    pointer-events:none;
+  }
+  .reel-card a::before{
+    content:'';position:absolute;top:50%;left:50%;transform:translate(-42%,-50%);
+    width:0;height:0;border-top:8px solid transparent;border-bottom:8px solid transparent;
+    border-left:13px solid #fff;z-index:1;pointer-events:none;
+  }
   .reels-nav{
     position:absolute;top:50%;transform:translateY(-50%);
     width:40px;height:40px;border-radius:50%;
