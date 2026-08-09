@@ -136,6 +136,7 @@
       <button class="logout-btn" onclick="logout()">התנתקות</button>
     </header>
 
+    <div style="color:var(--text-dim);font-size:0.8rem;margin:-10px 0 14px;">הכרטיסים למטה מציגים נתונים מאז השעה 12:00 האחרונה ומתאפסים אוטומטית מדי יום ב-12:00. הטבלה התקופתית וה-CSV שומרים היסטוריה מלאה של כל הנתונים, ללא מחיקה.</div>
     <div class="cards-row" id="stats-cards">
       <!-- stat cards injected by loadStats() -->
       <div class="links-card">
@@ -260,13 +261,25 @@ async function loadStats(){
     clearTimeout(timeout);
   }
 
+  const periodStart = getStatsResetPeriod();
+  const cardEvents = allEvents.filter(e=> e.ts >= periodStart);
+
   STAT_COUNTERS.forEach(c=>{
     const numEl = document.querySelector('#stat-' + c.key + ' .num');
-    const count = allEvents.filter(e=> e.name === c.key).length;
+    const count = cardEvents.filter(e=> e.name === c.key).length;
     if(numEl) numEl.textContent = count.toLocaleString('he-IL');
   });
 
   renderPeriodTable();
+}
+
+// Rolling reset point for the top stat cards: the most recent 12:00 (noon).
+// Purely time-based, so it "resets" automatically every day with no stored
+// state and no deletion of the underlying event log.
+function getStatsResetPeriod(){
+  const now = new Date();
+  const today12 = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 12, 0, 0, 0);
+  return now >= today12 ? today12 : new Date(today12.getTime() - 24*60*60*1000);
 }
 
 function periodKey(date, view){
