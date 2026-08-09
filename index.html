@@ -916,13 +916,38 @@ function sendToWhatsApp(e){
 
 /* Visit + click tracking - anonymous stats for the admin dashboard */
 const EVENTS_WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbwrVs80pZghxPROWNBuyqzfZLoWJ58E4rKQma7ZUrPMpvB58OZ38myKyV7_RnwFWJr8XQ/exec';
+function getTrafficSource(){
+  try{
+    const params = new URLSearchParams(location.search);
+    const utmSource = params.get('utm_source');
+    if(utmSource) return utmSource;
+    const ref = document.referrer;
+    if(!ref) return 'ישיר';
+    const host = new URL(ref).hostname.replace(/^www\./,'');
+    if(host.includes('instagram')) return 'Instagram';
+    if(host.includes('facebook')) return 'Facebook';
+    if(host.includes('google')) return 'Google';
+    if(host.includes('wa.me') || host.includes('whatsapp')) return 'WhatsApp';
+    if(host.includes('tiktok')) return 'TikTok';
+    return host;
+  }catch(e){ return 'לא ידוע'; }
+}
 function trackEvent(name){
   try{
+    const params = new URLSearchParams(location.search);
     fetch(EVENTS_WEBHOOK_URL, {
       method: 'POST',
       mode: 'no-cors',
       headers: {'Content-Type': 'text/plain'},
-      body: JSON.stringify({kind: 'event', name: name})
+      body: JSON.stringify({
+        kind: 'event',
+        name: name,
+        source: getTrafficSource(),
+        referrer: document.referrer || '',
+        utm_source: params.get('utm_source') || '',
+        utm_medium: params.get('utm_medium') || '',
+        utm_campaign: params.get('utm_campaign') || ''
+      })
     }).catch(function(){});
   }catch(e){}
 }
