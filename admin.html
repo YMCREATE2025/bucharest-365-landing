@@ -249,8 +249,13 @@ async function loadStats(){
     container.insertBefore(card, linksCard);
   });
 
+  // Google Apps Script web apps can be slow to respond on a cold start
+  // (sometimes well over 8s), so the timeout is generous. If it still fails,
+  // we show a clear error instead of silently rendering "0" / "no data",
+  // which used to be indistinguishable from genuinely-zero traffic.
   const controller = new AbortController();
-  const timeout = setTimeout(()=> controller.abort(), 8000);
+  const timeout = setTimeout(()=> controller.abort(), 20000);
+  let fetchFailed = false;
   try{
     const r = await fetch(EVENTS_URL, {signal: controller.signal});
     if(!r.ok) throw new Error('bad response');
@@ -258,6 +263,7 @@ async function loadStats(){
     allEvents = (data.events || []).map(e=> ({ts: new Date(e.ts), name: e.name}));
   }catch(e){
     allEvents = [];
+    fetchFailed = true;
   }finally{
     clearTimeout(timeout);
   }
@@ -267,11 +273,16 @@ async function loadStats(){
 
   STAT_COUNTERS.forEach(c=>{
     const numEl = document.querySelector('#stat-' + c.key + ' .num');
-    const count = cardEvents.filter(e=> e.name === c.key).length;
-    if(numEl) numEl.textContent = count.toLocaleString('he-IL');
+    if(!numEl) return;
+    if(fetchFailed){
+      numEl.textContent = '–';
+    } else {
+      const count = cardEvents.filter(e=> e.name === c.key).length;
+      numEl.textContent = count.toLocaleString('he-IL');
+    }
   });
 
-  renderPeriodTable();
+  renderPeriodTable(fetchFailed);
 }
 
 // Rolling reset point for the top stat cards: the most recent 12:00 noon,
@@ -342,10 +353,15 @@ function setStatsView(view){
   renderPeriodTable();
 }
 
-function renderPeriodTable(){
+function renderPeriodTable(fetchFailed){
   const table = document.getElementById('stats-period-table');
   if(!table) return;
   document.querySelectorAll('.stats-view-btn').forEach(b=> b.classList.toggle('active', b.dataset.view === statsView));
+
+  if(fetchFailed){
+    table.innerHTML = '<tbody><tr><td style="text-align:center;color:#ff6b6b;padding:16px;">שגיאה בטעינת הנתונים מהשרת (חיבור איטי או נכשל). לחצו על "רענון סטטיסטיקות" למעלה כדי לנסות שוב.</td></tr></tbody>';
+    return;
+  }
 
   const grouped = {};
   allEvents.forEach(e=>{
