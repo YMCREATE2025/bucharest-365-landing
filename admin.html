@@ -274,13 +274,29 @@ async function loadStats(){
   renderPeriodTable();
 }
 
-// Rolling reset point for the top stat cards: the most recent 12:00 (noon).
-// Purely time-based, so it "resets" automatically every day with no stored
-// state and no deletion of the underlying event log.
+// Rolling reset point for the top stat cards: the most recent 12:00 noon,
+// Israel time (Asia/Jerusalem) - always, regardless of the timezone the
+// admin panel happens to be opened from. Purely time-based, so it "resets"
+// automatically every day with no stored state and no deletion of the
+// underlying event log.
 function getStatsResetPeriod(){
   const now = new Date();
-  const today12 = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 12, 0, 0, 0);
-  return now >= today12 ? today12 : new Date(today12.getTime() - 24*60*60*1000);
+  const fmt = new Intl.DateTimeFormat('en-US', {
+    timeZone: 'Asia/Jerusalem',
+    year: 'numeric', month: '2-digit', day: '2-digit',
+    hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false
+  });
+  const parts = {};
+  fmt.formatToParts(now).forEach(p=>{ if(p.type !== 'literal') parts[p.type] = p.value; });
+  const y = parseInt(parts.year,10), mo = parseInt(parts.month,10), d = parseInt(parts.day,10);
+  let h = parseInt(parts.hour,10); if(h === 24) h = 0;
+  const mi = parseInt(parts.minute,10), s = parseInt(parts.second,10);
+
+  const israelWallMs = Date.UTC(y, mo-1, d, h, mi, s);
+  const offsetMs = israelWallMs - now.getTime();
+  const noonWallMs = Date.UTC(y, mo-1, d, 12, 0, 0);
+  const boundaryWallMs = (israelWallMs >= noonWallMs) ? noonWallMs : (noonWallMs - 24*60*60*1000);
+  return new Date(boundaryWallMs - offsetMs);
 }
 
 function getWeekStart(date){
