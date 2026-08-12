@@ -158,6 +158,7 @@
         <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;">
           <div class="stats-view-toggle">
             <button class="stats-view-btn" data-view="day" onclick="setStatsView('day')">יומי</button>
+            <button class="stats-view-btn" data-view="week" onclick="setStatsView('week')">שבועי</button>
             <button class="stats-view-btn" data-view="month" onclick="setStatsView('month')">חודשי</button>
             <button class="stats-view-btn" data-view="year" onclick="setStatsView('year')">שנתי</button>
           </div>
@@ -282,11 +283,22 @@ function getStatsResetPeriod(){
   return now >= today12 ? today12 : new Date(today12.getTime() - 24*60*60*1000);
 }
 
+function getWeekStart(date){
+  // Israeli week starts Sunday (getDay() 0 = Sunday)
+  const d = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+  d.setDate(d.getDate() - d.getDay());
+  return d;
+}
+
 function periodKey(date, view){
   const y = date.getFullYear();
   const m = String(date.getMonth() + 1).padStart(2,'0');
   const d = String(date.getDate()).padStart(2,'0');
   if(view === 'day') return y + '-' + m + '-' + d;
+  if(view === 'week'){
+    const ws = getWeekStart(date);
+    return ws.getFullYear() + '-' + String(ws.getMonth()+1).padStart(2,'0') + '-' + String(ws.getDate()).padStart(2,'0');
+  }
   if(view === 'month') return y + '-' + m;
   return String(y);
 }
@@ -297,6 +309,13 @@ function periodLabel(key, view){
   if(view === 'month'){
     const months = ['ינואר','פברואר','מרץ','אפריל','מאי','יוני','יולי','אוגוסט','ספטמבר','אוקטובר','נובמבר','דצמבר'];
     return months[parseInt(parts[1],10) - 1] + ' ' + parts[0];
+  }
+  if(view === 'week'){
+    const start = new Date(parseInt(parts[0],10), parseInt(parts[1],10) - 1, parseInt(parts[2],10));
+    const end = new Date(start);
+    end.setDate(end.getDate() + 6);
+    const fmt = dt => String(dt.getDate()).padStart(2,'0') + '/' + String(dt.getMonth()+1).padStart(2,'0');
+    return fmt(start) + '–' + fmt(end);
   }
   return parts[2] + '/' + parts[1] + '/' + parts[0];
 }
@@ -319,7 +338,7 @@ function renderPeriodTable(){
     grouped[key][e.name] = (grouped[key][e.name] || 0) + 1;
   });
 
-  const limit = statsView === 'day' ? 30 : (statsView === 'month' ? 24 : 10);
+  const limit = statsView === 'day' ? 30 : (statsView === 'week' ? 12 : (statsView === 'month' ? 24 : 10));
   const periods = Object.keys(grouped).sort().reverse().slice(0, limit);
 
   let html = '<thead><tr><th>תקופה</th>';
