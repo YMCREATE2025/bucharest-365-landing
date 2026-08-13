@@ -310,21 +310,37 @@ function getStatsResetPeriod(){
   return new Date(boundaryWallMs - offsetMs);
 }
 
+// All period grouping (day/week/month/year) is anchored to Israel calendar
+// dates (Asia/Jerusalem), not the viewing browser's local timezone - so the
+// table shows the same day boundaries no matter where the panel is opened
+// from, consistent with the noon-reset logic used for the top cards.
+function israelDateParts(date){
+  const fmt = new Intl.DateTimeFormat('en-US', {
+    timeZone: 'Asia/Jerusalem',
+    year: 'numeric', month: '2-digit', day: '2-digit'
+  });
+  const parts = {};
+  fmt.formatToParts(date).forEach(p=>{ if(p.type !== 'literal') parts[p.type] = p.value; });
+  return { y: parseInt(parts.year,10), mo: parseInt(parts.month,10), d: parseInt(parts.day,10) };
+}
+
 function getWeekStart(date){
-  // Israeli week starts Sunday (getDay() 0 = Sunday)
-  const d = new Date(date.getFullYear(), date.getMonth(), date.getDate());
-  d.setDate(d.getDate() - d.getDay());
-  return d;
+  // Israeli week starts Sunday. weekday is computed off the Israel-local
+  // calendar date (timezone doesn't affect which weekday a date falls on).
+  const {y, mo, d} = israelDateParts(date);
+  const asUTC = new Date(Date.UTC(y, mo-1, d));
+  asUTC.setUTCDate(asUTC.getUTCDate() - asUTC.getUTCDay());
+  return { y: asUTC.getUTCFullYear(), mo: asUTC.getUTCMonth()+1, d: asUTC.getUTCDate() };
 }
 
 function periodKey(date, view){
-  const y = date.getFullYear();
-  const m = String(date.getMonth() + 1).padStart(2,'0');
-  const d = String(date.getDate()).padStart(2,'0');
-  if(view === 'day') return y + '-' + m + '-' + d;
+  const {y, mo, d} = israelDateParts(date);
+  const m = String(mo).padStart(2,'0');
+  const dd = String(d).padStart(2,'0');
+  if(view === 'day') return y + '-' + m + '-' + dd;
   if(view === 'week'){
     const ws = getWeekStart(date);
-    return ws.getFullYear() + '-' + String(ws.getMonth()+1).padStart(2,'0') + '-' + String(ws.getDate()).padStart(2,'0');
+    return ws.y + '-' + String(ws.mo).padStart(2,'0') + '-' + String(ws.d).padStart(2,'0');
   }
   if(view === 'month') return y + '-' + m;
   return String(y);
