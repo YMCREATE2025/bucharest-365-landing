@@ -170,6 +170,13 @@
       </div>
     </div>
 
+    <div class="stats-card">
+      <div class="stats-card-head">
+        <h2>לחיצות WhatsApp לפי מיקום הכפתור</h2>
+      </div>
+      <div id="wa-breakdown"></div>
+    </div>
+
     <div class="note">
       <b>איך זה עובד:</b> הפאנל טוען את התוכן החי של האתר. עורכים טקסטים ומחליפים תמונות כאן, ובסוף לוחצים "הורדת קבצים לפרסום". זה מוריד את קובץ ה-index.html המעודכן ואת התמונות שהוחלפו. שולחים לי (בצ'אט) את הקבצים האלה ואני מעלה אותם לאתר החי בתוך דקה.
     </div>
@@ -260,7 +267,7 @@ async function loadStats(){
     const r = await fetch(EVENTS_URL, {signal: controller.signal});
     if(!r.ok) throw new Error('bad response');
     const data = await r.json();
-    allEvents = (data.events || []).map(e=> ({ts: new Date(e.ts), name: e.name}));
+    allEvents = (data.events || []).map(e=> ({ts: new Date(e.ts), name: e.name, location: e.location || ''}));
   }catch(e){
     allEvents = [];
     fetchFailed = true;
@@ -283,6 +290,62 @@ async function loadStats(){
   });
 
   renderPeriodTable(fetchFailed);
+  renderWhatsappBreakdown(fetchFailed);
+}
+
+const WA_LOC_LABELS = {
+  'header': 'כותרת עליונה (Header)',
+  'hero': 'הירו - למעלה בדף',
+  'about': 'אזור "עלינו" / סטטיסטיקות',
+  'bachelor-party': 'סקשן מסיבת רווקים',
+  'cta-band': 'באנר קריאה לפעולה',
+  'group-note': 'הערת "מגיעים בקבוצה"',
+  'contact-info': 'מספר הטלפון בפרטי יצירת קשר',
+  'contact-form': 'טופס יצירת קשר (בואו נדבר)',
+  'promo-bar': 'באנר פרומו (דף FAQ)',
+  'fab': 'כפתור צף (דף FAQ)',
+  'other': 'לא מזוהה',
+  '': 'לא ידוע (מלפני העדכון)'
+};
+
+function renderWhatsappBreakdown(fetchFailed){
+  const box = document.getElementById('wa-breakdown');
+  if(!box) return;
+
+  if(fetchFailed){
+    box.innerHTML = '<div style="color:#ff6b6b;font-size:0.85rem;">שגיאה בטעינת הנתונים.</div>';
+    return;
+  }
+
+  const waEvents = allEvents.filter(e=> e.name === 'whatsapp-clicks');
+  const counts = {};
+  waEvents.forEach(e=>{
+    const key = e.location || '';
+    counts[key] = (counts[key] || 0) + 1;
+  });
+
+  const allBlank = waEvents.length > 0 && waEvents.every(e=> !e.location);
+
+  if(waEvents.length === 0){
+    box.innerHTML = '<div style="color:var(--text-dim);font-size:0.85rem;">אין עדיין נתוני לחיצות WhatsApp.</div>';
+    return;
+  }
+
+  let html = '<div style="display:flex;flex-direction:column;gap:8px;">';
+  Object.entries(counts).sort((a,b)=> b[1]-a[1]).forEach(([key, count])=>{
+    const label = WA_LOC_LABELS[key] || key;
+    html += '<div style="display:flex;justify-content:space-between;align-items:center;padding:8px 12px;background:var(--bg-alt);border-radius:8px;">' +
+      '<span style="font-size:0.85rem;color:var(--text);">' + label + '</span>' +
+      '<span style="font-weight:800;color:var(--gold-light);">' + count + '</span>' +
+      '</div>';
+  });
+  html += '</div>';
+
+  if(allBlank){
+    html += '<div style="margin-top:12px;color:var(--text-dim);font-size:0.78rem;">⚠️ כל הלחיצות מסומנות "לא ידוע" - כנראה שהסקריפט (Apps Script) עדיין לא שומר את שדה ה-location. צריך לעדכן אותו כדי לראות פירוט אמיתי לפי כפתור.</div>';
+  }
+
+  box.innerHTML = html;
 }
 
 // Rolling reset point for the top stat cards: the most recent 12:00 noon,
@@ -415,9 +478,9 @@ function renderPeriodTable(fetchFailed){
 }
 
 function exportEventsCSV(){
-  let csv = '﻿תאריך ושעה,סוג אירוע\n';
+  let csv = '﻿תאריך ושעה,סוג אירוע,מיקום\n';
   allEvents.slice().sort((a,b)=> a.ts - b.ts).forEach(e=>{
-    csv += '"' + e.ts.toLocaleString('he-IL') + '","' + e.name + '"\n';
+    csv += '"' + e.ts.toLocaleString('he-IL') + '","' + e.name + '","' + (e.location || '') + '"\n';
   });
   const blob = new Blob([csv], {type:'text/csv;charset=utf-8;'});
   const url = URL.createObjectURL(blob);
