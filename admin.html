@@ -136,7 +136,7 @@
       <button class="logout-btn" onclick="logout()">התנתקות</button>
     </header>
 
-    <div style="color:var(--text-dim);font-size:0.8rem;margin:-10px 0 14px;">הכרטיסים למטה מציגים נתונים מאז השעה 12:00 האחרונה ומתאפסים אוטומטית מדי יום ב-12:00. הטבלה התקופתית וה-CSV שומרים היסטוריה מלאה של כל הנתונים, ללא מחיקה.</div>
+    <div style="color:var(--text-dim);font-size:0.8rem;margin:-10px 0 14px;">הכרטיסים למטה מציגים נתונים מאז השעה 12:00 האחרונה ומתאפסים אוטומטית מדי יום ב-12:00. "יום" בטבלה למטה מוגדר באותו אופן - מ-12:00 ועד 12:00 למחרת - כך שהמספרים תמיד יתאימו לכרטיסים. הטבלה וה-CSV שומרים היסטוריה מלאה של כל הנתונים, ללא מחיקה.</div>
     <div class="cards-row" id="stats-cards">
       <!-- stat cards injected by loadStats() -->
       <div class="links-card">
@@ -310,17 +310,19 @@ function getStatsResetPeriod(){
   return new Date(boundaryWallMs - offsetMs);
 }
 
-// All period grouping (day/week/month/year) is anchored to Israel calendar
-// dates (Asia/Jerusalem), not the viewing browser's local timezone - so the
-// table shows the same day boundaries no matter where the panel is opened
-// from, consistent with the noon-reset logic used for the top cards.
+// All period grouping (day/week/month/year) is anchored to Israel "business
+// days" that run 12:00 noon to the next day's 12:00 noon (Asia/Jerusalem) -
+// matching the top summary cards' reset point exactly, so a "today" row in
+// the table always agrees with the top cards. Not the viewing browser's
+// local timezone, and not a midnight-to-midnight calendar day.
 function israelDateParts(date){
+  const shifted = new Date(date.getTime() - 12*60*60*1000);
   const fmt = new Intl.DateTimeFormat('en-US', {
     timeZone: 'Asia/Jerusalem',
     year: 'numeric', month: '2-digit', day: '2-digit'
   });
   const parts = {};
-  fmt.formatToParts(date).forEach(p=>{ if(p.type !== 'literal') parts[p.type] = p.value; });
+  fmt.formatToParts(shifted).forEach(p=>{ if(p.type !== 'literal') parts[p.type] = p.value; });
   return { y: parseInt(parts.year,10), mo: parseInt(parts.month,10), d: parseInt(parts.day,10) };
 }
 
