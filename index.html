@@ -1036,13 +1036,13 @@ function closeBachelorPopup(){
       var start = null;
       function step(ts){
         if(!start) start = ts;
-        var pct = Math.min((ts - start) / 3000, 1);
+        var pct = Math.min((ts - start) / 6000, 1);
         ring.setAttribute('stroke-dashoffset', (100.5 * pct).toFixed(1));
         if(pct < 1) requestAnimationFrame(step);
       }
       requestAnimationFrame(step);
     }
-    setTimeout(closeBachelorPopup, 3000);
+    setTimeout(closeBachelorPopup, 6000);
     try{ localStorage.setItem('b365_popup_seen', '1'); }catch(e){}
   }, 800);
 })();
