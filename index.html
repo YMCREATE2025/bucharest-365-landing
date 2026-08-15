@@ -1029,7 +1029,8 @@ function closeBachelorPopup(){
   if(!overlay) return;
   setTimeout(function(){
     overlay.style.display = 'flex';
-    requestAnimationFrame(function(){ overlay.classList.add('show'); });
+    void overlay.offsetWidth;
+    overlay.classList.add('show');
     var ring = document.getElementById('bachelor-popup-ring');
     if(ring){
       var start = null;
