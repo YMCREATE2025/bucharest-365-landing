@@ -424,9 +424,44 @@
     .review{padding:24px 48px;}
     .carousel-btn{width:36px;height:36px;font-size:1.1rem;}
   }
+
+  .bachelor-popup-overlay{position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.6);display:none;align-items:center;justify-content:center;padding:20px;opacity:0;transition:opacity 0.35s ease;}
+  .bachelor-popup-overlay.show{opacity:1;}
+  .bachelor-popup{position:relative;width:100%;max-width:360px;max-height:90vh;aspect-ratio:3/4;border-radius:16px;overflow:hidden;background:#0b0b0f;box-shadow:0 0 4px rgba(255,20,254,0.4),0 0 14px rgba(255,20,254,0.28),0 0 30px rgba(255,20,254,0.14);border:2px solid rgba(255,20,254,0.55);transform:scale(0.92);transition:transform 0.35s ease;}
+  .bachelor-popup-overlay.show .bachelor-popup{transform:scale(1);}
+  .bachelor-popup-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
+  .bachelor-popup-gradient{position:absolute;inset:0;background:linear-gradient(180deg,rgba(11,11,15,0.25) 0%,rgba(11,11,15,0.55) 45%,rgba(11,11,15,0.96) 100%);}
+  .bachelor-popup-close{position:absolute;top:12px;left:12px;width:28px;height:28px;border-radius:50%;background:rgba(11,11,15,0.6);border:1px solid rgba(255,255,255,0.25);color:#f2f0ea;font-size:16px;line-height:1;cursor:pointer;z-index:2;}
+  .bachelor-popup-ringwrap{position:absolute;top:12px;right:12px;width:36px;height:36px;z-index:2;}
+  .bachelor-popup-logo{position:absolute;top:18px;left:50%;transform:translateX(-50%);width:78px;height:78px;border-radius:50%;object-fit:cover;background:#0c0c14;box-shadow:0 0 10px rgba(255,215,120,0.6),0 0 22px rgba(255,180,50,0.45);z-index:2;}
+  .bachelor-popup-text{position:absolute;bottom:0;right:0;left:0;padding:20px 20px 22px;text-align:center;z-index:2;}
+  .bachelor-popup-title{font-size:1.85rem;font-weight:800;color:#f2f0ea;line-height:1.2;margin-bottom:10px;text-shadow:0 2px 8px rgba(0,0,0,0.95),0 0 18px rgba(255,20,254,0.35);}
+  .bachelor-popup-sub{font-size:1.05rem;font-weight:700;color:#e4e4e8;line-height:1.4;margin-bottom:16px;}
+  .bachelor-popup-btn{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,var(--wa-green),var(--wa-green-dark));color:#fff;font-weight:700;font-size:0.9rem;padding:12px 22px;border-radius:999px;text-decoration:none;}
 </style>
 </head>
 <body>
+
+<div class="bachelor-popup-overlay" id="bachelor-popup">
+  <div class="bachelor-popup">
+    <img class="bachelor-popup-img" src="card2c.jpg" alt="מסיבת רווקים בבוקרשט">
+    <div class="bachelor-popup-gradient"></div>
+    <button type="button" class="bachelor-popup-close" onclick="closeBachelorPopup()" aria-label="סגור">×</button>
+    <div class="bachelor-popup-ringwrap">
+      <svg viewBox="0 0 36 36" style="width:36px;height:36px;transform:rotate(-90deg);">
+        <circle cx="18" cy="18" r="16" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="3"></circle>
+        <circle id="bachelor-popup-ring" cx="18" cy="18" r="16" fill="none" stroke="#FFA9FE" stroke-width="3" stroke-linecap="round" stroke-dasharray="100.5" stroke-dashoffset="0"></circle>
+      </svg>
+    </div>
+    <img class="bachelor-popup-logo" src="logo.png" alt="Bucharest365">
+    <div class="bachelor-popup-text">
+      <div class="bachelor-popup-title">מסיבת רווקים בבוקרשט?</div>
+      <div class="bachelor-popup-sub">כניסות VIP, שולחנות שמורים, לימוזינות, מסעדות - חוויה שלא תשכחו!</div>
+      <a class="bachelor-popup-btn" data-wa-loc="popup" href="https://wa.me/972544709642?text=היי%20גולן%20כ,%20אשמח%20לשמוע%20על%20החבילה%20שמתאימה%20לנו%20למסיבת%20רווקים" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" style="width:18px;height:18px;fill:#fff;"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.48 1.32 5L2 22l5.25-1.38c1.45.79 3.08 1.21 4.79 1.21h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.91-7.01A9.816 9.816 0 0012.04 2zm5.83 14.05c-.24.68-1.4 1.32-1.94 1.4-.5.08-1.12.11-1.81-.11-.42-.13-.96-.31-1.65-.61-2.91-1.26-4.81-4.18-4.96-4.38-.15-.2-1.18-1.57-1.18-3 0-1.42.75-2.12 1.01-2.41.26-.29.58-.36.77-.36.19 0 .39 0 .56.01.18.01.42-.07.65.5.24.58.82 2.01.89 2.16.07.15.12.32.02.52-.09.2-.14.32-.28.49-.14.17-.29.38-.42.51-.14.14-.28.29-.12.57.16.28.71 1.17 1.52 1.9 1.05.94 1.93 1.23 2.21 1.37.28.14.44.12.61-.07.16-.19.68-.79.86-1.06.18-.27.36-.22.61-.13.24.09 1.55.73 1.81.86.27.13.45.2.51.31.07.11.07.63-.17 1.31z"/></svg>דברו איתי על החבילה שמתאימה לכם</a>
+    </div>
+  </div>
+</div>
+
 
 <header>
   <div class="promo-bar">
@@ -978,6 +1013,38 @@ if(bachelorBtn) bachelorBtn.addEventListener('click', function(){ trackEvent('ba
 document.querySelectorAll('.reel-card a').forEach(function(a){
   a.addEventListener('click', function(){ trackEvent('reel-clicks'); });
 });
+
+/* First-visit bachelor party popup - shows once per visitor, auto-closes after 3s */
+function closeBachelorPopup(){
+  var overlay = document.getElementById('bachelor-popup');
+  if(!overlay) return;
+  overlay.classList.remove('show');
+  setTimeout(function(){ overlay.style.display = 'none'; }, 350);
+}
+(function(){
+  try{
+    if(localStorage.getItem('b365_popup_seen')) return;
+  }catch(e){ return; }
+  var overlay = document.getElementById('bachelor-popup');
+  if(!overlay) return;
+  setTimeout(function(){
+    overlay.style.display = 'flex';
+    requestAnimationFrame(function(){ overlay.classList.add('show'); });
+    var ring = document.getElementById('bachelor-popup-ring');
+    if(ring){
+      var start = null;
+      function step(ts){
+        if(!start) start = ts;
+        var pct = Math.min((ts - start) / 3000, 1);
+        ring.setAttribute('stroke-dashoffset', (100.5 * pct).toFixed(1));
+        if(pct < 1) requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+    }
+    setTimeout(closeBachelorPopup, 3000);
+    try{ localStorage.setItem('b365_popup_seen', '1'); }catch(e){}
+  }, 800);
+})();
 </script>
 
 </body>
