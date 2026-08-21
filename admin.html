@@ -282,22 +282,36 @@ async function loadStats(){
   });
 
   // Google Apps Script web apps can be slow to respond on a cold start
-  // (sometimes well over 8s), so the timeout is generous. If it still fails,
-  // we show a clear error instead of silently rendering "0" / "no data",
-  // which used to be indistinguishable from genuinely-zero traffic.
-  const controller = new AbortController();
-  const timeout = setTimeout(()=> controller.abort(), 20000);
+  // (sometimes well over 10s on the very first request). A single fetch
+  // attempt was observed to occasionally fail on cold start even though an
+  // immediate retry succeeds in ~2s, so we retry once automatically before
+  // giving up and showing an explicit error - instead of silently rendering
+  // "0" / "no data", which used to be indistinguishable from genuinely-zero
+  // traffic.
+  async function fetchEventsOnce(timeoutMs){
+    const controller = new AbortController();
+    const timeout = setTimeout(()=> controller.abort(), timeoutMs);
+    try{
+      const r = await fetch(EVENTS_URL, {signal: controller.signal, cache:'no-store'});
+      if(!r.ok) throw new Error('bad response');
+      return await r.json();
+    }finally{
+      clearTimeout(timeout);
+    }
+  }
+
   let fetchFailed = false;
   try{
-    const r = await fetch(EVENTS_URL, {signal: controller.signal});
-    if(!r.ok) throw new Error('bad response');
-    const data = await r.json();
+    let data;
+    try{
+      data = await fetchEventsOnce(15000);
+    }catch(firstErr){
+      data = await fetchEventsOnce(20000); // one automatic retry
+    }
     allEvents = (data.events || []).map(e=> ({ts: new Date(e.ts), name: e.name, location: e.location || ''}));
   }catch(e){
     allEvents = [];
     fetchFailed = true;
-  }finally{
-    clearTimeout(timeout);
   }
 
   const periodStart = getStatsResetPeriod();
