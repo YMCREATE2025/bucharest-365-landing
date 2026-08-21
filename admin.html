@@ -97,6 +97,9 @@
   table.stats-table td{color:var(--text-dim);}
   table.stats-table tr:last-child td{border-bottom:none;}
   table.stats-table td b{color:var(--gold-light);}
+  .chart-legend{display:flex;gap:16px;flex-wrap:wrap;font-size:0.78rem;color:var(--text-dim);margin-bottom:8px;}
+  .chart-legend i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-inline-end:5px;vertical-align:middle;}
+  .stats-chart{width:100%;height:220px;display:block;}
 
   /* Reels manager */
   .reel-row{display:flex;align-items:center;gap:14px;flex-wrap:wrap;border:1px solid var(--border);border-radius:12px;padding:14px;margin-bottom:12px;}
@@ -168,6 +171,28 @@
       <div class="stats-table-wrap">
         <table class="stats-table" id="stats-period-table"></table>
       </div>
+      <div style="margin-top:20px;">
+        <div class="chart-legend">
+          <span><i style="background:var(--gold-light);"></i>סה"כ אירועים</span>
+          <span><i style="background:var(--wa-green);"></i>לחיצות וואטסאפ</span>
+          <span><i style="background:#FFA94D;"></i>התעניינות רווקים/חבילות</span>
+        </div>
+        <canvas id="stats-period-chart" class="stats-chart"></canvas>
+      </div>
+    </div>
+
+    <div class="stats-card">
+      <div class="stats-card-head">
+        <h2>שעות השיא - פעילות באתר</h2>
+      </div>
+      <div style="color:var(--text-dim);font-size:0.8rem;margin-bottom:14px;">מבוסס על כל ההיסטוריה שנאספה (שעון ישראל), ולא רק על התקופה שנבחרה בטבלה למעלה - כדי שתמיד תדעו מתי הכי משתלם להיות זמינים.</div>
+      <div id="hourly-summary" style="font-size:0.88rem;color:var(--text);margin-bottom:16px;"></div>
+      <div class="chart-legend">
+        <span><i style="background:var(--gold-light);"></i>סה"כ תנועה</span>
+        <span><i style="background:var(--wa-green);"></i>פניות וואטסאפ</span>
+        <span><i style="background:#FFA94D;"></i>התעניינות רווקים/חבילות</span>
+      </div>
+      <canvas id="hourly-chart" class="stats-chart"></canvas>
     </div>
 
     <div class="stats-card">
@@ -291,6 +316,176 @@ async function loadStats(){
 
   renderPeriodTable(fetchFailed);
   renderWhatsappBreakdown(fetchFailed);
+  renderHourlyChart(fetchFailed);
+}
+
+/* ---------- Charts (plain canvas, no external libs) ---------- */
+function clearCanvas(id){
+  const canvas = document.getElementById(id);
+  if(!canvas) return;
+  const ctx = canvas.getContext('2d');
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+}
+
+function drawBarChart(canvasId, categories, series, opts){
+  const canvas = document.getElementById(canvasId);
+  if(!canvas) return;
+  opts = opts || {};
+  const dpr = window.devicePixelRatio || 1;
+  const cssWidth = canvas.parentElement.clientWidth || 600;
+  const cssHeight = opts.height || 220;
+  canvas.width = Math.round(cssWidth * dpr);
+  canvas.height = Math.round(cssHeight * dpr);
+  canvas.style.height = cssHeight + 'px';
+  const ctx = canvas.getContext('2d');
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  ctx.clearRect(0, 0, cssWidth, cssHeight);
+
+  if(!categories.length){
+    ctx.fillStyle = 'rgba(168,165,173,0.7)';
+    ctx.font = '12px "Noto Sans Hebrew", sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText('אין נתונים עדיין', cssWidth / 2, cssHeight / 2);
+    return;
+  }
+
+  const padding = {top:14, right:10, bottom:32, left:34};
+  const chartW = cssWidth - padding.left - padding.right;
+  const chartH = cssHeight - padding.top - padding.bottom;
+  const maxVal = Math.max(1, ...series.flatMap(s=> s.data));
+  const n = categories.length;
+  const groupW = chartW / n;
+  const barGap = 2;
+  const barW = Math.max(1.5, (groupW - barGap * (series.length + 1)) / series.length);
+
+  // gridlines + y-axis labels
+  ctx.strokeStyle = 'rgba(255,255,255,0.08)';
+  ctx.fillStyle = 'rgba(168,165,173,0.85)';
+  ctx.font = '10px "Noto Sans Hebrew", sans-serif';
+  ctx.textAlign = 'left';
+  const ySteps = 4;
+  for(let i=0;i<=ySteps;i++){
+    const v = Math.round(maxVal * i / ySteps);
+    const y = padding.top + chartH - (chartH * i / ySteps);
+    ctx.beginPath();
+    ctx.moveTo(padding.left, y);
+    ctx.lineTo(padding.left + chartW, y);
+    ctx.stroke();
+    ctx.fillText(String(v), 2, y + 3);
+  }
+
+  // bars
+  const rotateLabels = n > 10;
+  categories.forEach((cat, i)=>{
+    series.forEach((s, si)=>{
+      const val = s.data[i] || 0;
+      const barH = maxVal ? (val / maxVal) * chartH : 0;
+      const x = padding.left + i * groupW + barGap + si * (barW + barGap);
+      const y = padding.top + chartH - barH;
+      ctx.fillStyle = s.color;
+      ctx.fillRect(x, y, barW, Math.max(barH, val > 0 ? 1 : 0));
+    });
+
+    ctx.save();
+    ctx.fillStyle = 'rgba(168,165,173,0.9)';
+    ctx.font = '10px "Noto Sans Hebrew", sans-serif';
+    const labelX = padding.left + i * groupW + groupW / 2;
+    const labelY = padding.top + chartH + 14;
+    if(rotateLabels){
+      ctx.translate(labelX, labelY);
+      ctx.rotate(-Math.PI / 4);
+      ctx.textAlign = 'right';
+      ctx.fillText(cat, 0, 0);
+    } else {
+      ctx.textAlign = 'center';
+      ctx.fillText(cat, labelX, labelY);
+    }
+    ctx.restore();
+  });
+}
+
+function renderPeriodChartFromGrouped(grouped, periodsAsc, view){
+  const categories = periodsAsc.map(k=> periodLabel(k, view));
+  const totals = periodsAsc.map(k=> Object.values(grouped[k]).reduce((a,b)=> a + b, 0));
+  const wa = periodsAsc.map(k=> grouped[k]['whatsapp-clicks'] || 0);
+  const bachelor = periodsAsc.map(k=> (grouped[k]['bachelor-party-clicks'] || 0) + (grouped[k]['bachelor-details-clicks'] || 0));
+  drawBarChart('stats-period-chart', categories, [
+    {data: totals, color:'#FFA9FE'},
+    {data: wa, color:'#25D366'},
+    {data: bachelor, color:'#FFA94D'}
+  ], {height:220});
+}
+
+// Israel-local hour-of-day (0-23) for a given Date, regardless of the
+// viewing browser's own timezone.
+function israelHour(date){
+  const fmt = new Intl.DateTimeFormat('en-US', {timeZone:'Asia/Jerusalem', hour:'2-digit', hour12:false});
+  const parts = {};
+  fmt.formatToParts(date).forEach(p=>{ if(p.type !== 'literal') parts[p.type] = p.value; });
+  let h = parseInt(parts.hour, 10);
+  if(h === 24) h = 0;
+  return h;
+}
+
+function computeHourlyStats(){
+  const totals = new Array(24).fill(0);
+  const wa = new Array(24).fill(0);
+  const bachelor = new Array(24).fill(0);
+  allEvents.forEach(e=>{
+    const h = israelHour(e.ts);
+    totals[h] += 1;
+    if(e.name === 'whatsapp-clicks') wa[h] += 1;
+    if(e.name === 'bachelor-party-clicks' || e.name === 'bachelor-details-clicks') bachelor[h] += 1;
+  });
+  return {totals, wa, bachelor};
+}
+
+function hourRangeLabel(h){
+  const pad = n => String(n).padStart(2,'0');
+  return pad(h) + ':00–' + pad((h + 1) % 24) + ':00';
+}
+
+function renderHourlySummary(stats){
+  const el = document.getElementById('hourly-summary');
+  if(!el) return;
+  if(allEvents.length === 0){
+    el.textContent = 'אין עדיין מספיק נתונים כדי לזהות שעות שיא. הנתונים יצטברו ככל שיהיו יותר כניסות לאתר.';
+    return;
+  }
+
+  const topN = (arr, n) => arr.map((v,h)=>({h, v})).filter(x=> x.v > 0).sort((a,b)=> b.v - a.v).slice(0, n);
+  const topTotal = topN(stats.totals, 3);
+  const topWa = topN(stats.wa, 1);
+  const topBachelor = topN(stats.bachelor, 1);
+
+  let html = '<div style="margin-bottom:8px;"><b style="color:var(--gold-light);">שעות השיא הכלליות באתר: </b>' +
+    (topTotal.length ? topTotal.map(x=> hourRangeLabel(x.h) + ' (' + x.v + ' כניסות)').join(', ') : 'אין מספיק נתונים') +
+    '</div>';
+  html += '<div style="margin-bottom:8px;"><b style="color:var(--wa-green);">הכי הרבה פניות וואטסאפ: </b>' +
+    (topWa.length ? hourRangeLabel(topWa[0].h) + ' (' + topWa[0].v + ' פניות)' : 'אין מספיק נתונים') +
+    '</div>';
+  html += '<div><b style="color:#FFA94D;">הכי הרבה התעניינות במסיבות רווקים וחבילות: </b>' +
+    (topBachelor.length ? hourRangeLabel(topBachelor[0].h) + ' (' + topBachelor[0].v + ' לחיצות)' : 'אין עדיין מספיק נתונים') +
+    '</div>';
+
+  el.innerHTML = html;
+}
+
+function renderHourlyChart(fetchFailed){
+  const summaryEl = document.getElementById('hourly-summary');
+  if(fetchFailed){
+    clearCanvas('hourly-chart');
+    if(summaryEl) summaryEl.innerHTML = '<span style="color:#ff6b6b;">שגיאה בטעינת הנתונים מהשרת.</span>';
+    return;
+  }
+  const stats = computeHourlyStats();
+  renderHourlySummary(stats);
+  const categories = Array.from({length:24}, (_, h)=> String(h).padStart(2,'0'));
+  drawBarChart('hourly-chart', categories, [
+    {data: stats.totals, color:'#FFA9FE'},
+    {data: stats.wa, color:'#25D366'},
+    {data: stats.bachelor, color:'#FFA94D'}
+  ], {height:220});
 }
 
 const WA_LOC_LABELS = {
@@ -441,6 +636,7 @@ function renderPeriodTable(fetchFailed){
 
   if(fetchFailed){
     table.innerHTML = '<tbody><tr><td style="text-align:center;color:#ff6b6b;padding:16px;">שגיאה בטעינת הנתונים מהשרת (חיבור איטי או נכשל). לחצו על "רענון סטטיסטיקות" למעלה כדי לנסות שוב.</td></tr></tbody>';
+    clearCanvas('stats-period-chart');
     return;
   }
 
@@ -475,7 +671,20 @@ function renderPeriodTable(fetchFailed){
   }
   html += '</tbody>';
   table.innerHTML = html;
+
+  renderPeriodChartFromGrouped(grouped, periods.slice().reverse(), statsView);
 }
+
+let chartResizeTimer = null;
+window.addEventListener('resize', ()=>{
+  clearTimeout(chartResizeTimer);
+  chartResizeTimer = setTimeout(()=>{
+    if(document.getElementById('dashboard').style.display !== 'none'){
+      renderPeriodTable();
+      renderHourlyChart();
+    }
+  }, 250);
+});
 
 function exportEventsCSV(){
   let csv = '﻿תאריך ושעה,סוג אירוע,מיקום\n';
