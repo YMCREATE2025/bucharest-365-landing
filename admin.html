@@ -197,6 +197,20 @@
 
     <div class="stats-card">
       <div class="stats-card-head">
+        <h2>ימי השיא בשבוע</h2>
+      </div>
+      <div style="color:var(--text-dim);font-size:0.8rem;margin-bottom:14px;">מבוסס על כל ההיסטוריה שנאספה (שעון ישראל), ולא רק על התקופה שנבחרה בטבלה למעלה.</div>
+      <div id="weekday-summary" style="font-size:0.88rem;color:var(--text);margin-bottom:16px;"></div>
+      <div class="chart-legend">
+        <span><i style="background:var(--gold-light);"></i>סה"כ תנועה</span>
+        <span><i style="background:var(--wa-green);"></i>פניות וואטסאפ</span>
+        <span><i style="background:#FFA94D;"></i>התעניינות רווקים/חבילות</span>
+      </div>
+      <canvas id="weekday-chart" class="stats-chart"></canvas>
+    </div>
+
+    <div class="stats-card">
+      <div class="stats-card-head">
         <h2>לחיצות WhatsApp לפי מיקום הכפתור</h2>
       </div>
       <div id="wa-breakdown"></div>
@@ -331,6 +345,7 @@ async function loadStats(){
   renderPeriodTable(fetchFailed);
   renderWhatsappBreakdown(fetchFailed);
   renderHourlyChart(fetchFailed);
+  renderWeekdayChart(fetchFailed);
 }
 
 /* ---------- Charts (plain canvas, no external libs) ---------- */
@@ -496,6 +511,71 @@ function renderHourlyChart(fetchFailed){
   renderHourlySummary(stats);
   const categories = Array.from({length:24}, (_, h)=> String(h).padStart(2,'0'));
   drawBarChart('hourly-chart', categories, [
+    {data: stats.totals, color:'#FFA9FE'},
+    {data: stats.wa, color:'#25D366'},
+    {data: stats.bachelor, color:'#FFA94D'}
+  ], {height:220});
+}
+
+// Israel weekday index (0=ראשון...6=שבת) for a Date, based on the same
+// noon-to-noon "business day" definition used everywhere else in this
+// panel (israelDateParts), so a "day" here always matches the day/week/
+// month table above it.
+const WEEKDAY_NAMES = ['ראשון','שני','שלישי','רביעי','חמישי','שישי','שבת'];
+function israelWeekdayIndex(date){
+  const {y, mo, d} = israelDateParts(date);
+  return new Date(Date.UTC(y, mo-1, d)).getUTCDay();
+}
+
+function computeWeekdayStats(){
+  const totals = new Array(7).fill(0);
+  const wa = new Array(7).fill(0);
+  const bachelor = new Array(7).fill(0);
+  allEvents.forEach(e=>{
+    const wIdx = israelWeekdayIndex(e.ts);
+    totals[wIdx] += 1;
+    if(e.name === 'whatsapp-clicks') wa[wIdx] += 1;
+    if(e.name === 'bachelor-party-clicks' || e.name === 'bachelor-details-clicks') bachelor[wIdx] += 1;
+  });
+  return {totals, wa, bachelor};
+}
+
+function renderWeekdaySummary(stats){
+  const el = document.getElementById('weekday-summary');
+  if(!el) return;
+  if(allEvents.length === 0){
+    el.textContent = 'אין עדיין מספיק נתונים כדי לזהות ימי שיא. הנתונים יצטברו ככל שיהיו יותר כניסות לאתר.';
+    return;
+  }
+
+  const topN = (arr, n) => arr.map((v,w)=>({w, v})).filter(x=> x.v > 0).sort((a,b)=> b.v - a.v).slice(0, n);
+  const topTotal = topN(stats.totals, 3);
+  const topWa = topN(stats.wa, 1);
+  const topBachelor = topN(stats.bachelor, 1);
+
+  let html = '<div style="margin-bottom:8px;"><b style="color:var(--gold-light);">ימי השיא הכלליים באתר: </b>' +
+    (topTotal.length ? topTotal.map(x=> WEEKDAY_NAMES[x.w] + ' (' + x.v + ' כניסות)').join(', ') : 'אין מספיק נתונים') +
+    '</div>';
+  html += '<div style="margin-bottom:8px;"><b style="color:var(--wa-green);">הכי הרבה פניות וואטסאפ ביום: </b>' +
+    (topWa.length ? WEEKDAY_NAMES[topWa[0].w] + ' (' + topWa[0].v + ' פניות)' : 'אין מספיק נתונים') +
+    '</div>';
+  html += '<div><b style="color:#FFA94D;">הכי הרבה התעניינות במסיבות רווקים וחבילות ביום: </b>' +
+    (topBachelor.length ? WEEKDAY_NAMES[topBachelor[0].w] + ' (' + topBachelor[0].v + ' לחיצות)' : 'אין עדיין מספיק נתונים') +
+    '</div>';
+
+  el.innerHTML = html;
+}
+
+function renderWeekdayChart(fetchFailed){
+  const summaryEl = document.getElementById('weekday-summary');
+  if(fetchFailed){
+    clearCanvas('weekday-chart');
+    if(summaryEl) summaryEl.innerHTML = '<span style="color:#ff6b6b;">שגיאה בטעינת הנתונים מהשרת.</span>';
+    return;
+  }
+  const stats = computeWeekdayStats();
+  renderWeekdaySummary(stats);
+  drawBarChart('weekday-chart', WEEKDAY_NAMES, [
     {data: stats.totals, color:'#FFA9FE'},
     {data: stats.wa, color:'#25D366'},
     {data: stats.bachelor, color:'#FFA94D'}
@@ -696,6 +776,7 @@ window.addEventListener('resize', ()=>{
     if(document.getElementById('dashboard').style.display !== 'none'){
       renderPeriodTable();
       renderHourlyChart();
+      renderWeekdayChart();
     }
   }, 250);
 });
