@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+Disallow: /admin.html
+Disallow: /review.html
+Disallow: /approve.html
+Disallow: /whatsapp/
+
+Sitemap: https://bucharest365.vip/sitemap.xml
