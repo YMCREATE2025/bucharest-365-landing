@@ -155,6 +155,13 @@
       <button class="logout-btn" onclick="loadStats()" style="font-size:0.8rem;padding:7px 14px;">🔄 רענון סטטיסטיקות</button>
     </div>
 
+    <div class="stats-card" id="insights-card">
+      <div class="stats-card-head">
+        <h2>מתי הכי מתעניינים</h2>
+      </div>
+      <div id="insights-text" style="font-size:0.92rem;color:var(--text);line-height:2.1;"></div>
+    </div>
+
     <div class="stats-card">
       <div class="stats-card-head">
         <h2>פירוט סטטיסטיקות לפי תקופה</h2>
@@ -346,6 +353,59 @@ async function loadStats(){
   renderWhatsappBreakdown(fetchFailed);
   renderHourlyChart(fetchFailed);
   renderWeekdayChart(fetchFailed);
+  renderInsights(fetchFailed);
+}
+
+/* ---------- Quick insights: "when are people most interested" ---------- */
+// Combines WhatsApp clicks + bachelor-party "more details" clicks (the two
+// strongest buying-interest signals) into one rolling-window insight per
+// period (last 7 / 30 / 365 days), showing the single best weekday and the
+// top 2 hours of day (Israel time) for that combined signal.
+function computeInterestInsight(days){
+  const cutoff = new Date(Date.now() - days * 24 * 60 * 60 * 1000);
+  const events = allEvents.filter(e=> e.ts >= cutoff && (e.name === 'whatsapp-clicks' || e.name === 'bachelor-details-clicks'));
+  if(events.length === 0) return null;
+
+  const wCounts = new Array(7).fill(0);
+  const hCounts = new Array(24).fill(0);
+  events.forEach(e=>{
+    wCounts[israelWeekdayIndex(e.ts)] += 1;
+    hCounts[israelHour(e.ts)] += 1;
+  });
+
+  let bestWeekday = 0;
+  wCounts.forEach((v,i)=>{ if(v > wCounts[bestWeekday]) bestWeekday = i; });
+
+  const topHours = hCounts.map((v,h)=>({h, v})).filter(x=> x.v > 0).sort((a,b)=> b.v - a.v).slice(0, 2).sort((a,b)=> a.h - b.h);
+
+  return {count: events.length, weekday: bestWeekday, topHours};
+}
+
+function formatInsightSentence(prefix, insight){
+  if(!insight) return prefix + ' אין עדיין מספיק נתונים.';
+  const hoursText = insight.topHours.map(x=> hourRangeLabel(x.h)).join(' ו-');
+  return prefix + ' הכי הרבה פניות וואטסאפ והתעניינות במסיבות רווקים (לחיצה על "עוד פרטים") זה ביום <b style="color:var(--gold-light);">' +
+    WEEKDAY_NAMES[insight.weekday] + '</b> בשעות <b style="color:var(--gold-light);">' + hoursText + '</b>.';
+}
+
+function renderInsights(fetchFailed){
+  const el = document.getElementById('insights-text');
+  if(!el) return;
+  if(fetchFailed){
+    el.innerHTML = '<span style="color:#ff6b6b;">שגיאה בטעינת הנתונים מהשרת.</span>';
+    return;
+  }
+  if(allEvents.length === 0){
+    el.textContent = 'אין עדיין מספיק נתונים.';
+    return;
+  }
+  const week = computeInterestInsight(7);
+  const month = computeInterestInsight(30);
+  const year = computeInterestInsight(365);
+  el.innerHTML =
+    '<div>' + formatInsightSentence('בשבוע האחרון', week) + '</div>' +
+    '<div>' + formatInsightSentence('בחודש האחרון', month) + '</div>' +
+    '<div>' + formatInsightSentence('בשנה האחרונה', year) + '</div>';
 }
 
 /* ---------- Charts (plain canvas, no external libs) ---------- */
