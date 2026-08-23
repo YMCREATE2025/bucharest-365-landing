@@ -101,6 +101,13 @@
   .chart-legend i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-inline-end:5px;vertical-align:middle;}
   .stats-chart{width:100%;height:220px;display:block;}
 
+  /* Analyst insights log */
+  .insight-entry{border-inline-start:3px solid var(--gold);padding:2px 16px 2px 0;}
+  .insight-date{color:var(--text-dim);font-size:0.75rem;margin-bottom:4px;}
+  .insight-title{color:var(--gold-light);font-weight:700;font-size:0.95rem;margin-bottom:6px;}
+  .insight-body{color:var(--text);font-size:0.88rem;line-height:1.7;}
+  .insight-body b{color:var(--gold-light);}
+
   /* Reels manager */
   .reel-row{display:flex;align-items:center;gap:14px;flex-wrap:wrap;border:1px solid var(--border);border-radius:12px;padding:14px;margin-bottom:12px;}
   .reel-row.changed{border-color:var(--wa-green);}
@@ -160,6 +167,46 @@
         <h2>מתי הכי מתעניינים</h2>
       </div>
       <div id="insights-text" style="font-size:0.92rem;color:var(--text);line-height:2.1;"></div>
+    </div>
+
+    <div class="stats-card">
+      <div class="stats-card-head">
+        <h2>תובנות והמלצות</h2>
+        <span style="font-size:0.75rem;color:var(--text-dim);">ניתוח שוטף של הגלישה והלחיצות באתר, מתעדכן מדי פעם</span>
+      </div>
+      <div id="analyst-insights-list" style="display:flex;flex-direction:column;gap:20px;">
+
+        <div class="insight-entry">
+          <div class="insight-date">21.08.2026</div>
+          <div class="insight-title">🎉 עניין ענק בחבילות מסיבות רווקים - אבל לא דרך הכפתור הכללי</div>
+          <div class="insight-body">מתוך 542 כניסות לאתר, <b>114 לחיצות</b> (כ-21%) היו על "עוד פרטים" בתוך סקשן חבילות מסיבות הרווקים - שיעור מעורבות גבוה מאוד. לעומת זאת, הכפתור הכללי "מסיבת רווקים" (מחוץ לסקשן החבילות) קיבל <b>לחיצה אחת בלבד</b>. המסקנה: המבקרים מגיעים ישר לסקשן החבילות ומתעניינים שם בפרטים, לא דרך כפתור נפרד. כדאי לשקול להוסיף כפתור וואטסאפ ישיר בתוך/מיד אחרי כל כרטיס חבילה (ולא להסתמך רק על הכפתור הכללי), כדי להמיר את העניין הזה ללידים בפועל.</div>
+        </div>
+
+        <div class="insight-entry">
+          <div class="insight-date">21.08.2026</div>
+          <div class="insight-title">📸 אינסטגרם מקבל יותר לחיצות מוואטסאפ</div>
+          <div class="insight-body">בסך הכל: <b>49 לחיצות</b> על כפתורי אינסטגרם מול <b>30 לחיצות</b> על כפתורי וואטסאפ. כלומר יותר מבקרים "בורחים" להסתכל באינסטגרם מאשר פותחים שיחה בוואטסאפ - שזה ערוץ ה-conversion האמיתי. כפתורי האינסטגרם כבר נפתחים בטאב חדש כך שלא מאבדים את המבקר לגמרי, אבל שווה לבדוק אם כפתור האינסטגרם בולט מדי ביחס לוואטסאפ במקומות מסוימים באתר (למשל בהדר), ולשקול לצמצם את הבולטות שלו לטובת קריאה לפעולה ברורה יותר לוואטסאפ.</div>
+        </div>
+
+        <div class="insight-entry">
+          <div class="insight-date">21.08.2026</div>
+          <div class="insight-title">💬 מאיפה מגיעות לחיצות הוואטסאפ (מאז שהתחלנו למדוד מיקום)</div>
+          <div class="insight-body">הכפתור החזק ביותר הוא זה שב<b>הירו</b> (למעלה בדף, 6 לחיצות), אחריו <b>ההדר</b> (4 לחיצות) וסקשן <b>"עלינו"/סטטיסטיקות</b> (2 לחיצות). לעומת זאת, הכפתורים בסקשן מסיבות הרווקים, בהערת "מגיעים בקבוצה" ובפרטי יצירת הקשר עדיין לא צברו לחיצות מדודות - יכול להיות שזה בגלל שמעט זמן עבר מאז ההטמעה, נמשיך לעקוב ונעדכן כשיצטברו יותר נתונים.</div>
+        </div>
+
+        <div class="insight-entry">
+          <div class="insight-date">21.08.2026</div>
+          <div class="insight-title">⏰ מתי הכי כדאי להיות זמינים</div>
+          <div class="insight-body">בעקביות לאורך שבוע, חודש ושנה אחרונים - יום <b>שבת</b> הוא יום השיא, עם ריכוז לחיצות בשעות <b>00:00-01:00</b> ו-<b>20:00-21:00</b>. כדאי לוודא זמינות גבוהה לוואטסאפ בחלונות האלה, ואם מתוכננת פעילות פרסום/סטורי באינסטגרם - לתזמן אותה כך שתוביל לקראת השעות האלה ביום שבת.</div>
+        </div>
+
+        <div class="insight-entry">
+          <div class="insight-date">21.08.2026</div>
+          <div class="insight-title">🔍 מוכנות לגילוי בגוגל ו-AI</div>
+          <div class="insight-body">השלמנו תשתית SEO/GEO בסיסית: robots.txt, sitemap.xml, תגיות canonical (ותוקן canonical שגוי בדף השאלות שהצביע לכתובת ישנה), נתוני Schema.org (LocalBusiness) בעמוד הבית, ודחיסת תמונות כבדות שהאטו את הטעינה. האתר אומת ב-Google Search Console. עדיין לא מופיע בתוצאות חיפוש בפועל - זה תקין וצפוי לאתר חדש, בדרך כלל לוקח שבועות. ההמלצה המשמעותית ביותר שעדיין פתוחה: <b>אין קישור לאתר בביו של האינסטגרם</b> (@bucha_rest365, 896 עוקבים) - זו ככל הנראה הפעולה הכי משתלמת וזמינה כרגע לשיפור הדירוג.</div>
+        </div>
+
+      </div>
     </div>
 
     <div class="stats-card">
