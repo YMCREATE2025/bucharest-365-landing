@@ -418,7 +418,7 @@ async function loadStats(){
   renderVisitsTrendChart(fetchFailed);
 }
 
-/* ---------- Site visits trend (line/area chart) ---------- */
+/* ---------- Site visits trend (line/area chart, with hover tooltip) ---------- */
 function drawLineChart(canvasId, categories, data, opts){
   const canvas = document.getElementById(canvasId);
   if(!canvas) return;
@@ -431,13 +431,14 @@ function drawLineChart(canvasId, categories, data, opts){
   canvas.style.height = cssHeight + 'px';
   const ctx = canvas.getContext('2d');
   ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-  ctx.clearRect(0, 0, cssWidth, cssHeight);
 
   if(!categories.length){
+    ctx.clearRect(0, 0, cssWidth, cssHeight);
     ctx.fillStyle = 'rgba(168,165,173,0.7)';
     ctx.font = '12px "Noto Sans Hebrew", sans-serif';
     ctx.textAlign = 'center';
     ctx.fillText('אין נתונים עדיין', cssWidth / 2, cssHeight / 2);
+    canvas._chartState = null;
     return;
   }
 
@@ -450,59 +451,89 @@ function drawLineChart(canvasId, categories, data, opts){
   const color = opts.color || '#FF14FE';
   const fillColor = opts.fillColor || 'rgba(255,20,254,0.14)';
 
+  const points = data.map((v,i)=> ({
+    x: padding.left + (n > 1 ? i * stepX : chartW / 2),
+    y: padding.top + chartH - (maxVal ? (v / maxVal) * chartH : 0)
+  }));
+
+  canvas._chartState = {cssWidth, cssHeight, padding, chartW, chartH, maxVal, points, categories, data, color, fillColor};
+  paintLineChart(canvas, null);
+  setupChartHover(canvas);
+}
+
+// Repaints a line chart from its stored state, optionally highlighting one
+// point with a vertical guide line + enlarged dot (used for hover).
+function paintLineChart(canvas, hoverIndex){
+  const s = canvas._chartState;
+  if(!s) return;
+  const ctx = canvas.getContext('2d');
+  ctx.clearRect(0, 0, s.cssWidth, s.cssHeight);
+
   ctx.strokeStyle = 'rgba(255,255,255,0.08)';
   ctx.fillStyle = 'rgba(168,165,173,0.85)';
   ctx.font = '10px "Noto Sans Hebrew", sans-serif';
   ctx.textAlign = 'left';
   const ySteps = 4;
   for(let i=0;i<=ySteps;i++){
-    const v = Math.round(maxVal * i / ySteps);
-    const y = padding.top + chartH - (chartH * i / ySteps);
+    const v = Math.round(s.maxVal * i / ySteps);
+    const y = s.padding.top + s.chartH - (s.chartH * i / ySteps);
     ctx.beginPath();
-    ctx.moveTo(padding.left, y);
-    ctx.lineTo(padding.left + chartW, y);
+    ctx.moveTo(s.padding.left, y);
+    ctx.lineTo(s.padding.left + s.chartW, y);
     ctx.stroke();
     ctx.fillText(String(v), 2, y + 3);
   }
 
-  const points = data.map((v,i)=> ({
-    x: padding.left + (n > 1 ? i * stepX : chartW / 2),
-    y: padding.top + chartH - (maxVal ? (v / maxVal) * chartH : 0)
-  }));
-
   // area fill under the line
   ctx.beginPath();
-  ctx.moveTo(points[0].x, padding.top + chartH);
-  points.forEach(p=> ctx.lineTo(p.x, p.y));
-  ctx.lineTo(points[points.length - 1].x, padding.top + chartH);
+  ctx.moveTo(s.points[0].x, s.padding.top + s.chartH);
+  s.points.forEach(p=> ctx.lineTo(p.x, p.y));
+  ctx.lineTo(s.points[s.points.length - 1].x, s.padding.top + s.chartH);
   ctx.closePath();
-  ctx.fillStyle = fillColor;
+  ctx.fillStyle = s.fillColor;
   ctx.fill();
 
   // line
   ctx.beginPath();
-  points.forEach((p,i)=> i === 0 ? ctx.moveTo(p.x, p.y) : ctx.lineTo(p.x, p.y));
-  ctx.strokeStyle = color;
+  s.points.forEach((p,i)=> i === 0 ? ctx.moveTo(p.x, p.y) : ctx.lineTo(p.x, p.y));
+  ctx.strokeStyle = s.color;
   ctx.lineWidth = 2.5;
   ctx.lineJoin = 'round';
   ctx.stroke();
 
-  // point markers
-  points.forEach(p=>{
+  // vertical guide line at the hovered point
+  if(hoverIndex !== null && hoverIndex >= 0 && hoverIndex < s.points.length){
+    const hp = s.points[hoverIndex];
     ctx.beginPath();
-    ctx.arc(p.x, p.y, 3, 0, Math.PI * 2);
-    ctx.fillStyle = color;
+    ctx.moveTo(hp.x, s.padding.top);
+    ctx.lineTo(hp.x, s.padding.top + s.chartH);
+    ctx.strokeStyle = 'rgba(255,255,255,0.28)';
+    ctx.lineWidth = 1;
+    ctx.stroke();
+  }
+
+  // point markers (hovered point drawn larger with a white ring)
+  s.points.forEach((p,i)=>{
+    const isHover = i === hoverIndex;
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, isHover ? 5 : 3, 0, Math.PI * 2);
+    ctx.fillStyle = s.color;
     ctx.fill();
+    if(isHover){
+      ctx.lineWidth = 2;
+      ctx.strokeStyle = 'rgba(255,255,255,0.9)';
+      ctx.stroke();
+    }
   });
 
   // x-axis labels
-  const rotateLabels = n > 10;
-  categories.forEach((cat, i)=>{
-    const p = points[i];
+  const rotateLabels = s.categories.length > 10;
+  s.categories.forEach((cat, i)=>{
+    const p = s.points[i];
     ctx.save();
     ctx.fillStyle = 'rgba(168,165,173,0.9)';
     ctx.font = '10px "Noto Sans Hebrew", sans-serif';
-    const labelY = padding.top + chartH + 14;
+    const labelY = s.padding.top + s.chartH + 14;
     if(rotateLabels){
       ctx.translate(p.x, labelY);
       ctx.rotate(-Math.PI / 4);
@@ -513,6 +544,60 @@ function drawLineChart(canvasId, categories, data, opts){
       ctx.fillText(cat, p.x, labelY);
     }
     ctx.restore();
+  });
+}
+
+function getChartTooltipEl(){
+  let el = document.getElementById('chart-tooltip');
+  if(!el){
+    el = document.createElement('div');
+    el.id = 'chart-tooltip';
+    el.style.cssText = 'position:fixed;pointer-events:none;background:#1a1a22;border:1px solid var(--border);color:#fff;padding:8px 14px;border-radius:10px;font-family:"Noto Sans Hebrew","Segoe UI",Arial,sans-serif;box-shadow:0 4px 16px rgba(0,0,0,0.5);z-index:9999;display:none;text-align:center;transform:translateX(-50%);white-space:nowrap;';
+    el.innerHTML = '<div id="chart-tooltip-value" style="font-weight:800;font-size:1.1rem;line-height:1.2;color:var(--gold-light);"></div><div id="chart-tooltip-label" style="font-size:0.75rem;color:var(--text-dim);margin-top:2px;"></div>';
+    document.body.appendChild(el);
+  }
+  return el;
+}
+
+// Attaches mouse/touch hover handling to a chart canvas exactly once; safe
+// to call on every redraw since it no-ops if already bound.
+function setupChartHover(canvas){
+  if(canvas._hoverBound) return;
+  canvas._hoverBound = true;
+  const tooltip = getChartTooltipEl();
+
+  function handleMove(clientX, clientY){
+    const s = canvas._chartState;
+    if(!s) return;
+    const rect = canvas.getBoundingClientRect();
+    const scaleX = rect.width / s.cssWidth || 1;
+    const x = (clientX - rect.left) / scaleX;
+    let nearest = 0, minDist = Infinity;
+    s.points.forEach((p,i)=>{
+      const d = Math.abs(p.x - x);
+      if(d < minDist){ minDist = d; nearest = i; }
+    });
+    paintLineChart(canvas, nearest);
+    const hp = s.points[nearest];
+    document.getElementById('chart-tooltip-value').textContent = s.data[nearest].toLocaleString('he-IL');
+    document.getElementById('chart-tooltip-label').textContent = s.categories[nearest];
+    tooltip.style.display = 'block';
+    const scaleY = rect.height / s.cssHeight || 1;
+    tooltip.style.left = (rect.left + hp.x * scaleX) + 'px';
+    tooltip.style.top = (rect.top + hp.y * scaleY - 58) + 'px';
+  }
+
+  canvas.addEventListener('mousemove', e=> handleMove(e.clientX, e.clientY));
+  canvas.addEventListener('mouseleave', ()=>{
+    paintLineChart(canvas, null);
+    tooltip.style.display = 'none';
+  });
+  canvas.addEventListener('touchmove', e=>{
+    if(e.touches.length){ handleMove(e.touches[0].clientX, e.touches[0].clientY); e.preventDefault(); }
+  }, {passive:false});
+  canvas.addEventListener('touchend', ()=>{
+    paintLineChart(canvas, null);
+    tooltip.style.display = 'none';
   });
 }
 
