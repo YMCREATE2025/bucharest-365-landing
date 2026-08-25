@@ -212,6 +212,19 @@
 
     <div class="stats-card">
       <div class="stats-card-head">
+        <h2 id="visits-chart-title">כניסות ב-14 הימים האחרונים</h2>
+        <div class="stats-view-toggle">
+          <button class="stats-view-btn visits-view-btn active" data-view="day" onclick="setVisitsChartView('day')">יומי</button>
+          <button class="stats-view-btn visits-view-btn" data-view="week" onclick="setVisitsChartView('week')">שבועי</button>
+          <button class="stats-view-btn visits-view-btn" data-view="month" onclick="setVisitsChartView('month')">חודשי</button>
+          <button class="stats-view-btn visits-view-btn" data-view="year" onclick="setVisitsChartView('year')">שנתי</button>
+        </div>
+      </div>
+      <canvas id="visits-trend-chart" class="stats-chart" style="height:260px;"></canvas>
+    </div>
+
+    <div class="stats-card">
+      <div class="stats-card-head">
         <h2>פירוט סטטיסטיקות לפי תקופה</h2>
         <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;">
           <div class="stats-view-toggle">
@@ -402,6 +415,166 @@ async function loadStats(){
   renderHourlyChart(fetchFailed);
   renderWeekdayChart(fetchFailed);
   renderInsights(fetchFailed);
+  renderVisitsTrendChart(fetchFailed);
+}
+
+/* ---------- Site visits trend (line/area chart) ---------- */
+function drawLineChart(canvasId, categories, data, opts){
+  const canvas = document.getElementById(canvasId);
+  if(!canvas) return;
+  opts = opts || {};
+  const dpr = window.devicePixelRatio || 1;
+  const cssWidth = canvas.parentElement.clientWidth || 600;
+  const cssHeight = opts.height || 260;
+  canvas.width = Math.round(cssWidth * dpr);
+  canvas.height = Math.round(cssHeight * dpr);
+  canvas.style.height = cssHeight + 'px';
+  const ctx = canvas.getContext('2d');
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  ctx.clearRect(0, 0, cssWidth, cssHeight);
+
+  if(!categories.length){
+    ctx.fillStyle = 'rgba(168,165,173,0.7)';
+    ctx.font = '12px "Noto Sans Hebrew", sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText('אין נתונים עדיין', cssWidth / 2, cssHeight / 2);
+    return;
+  }
+
+  const padding = {top:16, right:12, bottom:32, left:34};
+  const chartW = cssWidth - padding.left - padding.right;
+  const chartH = cssHeight - padding.top - padding.bottom;
+  const maxVal = Math.max(1, ...data);
+  const n = categories.length;
+  const stepX = n > 1 ? chartW / (n - 1) : 0;
+  const color = opts.color || '#FF14FE';
+  const fillColor = opts.fillColor || 'rgba(255,20,254,0.14)';
+
+  ctx.strokeStyle = 'rgba(255,255,255,0.08)';
+  ctx.fillStyle = 'rgba(168,165,173,0.85)';
+  ctx.font = '10px "Noto Sans Hebrew", sans-serif';
+  ctx.textAlign = 'left';
+  const ySteps = 4;
+  for(let i=0;i<=ySteps;i++){
+    const v = Math.round(maxVal * i / ySteps);
+    const y = padding.top + chartH - (chartH * i / ySteps);
+    ctx.beginPath();
+    ctx.moveTo(padding.left, y);
+    ctx.lineTo(padding.left + chartW, y);
+    ctx.stroke();
+    ctx.fillText(String(v), 2, y + 3);
+  }
+
+  const points = data.map((v,i)=> ({
+    x: padding.left + (n > 1 ? i * stepX : chartW / 2),
+    y: padding.top + chartH - (maxVal ? (v / maxVal) * chartH : 0)
+  }));
+
+  // area fill under the line
+  ctx.beginPath();
+  ctx.moveTo(points[0].x, padding.top + chartH);
+  points.forEach(p=> ctx.lineTo(p.x, p.y));
+  ctx.lineTo(points[points.length - 1].x, padding.top + chartH);
+  ctx.closePath();
+  ctx.fillStyle = fillColor;
+  ctx.fill();
+
+  // line
+  ctx.beginPath();
+  points.forEach((p,i)=> i === 0 ? ctx.moveTo(p.x, p.y) : ctx.lineTo(p.x, p.y));
+  ctx.strokeStyle = color;
+  ctx.lineWidth = 2.5;
+  ctx.lineJoin = 'round';
+  ctx.stroke();
+
+  // point markers
+  points.forEach(p=>{
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, 3, 0, Math.PI * 2);
+    ctx.fillStyle = color;
+    ctx.fill();
+  });
+
+  // x-axis labels
+  const rotateLabels = n > 10;
+  categories.forEach((cat, i)=>{
+    const p = points[i];
+    ctx.save();
+    ctx.fillStyle = 'rgba(168,165,173,0.9)';
+    ctx.font = '10px "Noto Sans Hebrew", sans-serif';
+    const labelY = padding.top + chartH + 14;
+    if(rotateLabels){
+      ctx.translate(p.x, labelY);
+      ctx.rotate(-Math.PI / 4);
+      ctx.textAlign = 'right';
+      ctx.fillText(cat, 0, 0);
+    } else {
+      ctx.textAlign = 'center';
+      ctx.fillText(cat, p.x, labelY);
+    }
+    ctx.restore();
+  });
+}
+
+// Builds a gapless list of period keys ending at "now", so periods with
+// zero visits still show up as a flat 0 segment instead of a gap.
+function generateRecentPeriodKeys(view, n){
+  const now = new Date();
+  const keys = [];
+  if(view === 'day'){
+    for(let i=n-1;i>=0;i--) keys.push(periodKey(new Date(now.getTime() - i*24*60*60*1000), 'day'));
+  } else if(view === 'week'){
+    for(let i=n-1;i>=0;i--) keys.push(periodKey(new Date(now.getTime() - i*7*24*60*60*1000), 'week'));
+  } else if(view === 'month'){
+    const {y, mo} = israelDateParts(now);
+    for(let i=n-1;i>=0;i--){
+      let mIdx = mo - 1 - i, yy = y;
+      while(mIdx < 0){ mIdx += 12; yy -= 1; }
+      keys.push(yy + '-' + String(mIdx + 1).padStart(2,'0'));
+    }
+  } else {
+    const {y} = israelDateParts(now);
+    for(let i=n-1;i>=0;i--) keys.push(String(y - i));
+  }
+  return [...new Set(keys)];
+}
+
+const VISITS_CHART_LIMITS = {day:14, week:8, month:6, year:5};
+const VISITS_CHART_TITLES = {
+  day: n => 'כניסות ב-' + n + ' הימים האחרונים',
+  week: n => 'כניסות ב-' + n + ' השבועות האחרונים',
+  month: n => 'כניסות ב-' + n + ' החודשים האחרונים',
+  year: n => 'כניסות ב-' + n + ' השנים האחרונות'
+};
+let visitsChartView = 'day';
+
+function setVisitsChartView(view){
+  visitsChartView = view;
+  document.querySelectorAll('.visits-view-btn').forEach(b=> b.classList.toggle('active', b.dataset.view === view));
+  renderVisitsTrendChart();
+}
+
+function renderVisitsTrendChart(fetchFailed){
+  const titleEl = document.getElementById('visits-chart-title');
+  if(fetchFailed){
+    clearCanvas('visits-trend-chart');
+    if(titleEl) titleEl.textContent = 'כניסות לאתר';
+    return;
+  }
+  const grouped = {};
+  allEvents.forEach(e=>{
+    if(e.name !== 'index-visits') return;
+    const key = periodKey(e.ts, visitsChartView);
+    grouped[key] = (grouped[key] || 0) + 1;
+  });
+  const limit = VISITS_CHART_LIMITS[visitsChartView] || 14;
+  const periodsAsc = generateRecentPeriodKeys(visitsChartView, limit);
+  const categories = periodsAsc.map(k=> periodLabel(k, visitsChartView));
+  const data = periodsAsc.map(k=> grouped[k] || 0);
+
+  if(titleEl) titleEl.textContent = VISITS_CHART_TITLES[visitsChartView](periodsAsc.length);
+
+  drawLineChart('visits-trend-chart', categories, data, {height:260, color:'#FF14FE', fillColor:'rgba(255,20,254,0.14)'});
 }
 
 /* ---------- Quick insights: "when are people most interested" ---------- */
@@ -885,6 +1058,7 @@ window.addEventListener('resize', ()=>{
       renderPeriodTable();
       renderHourlyChart();
       renderWeekdayChart();
+      renderVisitsTrendChart();
     }
   }, 250);
 });
