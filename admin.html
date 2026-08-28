@@ -456,7 +456,8 @@ function drawLineChart(canvasId, categories, data, opts){
     y: padding.top + chartH - (maxVal ? (v / maxVal) * chartH : 0)
   }));
 
-  canvas._chartState = {cssWidth, cssHeight, padding, chartW, chartH, maxVal, points, categories, data, color, fillColor};
+  const tooltipLabels = opts.tooltipLabels || categories;
+  canvas._chartState = {cssWidth, cssHeight, padding, chartW, chartH, maxVal, points, categories, tooltipLabels, data, color, fillColor};
   paintLineChart(canvas, null);
   setupChartHover(canvas);
 }
@@ -580,7 +581,7 @@ function setupChartHover(canvas){
     paintLineChart(canvas, nearest);
     const hp = s.points[nearest];
     document.getElementById('chart-tooltip-value').textContent = s.data[nearest].toLocaleString('he-IL');
-    document.getElementById('chart-tooltip-label').textContent = s.categories[nearest];
+    document.getElementById('chart-tooltip-label').textContent = s.tooltipLabels[nearest];
     tooltip.style.display = 'block';
     const scaleY = rect.height / s.cssHeight || 1;
     tooltip.style.left = (rect.left + hp.x * scaleX) + 'px';
@@ -633,6 +634,15 @@ const VISITS_CHART_TITLES = {
 };
 let visitsChartView = 'day';
 
+// Weekday name (e.g. "שישי") for a 'day' view period key ("YYYY-MM-DD"),
+// consistent with the same business-day date the key was built from.
+function weekdayNameFromDayKey(key){
+  const parts = key.split('-');
+  const y = parseInt(parts[0],10), mo = parseInt(parts[1],10), d = parseInt(parts[2],10);
+  const wIdx = new Date(Date.UTC(y, mo-1, d)).getUTCDay();
+  return WEEKDAY_NAMES[wIdx];
+}
+
 function setVisitsChartView(view){
   visitsChartView = view;
   document.querySelectorAll('.visits-view-btn').forEach(b=> b.classList.toggle('active', b.dataset.view === view));
@@ -656,10 +666,13 @@ function renderVisitsTrendChart(fetchFailed){
   const periodsAsc = generateRecentPeriodKeys(visitsChartView, limit);
   const categories = periodsAsc.map(k=> periodLabel(k, visitsChartView));
   const data = periodsAsc.map(k=> grouped[k] || 0);
+  const tooltipLabels = visitsChartView === 'day'
+    ? periodsAsc.map((k,i)=> categories[i] + ' - יום ' + weekdayNameFromDayKey(k))
+    : categories;
 
   if(titleEl) titleEl.textContent = VISITS_CHART_TITLES[visitsChartView](periodsAsc.length);
 
-  drawLineChart('visits-trend-chart', categories, data, {height:260, color:'#FF14FE', fillColor:'rgba(255,20,254,0.14)'});
+  drawLineChart('visits-trend-chart', categories, data, {height:260, color:'#FF14FE', fillColor:'rgba(255,20,254,0.14)', tooltipLabels});
 }
 
 /* ---------- Quick insights: "when are people most interested" ---------- */
