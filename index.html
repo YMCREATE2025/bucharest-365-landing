@@ -465,9 +465,35 @@
   .bachelor-popup-title{font-size:1.85rem;font-weight:800;color:#f2f0ea;line-height:1.2;margin-bottom:10px;text-shadow:0 2px 8px rgba(0,0,0,0.95),0 0 18px rgba(255,20,254,0.35);}
   .bachelor-popup-sub{font-size:1.05rem;font-weight:700;color:#e4e4e8;line-height:1.4;margin-bottom:16px;}
   .bachelor-popup-btn{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,var(--wa-green),var(--wa-green-dark));color:#fff;font-weight:700;font-size:0.9rem;padding:12px 22px;border-radius:999px;text-decoration:none;}
+
+  .skip-link{position:absolute;right:16px;top:-60px;background:var(--gold);color:#1a0518;font-weight:800;padding:12px 20px;border-radius:10px;z-index:1000;transition:top .2s;}
+  .skip-link:focus{top:16px;}
+  a:focus-visible, button:focus-visible, input:focus-visible{outline:3px solid var(--gold-light);outline-offset:2px;}
+  .cookie-banner{position:fixed;bottom:0;left:0;right:0;z-index:9998;background:rgba(15,15,20,0.97);backdrop-filter:blur(10px);border-top:2px solid var(--border);padding:18px 24px;box-shadow:0 -4px 20px rgba(0,0,0,0.4);}
+  .cookie-banner-inner{max-width:var(--max-w);margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;}
+  .cookie-banner p{color:var(--text-dim);font-size:0.85rem;flex:1;min-width:240px;margin:0;}
+  .cookie-banner p a{color:var(--gold-light);text-decoration:underline;}
+  .cookie-banner-actions{display:flex;gap:10px;flex-shrink:0;}
+  .cookie-btn{padding:10px 22px;border-radius:999px;border:none;cursor:pointer;font-weight:700;font-size:0.85rem;font-family:inherit;}
+  .cookie-btn-decline{background:transparent;border:1px solid var(--border);color:var(--text-dim);}
+  .cookie-btn-decline:hover{color:var(--gold-light);border-color:var(--gold);}
+  .cookie-btn-accept{background:linear-gradient(135deg,var(--gold-light),var(--gold));color:#fff;}
+  @media (max-width:600px){.cookie-banner-inner{flex-direction:column;align-items:stretch;}.cookie-banner-actions{justify-content:stretch;}.cookie-btn{flex:1;}}
 </style>
 </head>
 <body>
+
+<a href="#main-content" class="skip-link">דלג לתוכן הראשי</a>
+
+<div class="cookie-banner" id="cookie-banner" style="display:none;" role="region" aria-label="הסכמה לשימוש בנתוני גלישה">
+  <div class="cookie-banner-inner">
+    <p>אנחנו אוספים נתוני גלישה אנונימיים (כניסות ולחיצות) כדי להבין איך לשפר את האתר. אפשר לקרוא את הפרטים ב<a href="privacy.html">מדיניות הפרטיות</a> שלנו.</p>
+    <div class="cookie-banner-actions">
+      <button class="cookie-btn cookie-btn-decline" type="button" onclick="declineCookies()">דחייה</button>
+      <button class="cookie-btn cookie-btn-accept" type="button" onclick="acceptCookies()">אישור</button>
+    </div>
+  </div>
+</div>
 
 <div class="bachelor-popup-overlay" id="bachelor-popup">
   <div class="bachelor-popup">
@@ -510,6 +536,7 @@
 </header>
 
 <section id="top" class="hero" data-edit-bg="hero-bg-img" data-bg-filename="hero-bg.jpg">
+<div id="main-content"></div>
   <div class="container">
     <img src="logo.png" alt="Bucharest365" class="hero-logo" data-edit="logo-img">
     <span class="eyebrow">✦ החוויה שלכם בבוקרשט מתחילה כאן ✦</span>
@@ -808,6 +835,10 @@
         <label>מה תרצו שנארגן?</label>
         <input id="f-req" type="text" placeholder="מסעדות, בילויים, לימוזינה...">
       </div>
+      <div class="field" style="display:flex;align-items:flex-start;gap:10px;margin-bottom:20px;">
+        <input id="f-marketing" type="checkbox" style="width:18px;height:18px;margin-top:2px;flex-shrink:0;accent-color:var(--gold);">
+        <label for="f-marketing" style="display:block;font-weight:400;font-size:0.85rem;color:var(--text-dim);margin-bottom:0;cursor:pointer;">אשמח לקבל מעדכונים והצעות של Bucharest365 (לא חובה, ניתן להסיר בכל עת)</label>
+      </div>
       <div class="cta-row" style="margin-top:8px;flex-wrap:nowrap;gap:10px;">
         <button class="btn" type="submit" style="flex:1;"><svg viewBox="0 0 24 24"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.48 1.32 5L2 22l5.25-1.38c1.45.79 3.08 1.21 4.79 1.21h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.91-7.01A9.816 9.816 0 0012.04 2zm5.83 14.05c-.24.68-1.4 1.32-1.94 1.4-.5.08-1.12.11-1.81-.11-.42-.13-.96-.31-1.65-.61-2.91-1.26-4.81-4.18-4.96-4.38-.15-.2-1.18-1.57-1.18-3 0-1.42.75-2.12 1.01-2.41.26-.29.58-.36.77-.36.19 0 .39 0 .56.01.18.01.42-.07.65.5.24.58.82 2.01.89 2.16.07.15.12.32.02.52-.09.2-.14.32-.28.49-.14.17-.29.38-.42.51-.14.14-.28.29-.12.57.16.28.71 1.17 1.52 1.9 1.05.94 1.93 1.23 2.21 1.37.28.14.44.12.61-.07.16-.19.68-.79.86-1.06.18-.27.36-.22.61-.13.24.09 1.55.73 1.81.86.27.13.45.2.51.31.07.11.07.63-.17 1.31z"/></svg>שליחת פרטים ב־WhatsApp</button>
         <a class="nav-instagram" href="https://www.instagram.com/bucha_rest365/" target="_blank" rel="noopener" aria-label="אינסטגרם" title="אינסטגרם" style="flex-shrink:0;margin-left:0;"><svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.012-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></a>
@@ -827,6 +858,9 @@
         <a href="#services">שירותים</a>
         <a href="#reviews">ממליצים</a>
         <a href="faq.html">שאלות ותשובות מורחב</a>
+        <a href="privacy.html">מדיניות פרטיות</a>
+        <a href="terms.html">תקנון וביטולים</a>
+        <a href="accessibility.html">נגישות</a>
         <a href="#contact">צור קשר</a>
       </div>
     </div>
@@ -858,11 +892,36 @@ function sendToWhatsApp(e){
   const phone = document.getElementById('f-phone').value;
   const dates = document.getElementById('f-dates').value;
   const req = document.getElementById('f-req').value;
+  const marketingConsent = document.getElementById('f-marketing') && document.getElementById('f-marketing').checked;
+  const reqForLog = req + (marketingConsent ? ' [מאשר/ת קבלת עדכונים שיווקיים]' : '');
   const text = `היי גולן כ', שמי ${name}, הטלפון שלי ${phone}. מתכננים להגיע: ${dates || 'לא צוין'}. נשמח לעזרה עם: ${req || 'לא צוין'}`;
   trackEvent('contact-form-submits');
   trackEvent('whatsapp-clicks', 'contact-form');
-  logLead(name, phone, dates, req);
+  logLead(name, phone, dates, reqForLog);
   window.open(`https://wa.me/972544709642?text=${encodeURIComponent(text)}`, '_blank');
+}
+
+/* Cookie / tracking consent */
+function acceptCookies(){
+  try{ localStorage.setItem('cookieConsent','accepted'); }catch(e){}
+  const b = document.getElementById('cookie-banner');
+  if(b) b.style.display = 'none';
+  trackEvent('index-visits');
+}
+function declineCookies(){
+  try{ localStorage.setItem('cookieConsent','declined'); }catch(e){}
+  const b = document.getElementById('cookie-banner');
+  if(b) b.style.display = 'none';
+}
+function initCookieBanner(){
+  let consent = null;
+  try{ consent = localStorage.getItem('cookieConsent'); }catch(e){}
+  if(consent === null){
+    const b = document.getElementById('cookie-banner');
+    if(b) b.style.display = 'block';
+  } else if(consent === 'accepted'){
+    trackEvent('index-visits');
+  }
 }
 
 (function(){
@@ -994,7 +1053,11 @@ function getTrafficSource(){
     return host;
   }catch(e){ return 'לא ידוע'; }
 }
+function hasTrackingConsent(){
+  try{ return localStorage.getItem('cookieConsent') === 'accepted'; }catch(e){ return false; }
+}
 function trackEvent(name, loc){
+  if(!hasTrackingConsent()) return;
   try{
     const params = new URLSearchParams(location.search);
     fetch(EVENTS_WEBHOOK_URL, {
@@ -1014,7 +1077,7 @@ function trackEvent(name, loc){
     }).catch(function(){});
   }catch(e){}
 }
-trackEvent('index-visits');
+initCookieBanner();
 
 function togglePkgDetails(btn){
   const card = btn.closest('.card');

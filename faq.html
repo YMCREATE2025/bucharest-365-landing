@@ -185,9 +185,35 @@
     .container{padding:0 16px;}
     section{padding:40px 0;}
   }
+
+  .skip-link{position:absolute;right:16px;top:-60px;background:var(--gold);color:#1a0518;font-weight:800;padding:12px 20px;border-radius:10px;z-index:1000;transition:top .2s;}
+  .skip-link:focus{top:16px;}
+  a:focus-visible, button:focus-visible, input:focus-visible{outline:3px solid var(--gold-light);outline-offset:2px;}
+  .cookie-banner{position:fixed;bottom:0;left:0;right:0;z-index:9998;background:rgba(15,15,20,0.97);backdrop-filter:blur(10px);border-top:2px solid var(--border);padding:18px 24px;box-shadow:0 -4px 20px rgba(0,0,0,0.4);}
+  .cookie-banner-inner{max-width:var(--max-w);margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;}
+  .cookie-banner p{color:var(--text-dim);font-size:0.85rem;flex:1;min-width:240px;margin:0;}
+  .cookie-banner p a{color:var(--gold-light);text-decoration:underline;}
+  .cookie-banner-actions{display:flex;gap:10px;flex-shrink:0;}
+  .cookie-btn{padding:10px 22px;border-radius:999px;border:none;cursor:pointer;font-weight:700;font-size:0.85rem;font-family:inherit;}
+  .cookie-btn-decline{background:transparent;border:1px solid var(--border);color:var(--text-dim);}
+  .cookie-btn-decline:hover{color:var(--gold-light);border-color:var(--gold);}
+  .cookie-btn-accept{background:linear-gradient(135deg,var(--gold-light),var(--gold));color:#fff;}
+  @media (max-width:600px){.cookie-banner-inner{flex-direction:column;align-items:stretch;}.cookie-banner-actions{justify-content:stretch;}.cookie-btn{flex:1;}}
 </style>
 </head>
 <body>
+
+<a href="#main-content" class="skip-link">דלג לתוכן הראשי</a>
+
+<div class="cookie-banner" id="cookie-banner" style="display:none;" role="region" aria-label="הסכמה לשימוש בנתוני גלישה">
+  <div class="cookie-banner-inner">
+    <p>אנחנו אוספים נתוני גלישה אנונימיים (כניסות ולחיצות) כדי להבין איך לשפר את האתר. אפשר לקרוא את הפרטים ב<a href="privacy.html">מדיניות הפרטיות</a> שלנו.</p>
+    <div class="cookie-banner-actions">
+      <button class="cookie-btn cookie-btn-decline" type="button" onclick="declineCookies()">דחייה</button>
+      <button class="cookie-btn cookie-btn-accept" type="button" onclick="acceptCookies()">אישור</button>
+    </div>
+  </div>
+</div>
 
 <header>
   <div class="promo-bar">
@@ -205,7 +231,7 @@
   </div>
 </header>
 
-<section class="page-hero">
+<section class="page-hero" id="main-content">
   <div class="container">
     <span class="eyebrow">✦ שאלות ותשובות</span>
     <h1>כל מה שרציתם לדעת על חיי לילה, מועדונים, מסיבות רווקים ולימוזינות בבוקרשט</h1>
@@ -441,6 +467,9 @@
         <a href="index.html#services">שירותים</a>
         <a href="index.html#reviews">ממליצים</a>
         <a href="faq.html">שאלות נפוצות</a>
+        <a href="privacy.html">מדיניות פרטיות</a>
+        <a href="terms.html">תקנון וביטולים</a>
+        <a href="accessibility.html">נגישות</a>
         <a href="index.html#contact">צור קשר</a>
       </div>
     </div>
@@ -469,7 +498,11 @@ function getTrafficSource(){
     return host;
   }catch(e){ return 'לא ידוע'; }
 }
+function hasTrackingConsent(){
+  try{ return localStorage.getItem('cookieConsent') === 'accepted'; }catch(e){ return false; }
+}
 function trackEvent(name, loc){
+  if(!hasTrackingConsent()) return;
   try{
     const params = new URLSearchParams(location.search);
     fetch(EVENTS_WEBHOOK_URL, {
@@ -489,7 +522,28 @@ function trackEvent(name, loc){
     }).catch(function(){});
   }catch(e){}
 }
-trackEvent('faq-visits');
+function acceptCookies(){
+  try{ localStorage.setItem('cookieConsent','accepted'); }catch(e){}
+  const b = document.getElementById('cookie-banner');
+  if(b) b.style.display = 'none';
+  trackEvent('faq-visits');
+}
+function declineCookies(){
+  try{ localStorage.setItem('cookieConsent','declined'); }catch(e){}
+  const b = document.getElementById('cookie-banner');
+  if(b) b.style.display = 'none';
+}
+function initCookieBanner(){
+  let consent = null;
+  try{ consent = localStorage.getItem('cookieConsent'); }catch(e){}
+  if(consent === null){
+    const b = document.getElementById('cookie-banner');
+    if(b) b.style.display = 'block';
+  } else if(consent === 'accepted'){
+    trackEvent('faq-visits');
+  }
+}
+initCookieBanner();
 document.querySelectorAll('a[href*="wa.me"]').forEach(function(a){
   a.addEventListener('click', function(){ trackEvent('whatsapp-clicks', a.dataset.waLoc || 'other'); });
 });
