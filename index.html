@@ -436,6 +436,13 @@
 
   @media (max-width:900px){
     nav{display:none;}
+    header .container{gap:8px;}
+    .logo{min-width:0;flex-shrink:1;}
+    .logo-img{flex-shrink:0;}
+    .logo > span[dir="ltr"]{display:inline-block;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+    .nav-cta-group{flex-shrink:0;}
+    header .btn{padding:0 14px;font-size:0.82rem;white-space:nowrap;}
+    header .btn svg{width:13px;height:13px;margin-left:4px;flex-shrink:0;}
     .grid, .steps{grid-template-columns:1fr;}
     .about-wrap, .contact-wrap{grid-template-columns:1fr;}
     .about-photo{aspect-ratio:3/2;}

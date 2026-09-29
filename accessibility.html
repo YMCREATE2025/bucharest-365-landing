@@ -65,7 +65,14 @@
   .footer-links a:hover{color:var(--gold-light);}
   .copyright{text-align:center;color:var(--text-dim);font-size:0.8rem;margin-top:32px;opacity:0.7;}
   .whatsapp-fab{position:fixed;bottom:24px;left:24px;z-index:99;width:58px;height:58px;border-radius:50%;background:linear-gradient(135deg,var(--wa-green),var(--wa-green-dark));display:flex;align-items:center;justify-content:center;box-shadow:0 0 4px rgba(37,211,102,0.3), 0 0 11px rgba(37,211,102,0.2), 0 0 23px rgba(37,211,102,0.1);font-size:1.5rem;}
-  @media (max-width:900px){ nav{display:none;} .legal-block{padding:26px 22px;} }
+  @media (max-width:900px){    nav{display:none;}
+    header .container{gap:8px;}
+    .logo{min-width:0;flex-shrink:1;}
+    .logo-img{flex-shrink:0;}
+    .logo > span[dir="ltr"]{display:inline-block;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+    .nav-cta-group{flex-shrink:0;}
+    header .btn{padding:0 14px;font-size:0.82rem;white-space:nowrap;}
+    header .btn svg{width:13px;height:13px;margin-left:4px;flex-shrink:0;} .legal-block{padding:26px 22px;} }
   @media (max-width:480px){ .container{padding:0 16px;} section{padding:30px 0;} }
   .stars-bg{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;}
   .stars-bg .star{position:absolute;background:#fff;border-radius:50%;opacity:0.15;box-shadow:0 0 4px 1px rgba(255,169,254,0.55);animation-name:starTwinkle;animation-iteration-count:infinite;animation-timing-function:ease-in-out;}
