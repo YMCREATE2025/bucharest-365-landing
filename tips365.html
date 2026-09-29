@@ -156,6 +156,26 @@
   @media (max-width:600px){ .rest-grid{grid-template-columns:1fr;} }
   .card-more-link{display:inline-block;margin-top:6px;color:var(--gold-light);font-weight:700;font-size:0.9rem;text-decoration:underline;text-shadow:var(--neon-text);}
   .card-more-link:hover{color:var(--gold);}
+  .tip-highlight{max-width:760px;margin:0 auto;background:linear-gradient(135deg, rgba(255,20,254,0.12), rgba(150,90,255,0.08));border:1px solid var(--border);border-radius:16px;padding:20px 26px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;box-shadow:var(--neon-box-soft);}
+  .tip-highlight-badge{flex-shrink:0;background:linear-gradient(135deg,var(--gold-light),var(--gold));color:#1a0518;font-weight:800;font-size:0.78rem;letter-spacing:0.5px;padding:6px 14px;border-radius:999px;}
+  .tip-highlight p{margin:0;color:var(--text);font-size:1rem;}
+  .tip-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:22px;}
+  .tip-block{background:var(--card);border:2px solid var(--border);border-radius:16px;padding:26px 28px;box-shadow:var(--neon-box-soft);transition:border-color .25s, box-shadow .25s;}
+  .tip-block:hover{border-color:var(--gold);box-shadow:var(--neon-box);}
+  .tip-block-head{display:flex;align-items:center;gap:12px;margin-bottom:14px;}
+  .tip-icon{font-size:1.5rem;line-height:1;}
+  .tip-block-head h3{font-size:1.25rem;font-weight:800;color:var(--gold-light);text-shadow:var(--neon-text);margin:0;}
+  .tip-block p{color:var(--text-dim);font-size:0.92rem;line-height:1.7;margin-bottom:12px;}
+  .tip-block p:last-child{margin-bottom:0;}
+  .tip-block-currency{grid-column:1 / -1;}
+  .eur-rate-box{margin-top:18px;background:rgba(0,0,0,0.25);border:1px solid var(--border);border-radius:14px;padding:20px 24px;display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center;}
+  .eur-rate-label{font-size:0.8rem;color:var(--text-dim);letter-spacing:0.5px;}
+  .eur-rate-value{font-size:2.4rem;font-weight:800;color:var(--gold-light);text-shadow:var(--neon-text);}
+  .eur-rate-updated{font-size:0.75rem;color:var(--text-dim);opacity:0.7;}
+  @media (max-width:800px){
+    .tip-grid{grid-template-columns:1fr;}
+    .tip-block-currency{grid-column:auto;}
+  }
 
   .cta-band{
     background:linear-gradient(135deg, rgba(255,20,254,0.12), rgba(255,20,254,0.02));
@@ -264,31 +284,95 @@
 
 <section class="page-hero" id="main-content">
   <div class="container">
-    <span class="eyebrow">✦ המלצות 365</span>
-    <h1>כל טיפ, כל המלצה, כל סוד קטן על בוקרשט</h1>
-    <p>עשר שנים של חיי לילה בבוקרשט הופכות לכתובת אחת שעונה לכל שאלה - מתי לטוס, איפה בטוח ללכת בלילה, ואיך נראית חופשה טיפוסית עם Bucharest365 מהנחיתה ועד ההמראה.</p>
+    <span class="eyebrow">✦ עדכון שוטף מגולן</span>
+    <h1>המלצות 365 - כל מה שצריך לדעת על בוקרשט עכשיו</h1>
+    <p>לא מדריך תיירים כללי, אלא עדכון אמיתי מהשטח - בטיחות, נסיעות, מסעדות, מזג אוויר, שערי מטבע, קזינו, מועדונים, טרמה וטיולים. גולן מעדכן את זה באופן שוטף כדי שתגיעו מוכנים.</p>
+  </div>
+</section>
+
+<section id="tips-intro">
+  <div class="container">
+    <div class="tip-highlight">
+      <span class="tip-highlight-badge">עדכון אחרון</span>
+      <p>בוקרשט חוזרת למסלול רגיל לאחר תקופה של שלושה שבועות.</p>
+    </div>
   </div>
 </section>
 
 <section id="tips-list">
   <div class="container">
-    <div class="cat-block">
-      <div class="faq-item">
-        <div class="faq-q-row"><img class="faq-crown" src="favicon-crown.png" alt=""><h3>מתי הכי כדאי לטוס לבוקרשט לחופשת בילויים?</h3></div>
-        <p>בוקרשט פעילה כמעט כל השנה, אך סופי שבוע וחגים מביאים את המועדונים והמסעדות לשיא העומס. מי שרוצה חיי לילה סוערים במיוחד יעדיף להגיע בסוף שבוע, ומי שמחפש שקט יחסי יכול לתכנן אמצע שבוע עם Bucharest365.</p>
+    <div class="tip-grid">
+
+      <div class="tip-block">
+        <div class="tip-block-head"><span class="tip-icon">🛡️</span><h3>בטיחות</h3></div>
+        <p>בוקרשט מקום בטוח לחלוטין, אך תמיד כדאי להישמר - בטח בתקופה שאנחנו נמצאים בה כיום.</p>
+        <p>ראשית, סממנים יהודיים לא מהווים בעיה בעיר, וכך גם דיבור בעברית. אנטישמיות כמעט ולא קיימת - אם להגיד את האמת, גולן אישית לא הרגיש פעם אחת דבר כזה.</p>
+        <p>שנית, העיר העתיקה היא המקום המסוכן ביותר בלילות מבחינת כייסות. מומלץ לשים הכל בכיסים הקדמיים ולשמור על עירנות. לא כדאי לצאת להרפתקאות עצמאיות בעיר העתיקה או לזרום עם אנשים שמנסים לקחת אתכם למקומות מפוקפקים משם.</p>
+        <p>מה גם שיש אנשים שעובדים עם המקומות עצמם (כמו בנות יפות) שרוצות שתזמינו להן משקה. אתם עשויים להרגיש לרגע כמו בראד פיט, אבל אחרי ההזמנה תבינו שאתם חלק מתעשייה שלמה שגורמת למקומות (ולבנות) להרוויח עליכם את לחמם.</p>
       </div>
-      <div class="faq-item">
-        <div class="faq-q-row"><img class="faq-crown" src="favicon-crown.png" alt=""><h3>האם בוקרשט בטוחה לתיירים בלילה?</h3></div>
-        <p>בוקרשט נחשבת עיר בטוחה יחסית לתיירים, אך כמו בכל עיר גדולה מומלץ להיזהר באזורים לא מוכרים בשעות הלילה. אחד היתרונות של Bucharest365 הוא ליווי VIP ולימוזינות שמצמצמים את הצורך בהתמצאות עצמאית בלילה בעיר לא מוכרת.</p>
+
+      <div class="tip-block">
+        <div class="tip-block-head"><span class="tip-icon">🚕</span><h3>נסיעות</h3></div>
+        <p>מונית משדה התעופה: בין 70-90 ליי. לוקחים כרטיס בקבלת הפנים מהמכונות בלבד.</p>
+        <p>הזמנת אובר או בולט מהשדה מסובכת יותר, כי הם לא יכולים להגיע קרוב לשדה - בכל אופן הם נמצאים באותה קומה של הקבלת פנים, ממול.</p>
+        <p>מונית בעיר: בין 12-24 ליי בשעת לחץ. לעולם לא לעלות למונית צהובה, ובטח לא עם נהגים ששמים לכם שירים של אייל גולן ומבטיחים שיהיה כיף.</p>
+        <p>מונית לטרמה: בין 70-100 ליי.</p>
+        <p>יש הסעה משדה התעופה למלון ב-50 יורו לקבוצה גדולה של עד 8 אנשים, כולל מזוודות.</p>
       </div>
-      <div class="faq-item">
-        <div class="faq-q-row"><img class="faq-crown" src="favicon-crown.png" alt=""><h3>איך נראית חופשה טיפוסית עם Bucharest365 מנחיתה ועד המראה?</h3></div>
-        <p>החופשה מתחילה באיסוף משדה התעופה בלימוזינה, ממשיכה בערבים עם מסעדות מומלצות, כניסת VIP למועדוני הלילה הכי שווים בבוקרשט, ולעיתים מסיבת רווקים או אירוע מיוחד באמצע - כשגולן זמין בעברית לאורך כל הדרך עד ההמראה חזרה.</p>
+
+      <div class="tip-block">
+        <div class="tip-block-head"><span class="tip-icon">🍽</span><h3>מסעדות</h3></div>
+        <p>מלא מסעדות חדשות נפתחות כל הזמן, לצד המסעדות המובילות, הישנות והטובות.</p>
+        <p>בסופי שבוע כדאי להזמין מקום מראש כי יש הרבה אנשים שמגיעים.</p>
+        <p>כדאי לבדוק אם יש מקום למעשנים (בדרך כלל יש) - זה יהיה בחוץ, עם חימום.</p>
+        <p>Bucharest365 נותנים שירות הזמנת מקומות בכל המסעדות בעיר.</p>
       </div>
-      <div class="faq-item">
-        <div class="faq-q-row"><img class="faq-crown" src="favicon-crown.png" alt=""><h3>איזה סוג טיפים אפשר לבקש מגולן?</h3></div>
-        <p>ממש הכל - איפה לאכול, אילו מועדונים הכי שווים באותו שבוע, אילו אזורים בעיר כדאי לבקר, ואיך לשלב הכל ביחד בלי לבזבז זמן על תכנון עצמאי.</p>
+
+      <div class="tip-block">
+        <div class="tip-block-head"><span class="tip-icon">❄️</span><h3>מזג האוויר</h3></div>
+        <p>קריר עד קריר מאוד. עדיין אין שלג, אבל תקופת המינוסים כבר התחילה. כדאי להביא כפפות, כובעי צמר, ובעיקר נעליים נוחות שמונעות החלקה.</p>
+        <p>יש מתחם החלקה על הקרח בקניון AFI ובפארק צ'ישמיג'יו (Cișmigiu).</p>
       </div>
+
+      <div class="tip-block tip-block-currency">
+        <div class="tip-block-head"><span class="tip-icon">💱</span><h3>ציינג'ים (המרת מטבע)</h3></div>
+        <p>בואו לא תהיו עשירים אם תמירו במקום אחד ולא בשני שהוא קצת יותר גבוה - יש ציינג'ים כמעט בכל מקום בעיר.</p>
+        <p>מקומות שמחליפים כסף ישראלי: מול מלון מריוט, והציינג' בפיאצה רומנה.</p>
+        <div class="eur-rate-box">
+          <span class="eur-rate-label">שער היורו הרשמי כרגע (EUR/RON)</span>
+          <span class="eur-rate-value" id="eur-rate-value">טוען...</span>
+          <span class="eur-rate-updated" id="eur-rate-updated"></span>
+        </div>
+      </div>
+
+      <div class="tip-block">
+        <div class="tip-block-head"><span class="tip-icon">🎰</span><h3>קזינו</h3></div>
+        <p>כל הקזינואים פעילים כרגיל, 24/7. סה"כ שלושה בתי קזינו: מלון מריוט, מלון רדיסון, ופאלאס קזינו.</p>
+        <p>בכל הקזינואים הכניסה היא 50 ליי, ובקומת המכונות הכניסה חינם.</p>
+      </div>
+
+      <div class="tip-block">
+        <div class="tip-block-head"><span class="tip-icon">🎶</span><h3>מועדונים</h3></div>
+        <p>כרגע מועדונים פועלים בימי שישי ושבת בלבד. בשאר ימות השבוע יש דאנס בארים, מסעדות מיוחדות וברים.</p>
+        <p>בימי שישי, לקבוצה מעל 2 אנשים חובה להזמין שולחן - וקשה ליהנות באמת בלי שולחן במועדון שמכבד את עצמו בבוקרשט.</p>
+        <p>בשבת חובה להזמין שולחן, ואין כניסה בלי שולחנות. מי שאוהב לקבל "אחורה פנה" יכול לנסות בכיף לא להזמין שולחן.</p>
+        <p>בימי שישי הלבוש לא חייב להיות אלגנטי, אבל אין כניסה עם קפוצ'ונים, נעלי ספורט או דגמחים. בשבת יש להגיע לבושים אלגנט, אחרת גם עם שולחן מוזמן תקבלו "אחורה פנה".</p>
+        <p>הזמנת שולחנות בפרטי או בוואטסאפ: 0544709642</p>
+      </div>
+
+      <div class="tip-block">
+        <div class="tip-block-head"><span class="tip-icon">🧖</span><h3>טרמה</h3></div>
+        <p>תזכורת: יש להגיע לבושים רגיל ועם תיק שכולל כפכפים ומגבת. מי שלא מגיע עם הפריטים האלה יצטרך לקנות במקום (כל פריט 24 ליי). ללא כפכפים או בגד ים לא יכניסו אתכם - מחליפים במלתחות.</p>
+        <p>אסור לצלם במקומות שמסומנים לאיסור צילום, ומותר לעשן רק בחדרי עישון ייעודיים.</p>
+        <p>יש שמירת חפצים בטרמה, כולל מזוודות - לפני או אחרי טיסה משדה התעופה.</p>
+      </div>
+
+      <div class="tip-block">
+        <div class="tip-block-head"><span class="tip-icon">🎿</span><h3>טיולים</h3></div>
+        <p>כרגע יש טיולי טרקטורונים וטיול אופנועי שלג.</p>
+        <p>בסינאייה (Sinaia) ובראשוב (Brașov) קר הרבה יותר מבבוקרשט - כדאי להצטייד במעיל, חולצה ארוכה, כפפות, כובעים ונעליים גבוהות ומחוממות.</p>
+      </div>
+
     </div>
   </div>
 </section>
@@ -405,6 +489,24 @@ document.querySelectorAll('a[href*="instagram.com"]').forEach(function(a){
   a.addEventListener('click', function(){ trackEvent('instagram-clicks'); });
 });
 
+
+(function(){
+  var valEl = document.getElementById('eur-rate-value');
+  var updEl = document.getElementById('eur-rate-updated');
+  if(!valEl) return;
+  fetch('https://api.frankfurter.app/latest?from=EUR&to=RON')
+    .then(function(r){ return r.json(); })
+    .then(function(data){
+      var rate = data.rates && data.rates.RON;
+      if(!rate) throw new Error('no rate');
+      valEl.textContent = '1€ = ' + rate.toFixed(2) + ' ליי';
+      updEl.textContent = 'מעודכן ל-' + data.date;
+    })
+    .catch(function(){
+      valEl.textContent = '1€ = 4.97 ליי (משוער)';
+      updEl.textContent = '';
+    });
+})();
 </script>
 
 </body>
