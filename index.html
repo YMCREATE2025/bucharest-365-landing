@@ -185,10 +185,13 @@
   }
   .hero h1 .accent{
     display:block;
+    font-size:clamp(1.3rem,2.6vw,2.6rem);
+    white-space:nowrap;
     background:linear-gradient(135deg,var(--gold-light),var(--gold));
     -webkit-background-clip:text;background-clip:text;color:transparent;
     animation:neonPulse 3.2s ease-in-out infinite;
   }
+  @media (max-width:900px){ .hero h1 .accent{white-space:normal;font-size:clamp(1.6rem,5vw,2.8rem);} }
   .hero p.lead{
     max-width:640px;margin:0 0 40px;color:var(--text-dim);font-size:1.15rem;
   }
