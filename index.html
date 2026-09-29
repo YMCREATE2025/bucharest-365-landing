@@ -516,15 +516,28 @@
   .cookie-btn-decline:hover{color:var(--gold-light);border-color:var(--gold);}
   .cookie-btn-accept{background:linear-gradient(135deg,var(--gold-light),var(--gold));color:#fff;}
   @media (max-width:600px){.cookie-banner-inner{flex-direction:column;align-items:stretch;}.cookie-banner-actions{justify-content:stretch;}.cookie-btn{flex:1;}}
-  .stars-bg{position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden;}
-  .stars-bg .star{position:absolute;background:var(--gold-light);border-radius:50%;opacity:0.15;box-shadow:0 0 5px 1.5px rgba(255,20,254,0.6);animation-name:starTwinkle;animation-iteration-count:infinite;animation-timing-function:ease-in-out;}
-  @keyframes starTwinkle{0%,100%{opacity:0.12;transform:translate(0,0);}50%{opacity:0.95;transform:translate(var(--dx,2px),var(--dy,-2px));}}
+  .stars-bg{position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden;background:var(--bg);}
+  .spotlight{position:absolute;border-radius:50%;filter:blur(70px);}
+  .spotlight.s1{width:480px;height:820px;top:-260px;right:-80px;background:radial-gradient(ellipse at center, rgba(255,20,254,0.22), transparent 70%);animation:spotSway1 10s ease-in-out infinite;}
+  .spotlight.s2{width:420px;height:760px;top:-220px;left:-60px;background:radial-gradient(ellipse at center, rgba(150,90,255,0.16), transparent 70%);animation:spotSway2 12s ease-in-out infinite;}
+  .spotlight.s3{width:520px;height:900px;bottom:-320px;right:8%;background:radial-gradient(ellipse at center, rgba(255,169,254,0.15), transparent 70%);animation:spotSway3 14s ease-in-out infinite;}
+  .spotlight.s4{width:400px;height:700px;bottom:-260px;left:6%;background:radial-gradient(ellipse at center, rgba(100,140,255,0.13), transparent 70%);animation:spotSway4 11s ease-in-out infinite;}
+  @keyframes spotSway1{0%,100%{opacity:0.35;transform:rotate(22deg) translateY(0);}50%{opacity:0.65;transform:rotate(27deg) translateY(16px);}}
+  @keyframes spotSway2{0%,100%{opacity:0.28;transform:rotate(-18deg) translateY(0);}50%{opacity:0.55;transform:rotate(-23deg) translateY(-14px);}}
+  @keyframes spotSway3{0%,100%{opacity:0.3;transform:rotate(-12deg) translateY(0);}50%{opacity:0.55;transform:rotate(-17deg) translateY(-12px);}}
+  @keyframes spotSway4{0%,100%{opacity:0.25;transform:rotate(15deg) translateY(0);}50%{opacity:0.5;transform:rotate(20deg) translateY(12px);}}
+  @media (prefers-reduced-motion: reduce){.spotlight{animation:none;}}
 </style>
 </head>
 <body>
 
 
-<div class="stars-bg" id="stars-bg" aria-hidden="true"></div>
+<div class="stars-bg" id="stars-bg" aria-hidden="true">
+  <div class="spotlight s1"></div>
+  <div class="spotlight s2"></div>
+  <div class="spotlight s3"></div>
+  <div class="spotlight s4"></div>
+</div>
 
 <a href="#main-content" class="skip-link">דלג לתוכן הראשי</a>
 
@@ -1189,28 +1202,6 @@ function closeBachelorPopup(){
   }, 800);
 })();
 
-/* Gentle twinkling star background */
-(function(){
-  var container = document.getElementById('stars-bg');
-  if(!container) return;
-  var n = window.innerWidth < 600 ? 45 : 80;
-  var frag = document.createDocumentFragment();
-  for(var i=0;i<n;i++){
-    var s = document.createElement('div');
-    s.className = 'star';
-    var size = (Math.random()*1.8+0.6).toFixed(1);
-    s.style.width = size+'px';
-    s.style.height = size+'px';
-    s.style.top = (Math.random()*100).toFixed(2)+'%';
-    s.style.left = (Math.random()*100).toFixed(2)+'%';
-    s.style.animationDuration = (2.2 + Math.random()*3.2).toFixed(1)+'s';
-    s.style.animationDelay = (Math.random()*4).toFixed(1)+'s';
-    s.style.setProperty('--dx', ((Math.random()*5-2.5).toFixed(1))+'px');
-    s.style.setProperty('--dy', ((Math.random()*5-2.5).toFixed(1))+'px');
-    frag.appendChild(s);
-  }
-  container.appendChild(frag);
-})();
 </script>
 
 </body>
