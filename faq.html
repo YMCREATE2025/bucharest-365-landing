@@ -208,36 +208,36 @@
   .cookie-btn-accept{background:linear-gradient(135deg,var(--gold-light),var(--gold));color:#fff;}
   @media (max-width:600px){.cookie-banner-inner{flex-direction:column;align-items:stretch;}.cookie-banner-actions{justify-content:stretch;}.cookie-btn{flex:1;}}
   .stars-bg{position:absolute;top:0;left:0;right:0;bottom:0;z-index:-1;pointer-events:none;overflow:hidden;background:var(--bg);}
-  .spotlight{position:absolute;width:340px;height:620px;clip-path:polygon(50% 0%, 0% 100%, 100% 100%);filter:blur(16px);mix-blend-mode:screen;transform-origin:top center;}
-  .spotlight::before{content:"";position:absolute;top:-5px;left:50%;transform:translateX(-50%);width:12px;height:12px;border-radius:50%;filter:blur(1px);}
-  .spotlight.pink{background:linear-gradient(to bottom, rgba(255,255,255,0.85), rgba(255,20,254,0.55) 35%, rgba(255,20,254,0.12) 75%, transparent);}
-  .spotlight.pink::before{background:radial-gradient(circle, #fff, rgba(255,20,254,0.9));box-shadow:0 0 12px 4px rgba(255,20,254,0.8);}
-  .spotlight.blue{background:linear-gradient(to bottom, rgba(255,255,255,0.85), rgba(100,180,255,0.55) 35%, rgba(100,180,255,0.12) 75%, transparent);}
-  .spotlight.blue::before{background:radial-gradient(circle, #fff, rgba(100,180,255,0.9));box-shadow:0 0 12px 4px rgba(100,180,255,0.8);}
-  .spotlight.s1{top:-1%;left:4%;transform:rotate(-14deg);animation:beamSway1 18s ease-in-out infinite;}
-  .spotlight.s2{top:-1%;right:6%;transform:rotate(12deg);animation:beamSway2 20s ease-in-out infinite;}
-  .spotlight.s3{top:9%;left:20%;transform:rotate(-6deg);animation:beamSway3 16s ease-in-out infinite;}
-  .spotlight.s4{top:9%;right:22%;transform:rotate(8deg);animation:beamSway4 22s ease-in-out infinite;}
-  .spotlight.s5{top:20%;left:3%;transform:rotate(-16deg);animation:beamSway2 19s ease-in-out infinite;}
-  .spotlight.s6{top:20%;right:5%;transform:rotate(15deg);animation:beamSway1 17s ease-in-out infinite;}
-  .spotlight.s7{top:31%;left:22%;transform:rotate(-7deg);animation:beamSway4 21s ease-in-out infinite;}
-  .spotlight.s8{top:31%;right:20%;transform:rotate(9deg);animation:beamSway3 15s ease-in-out infinite;}
-  .spotlight.s9{top:43%;left:4%;transform:rotate(-13deg);animation:beamSway1 20s ease-in-out infinite;}
-  .spotlight.s10{top:43%;right:6%;transform:rotate(11deg);animation:beamSway2 18s ease-in-out infinite;}
-  .spotlight.s11{top:55%;left:20%;transform:rotate(-8deg);animation:beamSway3 16.5s ease-in-out infinite;}
-  .spotlight.s12{top:55%;right:22%;transform:rotate(10deg);animation:beamSway4 19.5s ease-in-out infinite;}
-  .spotlight.s13{top:67%;left:3%;transform:rotate(-15deg);animation:beamSway2 21s ease-in-out infinite;}
-  .spotlight.s14{top:67%;right:5%;transform:rotate(13deg);animation:beamSway1 17.5s ease-in-out infinite;}
-  .spotlight.s15{top:79%;left:22%;transform:rotate(-9deg);animation:beamSway4 20s ease-in-out infinite;}
-  .spotlight.s16{top:79%;right:20%;transform:rotate(7deg);animation:beamSway3 18.5s ease-in-out infinite;}
-  .spotlight.s17{top:90%;left:4%;transform:rotate(-12deg);animation:beamSway1 19s ease-in-out infinite;}
-  .spotlight.s18{top:90%;right:6%;transform:rotate(14deg);animation:beamSway2 16s ease-in-out infinite;}
-  @keyframes beamSway1{0%,100%{opacity:0.55;transform:rotate(-14deg);}50%{opacity:0.85;transform:rotate(-9deg);}}
-  @keyframes beamSway2{0%,100%{opacity:0.5;transform:rotate(12deg);}50%{opacity:0.8;transform:rotate(17deg);}}
-  @keyframes beamSway3{0%,100%{opacity:0.5;transform:rotate(-7deg);}50%{opacity:0.82;transform:rotate(-2deg);}}
-  @keyframes beamSway4{0%,100%{opacity:0.5;transform:rotate(9deg);}50%{opacity:0.8;transform:rotate(14deg);}}
+  .spotlight{position:absolute;width:380px;height:660px;clip-path:polygon(50% 0%, 0% 100%, 100% 100%);filter:blur(22px) saturate(1.3);mix-blend-mode:screen;transform-origin:top center;}
+  .spotlight::before{content:"";position:absolute;top:-8px;left:50%;transform:translateX(-50%);width:18px;height:18px;border-radius:50%;filter:blur(1px);}
+  .spotlight.pink{background:linear-gradient(to bottom, rgba(255,255,255,0.95), rgba(255,20,254,0.8) 30%, rgba(255,20,254,0.3) 65%, transparent);}
+  .spotlight.pink::before{background:radial-gradient(circle, #fff, rgba(255,20,254,1));box-shadow:0 0 22px 8px rgba(255,20,254,1),0 0 45px 16px rgba(255,20,254,0.5);}
+  .spotlight.blue{background:linear-gradient(to bottom, rgba(255,255,255,0.95), rgba(90,190,255,0.8) 30%, rgba(90,190,255,0.3) 65%, transparent);}
+  .spotlight.blue::before{background:radial-gradient(circle, #fff, rgba(90,190,255,1));box-shadow:0 0 22px 8px rgba(90,190,255,1),0 0 45px 16px rgba(90,190,255,0.5);}
+  .spotlight.s1{top:-1%;left:4%;transform:rotate(-14deg);animation:beamSway1 6.5s ease-in-out infinite;}
+  .spotlight.s2{top:-1%;right:6%;transform:rotate(12deg);animation:beamSway2 7.5s ease-in-out infinite;}
+  .spotlight.s3{top:9%;left:20%;transform:rotate(-6deg);animation:beamSway3 6s ease-in-out infinite;}
+  .spotlight.s4{top:9%;right:22%;transform:rotate(8deg);animation:beamSway4 8s ease-in-out infinite;}
+  .spotlight.s5{top:20%;left:3%;transform:rotate(-16deg);animation:beamSway2 7s ease-in-out infinite;}
+  .spotlight.s6{top:20%;right:5%;transform:rotate(15deg);animation:beamSway1 6.2s ease-in-out infinite;}
+  .spotlight.s7{top:31%;left:22%;transform:rotate(-7deg);animation:beamSway4 7.8s ease-in-out infinite;}
+  .spotlight.s8{top:31%;right:20%;transform:rotate(9deg);animation:beamSway3 5.8s ease-in-out infinite;}
+  .spotlight.s9{top:43%;left:4%;transform:rotate(-13deg);animation:beamSway1 7.2s ease-in-out infinite;}
+  .spotlight.s10{top:43%;right:6%;transform:rotate(11deg);animation:beamSway2 6.6s ease-in-out infinite;}
+  .spotlight.s11{top:55%;left:20%;transform:rotate(-8deg);animation:beamSway3 6.3s ease-in-out infinite;}
+  .spotlight.s12{top:55%;right:22%;transform:rotate(10deg);animation:beamSway4 7.4s ease-in-out infinite;}
+  .spotlight.s13{top:67%;left:3%;transform:rotate(-15deg);animation:beamSway2 7.9s ease-in-out infinite;}
+  .spotlight.s14{top:67%;right:5%;transform:rotate(13deg);animation:beamSway1 6.4s ease-in-out infinite;}
+  .spotlight.s15{top:79%;left:22%;transform:rotate(-9deg);animation:beamSway4 7.1s ease-in-out infinite;}
+  .spotlight.s16{top:79%;right:20%;transform:rotate(7deg);animation:beamSway3 6.7s ease-in-out infinite;}
+  .spotlight.s17{top:90%;left:4%;transform:rotate(-12deg);animation:beamSway1 7.3s ease-in-out infinite;}
+  .spotlight.s18{top:90%;right:6%;transform:rotate(14deg);animation:beamSway2 6.1s ease-in-out infinite;}
+  @keyframes beamSway1{0%,100%{opacity:0.6;transform:rotate(-20deg) scale(1);}50%{opacity:1;transform:rotate(-6deg) scale(1.05);}}
+  @keyframes beamSway2{0%,100%{opacity:0.55;transform:rotate(6deg) scale(1);}50%{opacity:0.95;transform:rotate(22deg) scale(1.05);}}
+  @keyframes beamSway3{0%,100%{opacity:0.55;transform:rotate(-13deg) scale(1);}50%{opacity:0.95;transform:rotate(2deg) scale(1.05);}}
+  @keyframes beamSway4{0%,100%{opacity:0.55;transform:rotate(3deg) scale(1);}50%{opacity:0.95;transform:rotate(19deg) scale(1.05);}}
   @media (prefers-reduced-motion: reduce){.spotlight{animation:none;}}
-  @media (max-width:700px){.spotlight{width:200px;height:400px;filter:blur(10px);}}
+  @media (max-width:700px){.spotlight{width:220px;height:420px;filter:blur(14px) saturate(1.3);}}
   @media (max-width:700px){.spotlight{width:3px;filter:blur(2px);}.spotlight::before{filter:blur(9px);}}
 </style>
 </head>
