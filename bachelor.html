@@ -157,6 +157,27 @@
   .card-more-link{display:inline-block;margin-top:6px;color:var(--gold-light);font-weight:700;font-size:0.9rem;text-decoration:underline;text-shadow:var(--neon-text);}
   .card-more-link:hover{color:var(--gold);}
 
+  .limo-notes{max-width:640px;margin:0 auto;list-style:none;padding:0;}
+  .limo-notes li{color:var(--text-dim);font-size:0.95rem;padding:10px 0 10px 0;padding-right:26px;position:relative;border-bottom:1px solid var(--border);}
+  .limo-notes li:last-child{border-bottom:none;}
+  .limo-notes li::before{content:"✦";position:absolute;right:0;top:10px;color:var(--gold-light);text-shadow:var(--neon-text);}
+
+  .timeline{max-width:760px;margin:0 auto;display:flex;flex-direction:column;gap:0;}
+  .timeline-step{display:flex;gap:20px;position:relative;padding-bottom:34px;}
+  .timeline-step:last-child{padding-bottom:0;}
+  .timeline-step::before{content:"";position:absolute;top:44px;bottom:0;right:21px;width:2px;background:var(--border);}
+  .timeline-step:last-child::before{display:none;}
+  .timeline-num{flex-shrink:0;width:44px;height:44px;border-radius:50%;background:var(--card);border:2px solid var(--border);display:flex;align-items:center;justify-content:center;font-weight:800;color:var(--gold-light);text-shadow:var(--neon-text);box-shadow:var(--neon-box-soft);z-index:1;}
+  .timeline-body h3{font-size:1.05rem;margin-bottom:6px;color:var(--text);}
+  .timeline-body p{color:var(--text-dim);font-size:0.92rem;}
+
+  .included-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;max-width:860px;margin:0 auto;}
+  .included-item{display:flex;gap:14px;align-items:flex-start;background:var(--card);border:2px solid var(--border);border-radius:14px;padding:18px 20px;box-shadow:var(--neon-box-soft);}
+  .included-icon{font-size:1.4rem;flex-shrink:0;}
+  .included-item h4{font-size:0.98rem;margin-bottom:4px;color:var(--gold-light);text-shadow:var(--neon-text);}
+  .included-item p{color:var(--text-dim);font-size:0.88rem;}
+  @media (max-width:700px){ .included-grid{grid-template-columns:1fr;} }
+
   .cta-band{
     background:linear-gradient(135deg, rgba(255,20,254,0.12), rgba(255,20,254,0.02));
     border-top:1px solid var(--border);border-bottom:1px solid var(--border);
@@ -266,12 +287,58 @@
   <div class="container">
     <span class="eyebrow">✦ מסיבות רווקים</span>
     <h1>מסיבת רווקים שלא תשכחו בבוקרשט</h1>
-    <p>שילוב של לימוזינה, מועדונים מובילים ושולחנות שמורים - כל מה שצריך כדי שהחתן והחבר'ה יקבלו לילה שממש שווה לטוס בשבילו. גולן בונה לכל קבוצה תוכנית מותאמת אישית, מהנחיתה ועד סוף הלילה.</p>
+    <p>שילוב של לימוזינה, מועדונים מובילים ושולחנות שמורים - כל מה שצריך כדי שהחתן והחבר'ה יקבלו לילה שממש שווה לטוס בשבילו. גולן בונה לכל קבוצה תוכנית מותאמת אישית, מהנחיתה ועד סוף הלילה, ומלווה אתכם אישית בעברית לאורך כל הדרך.</p>
   </div>
 </section>
 
-<section id="bachelor-packages">
+<section id="bachelor-timeline">
   <div class="container">
+    <span class="sec-eyebrow" style="text-align:center;display:block;">איך זה נראה בפועל</span>
+    <h2 class="sec-title" style="text-align:center;margin-bottom:36px;">ערב טיפוסי במסיבת רווקים עם Bucharest365</h2>
+    <div class="timeline">
+      <div class="timeline-step">
+        <div class="timeline-num">1</div>
+        <div class="timeline-body">
+          <h3>איסוף בלימוזינה מהמלון</h3>
+          <p>הלימוזינה מחכה לכם ליד המלון עם שמפניה קרה, מוזיקה ותאורה צבעונית - כל הקבוצה עולה יחד ומתחילה את הערב באווירה כבר בדרך.</p>
+        </div>
+      </div>
+      <div class="timeline-step">
+        <div class="timeline-num">2</div>
+        <div class="timeline-body">
+          <h3>ארוחת ערב או עצירה בעיר העתיקה</h3>
+          <p>לפי מה שהקבוצה מבקשת - עצירה במסעדה מומלצת או סיבוב קצר בעיר העתיקה של בוקרשט, עם תמונות ליד האתרים הכי מצולמים בעיר.</p>
+        </div>
+      </div>
+      <div class="timeline-step">
+        <div class="timeline-num">3</div>
+        <div class="timeline-body">
+          <h3>כניסת VIP למועדון הראשון</h3>
+          <p>מגיעים ישר לכניסה בלי לעמוד בתור, לשולחן שמור מראש. גולן או נציג מטעמו מחכה במקום ומוודא שהכול מוכן לפני שהקבוצה מגיעה.</p>
+        </div>
+      </div>
+      <div class="timeline-step">
+        <div class="timeline-num">4</div>
+        <div class="timeline-body">
+          <h3>ריקוד לחתן ובקבוקים על השולחן</h3>
+          <p>בכל אחד מהמועדונים החתן מקבל התייחסות מיוחדת - ריקוד, תשומת לב מהצוות ומקום מרכזי על רחבת הריקודים, לפי החבילה שנבחרה.</p>
+        </div>
+      </div>
+      <div class="timeline-step">
+        <div class="timeline-num">5</div>
+        <div class="timeline-body">
+          <h3>המשך הערב - מועדון שני או עד הסגירה</h3>
+          <p>אם הקבוצה רוצה עוד, גולן מסדר מעבר למועדון נוסף עם כניסת VIP, או פשוט משאיר אתכם עד סוף הלילה במקום שהכי מתחבר לאווירה.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="bachelor-packages" style="background:var(--bg-alt);">
+  <div class="container">
+    <span class="sec-eyebrow" style="text-align:center;display:block;">חבילות VIP</span>
+    <h2 class="sec-title" style="text-align:center;margin-bottom:36px;">שתי חבילות ל-3 לילות VIP</h2>
     <div class="rest-grid" style="grid-template-columns:repeat(2,1fr);">
 
       <div class="rest-card">
@@ -280,7 +347,7 @@
           <div class="rest-title-overlay"><span class="rest-tag">3 לילות VIP</span><h3>BUCHAREST365 Silver</h3></div>
         </div>
         <div class="rest-body">
-          <p>3 לילות VIP בבוקרשט - נסיעה בלימוזינה עם שמפניה ורקדניות, ומסע בין המועדונים הכי חמים בעיר.</p>
+          <p>3 לילות VIP בבוקרשט - נסיעה בלימוזינה עם שמפניה ורקדניות, ומסע בין המועדונים הכי חמים בעיר. חבילה מצוינת לקבוצה שרוצה חוויה שלמה ברמה גבוהה בלי להגזים בתקציב.</p>
           <div class="rest-price-row"><span>לילה 1 - ג'נטלמן קלאב</span><strong>שולחן שמור + ריקוד חינם לחתן</strong></div>
           <div class="rest-price-row"><span>לילה 2 - פרדו</span><strong>שולחן במיקום הכי טוב</strong></div>
           <div class="rest-price-row"><span>לילה 3 - פייס</span><strong>אחד המקומות המבוקשים בעיר</strong></div>
@@ -293,13 +360,93 @@
           <div class="rest-title-overlay"><span class="rest-tag">3 לילות VIP · רמה גבוהה</span><h3>BUCHAREST365 Gold</h3></div>
         </div>
         <div class="rest-body">
-          <p>3 לילות VIP ברמה הכי גבוהה שיש - נסיעה בלימוזינה עם שמפניה ורקדניות, ולילה אחר בכל אחד מ-3 המועדונים המובילים בעיר.</p>
+          <p>3 לילות VIP ברמה הכי גבוהה שיש - נסיעה בלימוזינה עם שמפניה ורקדניות, ולילה אחר בכל אחד מ-3 המועדונים המובילים בעיר, עם שולחנות משודרגים ופינוקים נוספים על החתן.</p>
           <div class="rest-price-row"><span>לילה 1 - ג'נטלמן קלאב</span><strong>שולחן שמור, ריקוד לחתן, בקבוקי פרימיום</strong></div>
           <div class="rest-price-row"><span>לילה 2 - פרדו</span><strong>שולחן VIP + פלטת אוכל או פירות</strong></div>
           <div class="rest-price-row"><span>לילה 3 - פייס</span><strong>המועדון היוקרתי ביותר עם שולחן VIP</strong></div>
         </div>
       </div>
 
+    </div>
+  </div>
+</section>
+
+<section id="bachelor-clubs">
+  <div class="container">
+    <span class="sec-eyebrow" style="text-align:center;display:block;">המועדונים בחבילה</span>
+    <h2 class="sec-title" style="text-align:center;margin-bottom:36px;">מי זה ג'נטלמן קלאב, פרדו ופייס</h2>
+    <div class="rest-grid">
+      <div class="rest-card">
+        <div class="rest-media">
+          <img class="rest-img" src="reel3.jpg" alt="ג'נטלמן קלאב - מועדון חשפנות VIP בבוקרשט" loading="lazy">
+          <div class="rest-title-overlay"><span class="rest-tag">לילה 1</span><h3>ג'נטלמן קלאב</h3></div>
+        </div>
+        <div class="rest-body">
+          <p>מועדון חשפנות ברמה בינלאומית, מהמוכרים באירופה. שולחן שמור, אווירה סוחפת וריקוד מיוחד לחתן על רחבת הריקודים - פתיחה מושלמת לערב הראשון.</p>
+        </div>
+      </div>
+      <div class="rest-card">
+        <div class="rest-media">
+          <img class="rest-img" src="card1g.jpg" alt="פרדו - מועדון VIP עם שולחנות בבוקרשט" loading="lazy">
+          <div class="rest-title-overlay"><span class="rest-tag">לילה 2</span><h3>פרדו</h3></div>
+        </div>
+        <div class="rest-body">
+          <p>אחד המועדונים המבוקשים ביותר בעיר, עם שולחנות VIP במיקום מרכזי. בחבילת הגולד מגיע גם עם פלטת אוכל או פירות על השולחן.</p>
+        </div>
+      </div>
+      <div class="rest-card">
+        <div class="rest-media">
+          <img class="rest-img" src="card5.jpg" alt="פייס - המועדון היוקרתי ביותר בבוקרשט" loading="lazy">
+          <div class="rest-title-overlay"><span class="rest-tag">לילה 3</span><h3>פייס</h3></div>
+        </div>
+        <div class="rest-body">
+          <p>המועדון היוקרתי ביותר בבוקרשט לסיום מושלם לשלושת הלילות - שולחן VIP, אווירה ברמה הכי גבוהה בעיר ולילה שנשאר בזיכרון של כל הקבוצה.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="bachelor-included" style="background:var(--bg-alt);">
+  <div class="container">
+    <span class="sec-eyebrow" style="text-align:center;display:block;">מה כלול</span>
+    <h2 class="sec-title" style="text-align:center;margin-bottom:36px;">כל מה שמקבלים בחבילת מסיבת רווקים</h2>
+    <div class="included-grid">
+      <div class="included-item"><span class="included-icon">🚗</span><div><h4>לימוזינה לאורך הערב</h4><p>נסיעה בין היעדים בלימוזינה עם שמפניה ותאורה, כולל איסוף מהמלון.</p></div></div>
+      <div class="included-item"><span class="included-icon">🍾</span><div><h4>שמפניה ורקדניות</h4><p>שמפניה קרה על הדרך, עם אופציה להוסיף רקדנית בתשלום נוסף לפי בקשה.</p></div></div>
+      <div class="included-item"><span class="included-icon">🎟️</span><div><h4>כניסת VIP בלי תור</h4><p>כניסה מהירה לכל שלושת המועדונים, בלי לעמוד בתורים הארוכים של סופי שבוע.</p></div></div>
+      <div class="included-item"><span class="included-icon">🪑</span><div><h4>שולחן שמור בכל מועדון</h4><p>מקום ישיבה קבוע לכל הקבוצה, במיקום משודרג יותר בחבילת הגולד.</p></div></div>
+      <div class="included-item"><span class="included-icon">🤵</span><div><h4>יחס מיוחד לחתן</h4><p>ריקוד לחתן, תשומת לב מהצוות ובחבילת הגולד גם בקבוקי פרימיום על השולחן.</p></div></div>
+      <div class="included-item"><span class="included-icon">📱</span><div><h4>ליווי אישי של גולן</h4><p>זמינות בוואטסאפ לאורך כל הערבים, ותיאום מול הצוותים במקום כדי שהכול יזרום.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<section id="bachelor-faq">
+  <div class="container">
+    <span class="sec-eyebrow" style="text-align:center;display:block;">שאלות נפוצות</span>
+    <h2 class="sec-title" style="text-align:center;margin-bottom:36px;">שאלות שחתנים וחברים שואלים הכי הרבה</h2>
+    <div class="cat-block">
+      <div class="faq-item">
+        <h3>כמה זמן מראש כדאי לתכנן מסיבת רווקים בבוקרשט?</h3>
+        <p>מומלץ לפנות לפחות שבועיים עד חודש מראש, במיוחד אם מדובר בקבוצה גדולה או סוף שבוע עמוס. ככל שפונים מוקדם יותר, כך קל יותר להבטיח שולחנות במסעדות ומקום VIP במועדונים המבוקשים.</p>
+      </div>
+      <div class="faq-item">
+        <h3>אפשר לשנות את סדר המועדונים או להוסיף לילה?</h3>
+        <p>בהחלט. גולן בונה את התוכנית סביב הקבוצה - אפשר לשנות סדר, להוסיף מסעדה או לילה נוסף, או להחליף מועדון לפי מה שהחתן והחבר'ה מחפשים.</p>
+      </div>
+      <div class="faq-item">
+        <h3>יש אפשרות להוסיף רקדנית או אטרקציה נוספת?</h3>
+        <p>כן, בתשלום נוסף אפשר להוסיף רקדנית או אטרקציה מיוחדת לחתן, בכל אחד מהערבים או רק באחד מהם.</p>
+      </div>
+      <div class="faq-item">
+        <h3>האם יש חבילות דומות גם למסיבות רווקות?</h3>
+        <p>כן. בדיוק כמו מסיבות רווקים, גולן בונה גם למסיבות רווקות תוכנית מלאה בבוקרשט - מסעדות, לימוזינות, מועדונים וכניסת VIP - בהתאמה לסגנון ולאווירה שהקבוצה מחפשת.</p>
+      </div>
+      <div class="faq-item">
+        <h3>מה קורה אם הקבוצה גדולה מהרגיל?</h3>
+        <p>אין בעיה - גולן מתאים מספר לימוזינות במקביל ושולחנות גדולים יותר במועדונים, כך שכל הקבוצה נשארת ביחד לאורך כל הערב.</p>
+      </div>
     </div>
   </div>
 </section>
@@ -313,6 +460,8 @@
       <li>שילוב טוב כולל ארוחת ערב, לימוזינה בין היעדים וכניסת VIP למועדון.</li>
       <li>אפשר לשלב הסעה, מסעדה ומועדון באותו ערב בלי המתנות מיותרות.</li>
       <li>יש חבילות דומות גם למסיבות רווקות - פשוט מספרים לגולן מה מחפשים.</li>
+      <li>אפשר להוסיף רקדנית או אטרקציה מיוחדת לחתן בתשלום נוסף, לפי בקשה.</li>
+      <li>קבוצה גדולה? גולן מתאם כמה לימוזינות ושולחנות גדולים כדי שכולם יישארו יחד.</li>
     </ul>
   </div>
 </section>
