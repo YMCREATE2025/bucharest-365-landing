@@ -518,51 +518,28 @@
   .cookie-btn-accept{background:linear-gradient(135deg,var(--gold-light),var(--gold));color:#fff;}
   @media (max-width:600px){.cookie-banner-inner{flex-direction:column;align-items:stretch;}.cookie-banner-actions{justify-content:stretch;}.cookie-btn{flex:1;}}
   .stars-bg{position:absolute;top:0;left:0;right:0;bottom:0;z-index:-1;pointer-events:none;overflow:hidden;background:var(--bg);}
-  .spotlight{position:absolute;width:340px;height:620px;clip-path:polygon(50% 0%, 0% 100%, 100% 100%);filter:blur(16px);mix-blend-mode:screen;transform-origin:top center;}
-  .spotlight::before{content:"";position:absolute;top:-5px;left:50%;transform:translateX(-50%);width:12px;height:12px;border-radius:50%;filter:blur(1px);}
-  .spotlight.pink{background:linear-gradient(to bottom, rgba(255,255,255,0.85), rgba(255,20,254,0.55) 35%, rgba(255,20,254,0.12) 75%, transparent);}
-  .spotlight.pink::before{background:radial-gradient(circle, #fff, rgba(255,20,254,0.9));box-shadow:0 0 12px 4px rgba(255,20,254,0.8);}
-  .spotlight.blue{background:linear-gradient(to bottom, rgba(255,255,255,0.85), rgba(100,180,255,0.55) 35%, rgba(100,180,255,0.12) 75%, transparent);}
-  .spotlight.blue::before{background:radial-gradient(circle, #fff, rgba(100,180,255,0.9));box-shadow:0 0 12px 4px rgba(100,180,255,0.8);}
-  .spotlight.s1{top:-1%;left:4%;transform:rotate(-14deg);animation:beamSway1 18s ease-in-out infinite;}
-  .spotlight.s2{top:-1%;right:6%;transform:rotate(12deg);animation:beamSway2 20s ease-in-out infinite;}
-  .spotlight.s3{top:9%;left:20%;transform:rotate(-6deg);animation:beamSway3 16s ease-in-out infinite;}
-  .spotlight.s4{top:9%;right:22%;transform:rotate(8deg);animation:beamSway4 22s ease-in-out infinite;}
-  .spotlight.s5{top:20%;left:3%;transform:rotate(-16deg);animation:beamSway2 19s ease-in-out infinite;}
-  .spotlight.s6{top:20%;right:5%;transform:rotate(15deg);animation:beamSway1 17s ease-in-out infinite;}
-  .spotlight.s7{top:31%;left:22%;transform:rotate(-7deg);animation:beamSway4 21s ease-in-out infinite;}
-  .spotlight.s8{top:31%;right:20%;transform:rotate(9deg);animation:beamSway3 15s ease-in-out infinite;}
-  .spotlight.s9{top:43%;left:4%;transform:rotate(-13deg);animation:beamSway1 20s ease-in-out infinite;}
-  .spotlight.s10{top:43%;right:6%;transform:rotate(11deg);animation:beamSway2 18s ease-in-out infinite;}
-  .spotlight.s11{top:55%;left:20%;transform:rotate(-8deg);animation:beamSway3 16.5s ease-in-out infinite;}
-  .spotlight.s12{top:55%;right:22%;transform:rotate(10deg);animation:beamSway4 19.5s ease-in-out infinite;}
-  .spotlight.s13{top:67%;left:3%;transform:rotate(-15deg);animation:beamSway2 21s ease-in-out infinite;}
-  .spotlight.s14{top:67%;right:5%;transform:rotate(13deg);animation:beamSway1 17.5s ease-in-out infinite;}
-  .spotlight.s15{top:79%;left:22%;transform:rotate(-9deg);animation:beamSway4 20s ease-in-out infinite;}
-  .spotlight.s16{top:79%;right:20%;transform:rotate(7deg);animation:beamSway3 18.5s ease-in-out infinite;}
-  .spotlight.s17{top:90%;left:4%;transform:rotate(-12deg);animation:beamSway1 19s ease-in-out infinite;}
-  .spotlight.s18{top:90%;right:6%;transform:rotate(14deg);animation:beamSway2 16s ease-in-out infinite;}
-  @keyframes beamSway1{0%,100%{opacity:0.55;transform:rotate(-14deg);}50%{opacity:0.85;transform:rotate(-9deg);}}
-  @keyframes beamSway2{0%,100%{opacity:0.5;transform:rotate(12deg);}50%{opacity:0.8;transform:rotate(17deg);}}
-  @keyframes beamSway3{0%,100%{opacity:0.5;transform:rotate(-7deg);}50%{opacity:0.82;transform:rotate(-2deg);}}
-  @keyframes beamSway4{0%,100%{opacity:0.5;transform:rotate(9deg);}50%{opacity:0.8;transform:rotate(14deg);}}
+  .spotlight{position:absolute;border-radius:50%;filter:blur(45px);}
+  .spotlight.s1{width:560px;height:560px;top:2%;right:0%;background:radial-gradient(ellipse at center, rgba(255,20,254,0.65), transparent 72%);animation:spotSway1 10s ease-in-out infinite;}
+  .spotlight.s2{width:500px;height:500px;top:13%;left:1%;background:radial-gradient(ellipse at center, rgba(160,100,255,0.58), transparent 72%);animation:spotSway2 12s ease-in-out infinite;}
+  .spotlight.s3{width:540px;height:540px;top:25%;right:2%;background:radial-gradient(ellipse at center, rgba(255,169,254,0.6), transparent 72%);animation:spotSway3 14s ease-in-out infinite;}
+  .spotlight.s4{width:480px;height:480px;top:36%;left:2%;background:radial-gradient(ellipse at center, rgba(110,150,255,0.55), transparent 72%);animation:spotSway4 11s ease-in-out infinite;}
+  .spotlight.s5{width:540px;height:540px;top:47%;right:1%;background:radial-gradient(ellipse at center, rgba(255,20,254,0.58), transparent 72%);animation:spotSway2 13s ease-in-out infinite;}
+  .spotlight.s6{width:500px;height:500px;top:58%;left:0%;background:radial-gradient(ellipse at center, rgba(160,100,255,0.55), transparent 72%);animation:spotSway1 15s ease-in-out infinite;}
+  .spotlight.s7{width:540px;height:540px;top:69%;right:0%;background:radial-gradient(ellipse at center, rgba(255,169,254,0.58), transparent 72%);animation:spotSway4 12s ease-in-out infinite;}
+  .spotlight.s8{width:500px;height:500px;top:80%;left:1%;background:radial-gradient(ellipse at center, rgba(110,150,255,0.55), transparent 72%);animation:spotSway3 13s ease-in-out infinite;}
+  .spotlight.s9{width:520px;height:520px;top:91%;right:1%;background:radial-gradient(ellipse at center, rgba(255,20,254,0.55), transparent 72%);animation:spotSway1 11s ease-in-out infinite;}
+  @keyframes spotSway1{0%,100%{opacity:0.55;transform:rotate(22deg) translateY(0);}50%{opacity:0.9;transform:rotate(27deg) translateY(16px);}}
+  @keyframes spotSway2{0%,100%{opacity:0.5;transform:rotate(-18deg) translateY(0);}50%{opacity:0.82;transform:rotate(-23deg) translateY(-14px);}}
+  @keyframes spotSway3{0%,100%{opacity:0.52;transform:rotate(-12deg) translateY(0);}50%{opacity:0.85;transform:rotate(-17deg) translateY(-12px);}}
+  @keyframes spotSway4{0%,100%{opacity:0.45;transform:rotate(15deg) translateY(0);}50%{opacity:0.78;transform:rotate(20deg) translateY(12px);}}
   @media (prefers-reduced-motion: reduce){.spotlight{animation:none;}}
-  @media (max-width:700px){.spotlight{width:200px;height:400px;filter:blur(10px);}}
   @media (max-width:700px){.spotlight{width:3px;filter:blur(2px);}.spotlight::before{filter:blur(9px);}}
 </style>
 </head>
 <body>
 
 
-<div class="stars-bg" id="stars-bg" aria-hidden="true"><div class="spotlight pink s1"></div><div class="spotlight blue s2"></div><div class="spotlight pink s3"></div><div class="spotlight blue s4"></div><div class="spotlight pink s5"></div><div class="spotlight blue s6"></div><div class="spotlight pink s7"></div><div class="spotlight blue s8"></div><div class="spotlight pink s9"></div><div class="spotlight blue s10"></div><div class="spotlight pink s11"></div><div class="spotlight blue s12"></div><div class="spotlight pink s13"></div><div class="spotlight blue s14"></div><div class="spotlight pink s15"></div><div class="spotlight blue s16"></div><div class="spotlight pink s17"></div><div class="spotlight blue s18"></div></div><div class="spotlight s2"></div><div class="spotlight s3"></div><div class="spotlight s4"></div><div class="spotlight s5"></div><div class="spotlight s6"></div><div class="spotlight s7"></div><div class="spotlight s8"></div><div class="spotlight s9"></div><div class="spotlight s10"></div><div class="spotlight s11"></div><div class="spotlight s12"></div><div class="spotlight s13"></div><div class="spotlight s14"></div><div class="spotlight s15"></div><div class="spotlight s16"></div></div>
-  <div class="spotlight s2"></div>
-  <div class="spotlight s3"></div>
-  <div class="spotlight s4"></div>
-  <div class="spotlight s5"></div>
-  <div class="spotlight s6"></div>
-  <div class="spotlight s7"></div>
-  <div class="spotlight s8"></div><div class="spotlight s9"></div>
-</div>
+<div class="stars-bg" id="stars-bg" aria-hidden="true"><div class="spotlight s1"></div><div class="spotlight s2"></div><div class="spotlight s3"></div><div class="spotlight s4"></div><div class="spotlight s5"></div><div class="spotlight s6"></div><div class="spotlight s7"></div><div class="spotlight s8"></div><div class="spotlight s9"></div></div>
 
 <a href="#main-content" class="skip-link">דלג לתוכן הראשי</a>
 
