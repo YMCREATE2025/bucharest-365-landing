@@ -112,6 +112,25 @@
   nav{display:flex;gap:32px;}
   nav a{font-size:0.95rem;color:var(--text-dim);transition:color .2s;}
   nav a:hover{color:var(--gold-light);text-shadow:0 0 6px var(--gold-light);}
+  .nav-dropdown{position:relative;}
+  .nav-dropdown>a{display:flex;align-items:center;gap:4px;}
+  .nav-dropdown-caret{font-size:0.65rem;transition:transform .2s;}
+  .nav-dropdown:hover .nav-dropdown-caret, .nav-dropdown:focus-within .nav-dropdown-caret{transform:rotate(180deg);}
+  .nav-dropdown-menu{
+    position:absolute;top:100%;right:0;margin-top:14px;min-width:200px;
+    background:rgba(15,15,20,0.98);backdrop-filter:blur(12px);
+    border:1px solid var(--border);border-radius:14px;padding:8px;
+    box-shadow:var(--neon-box-soft);
+    opacity:0;visibility:hidden;transform:translateY(-8px);
+    transition:opacity .2s, transform .2s, visibility .2s;
+    z-index:200;
+  }
+  .nav-dropdown:hover .nav-dropdown-menu,
+  .nav-dropdown:focus-within .nav-dropdown-menu{
+    opacity:1;visibility:visible;transform:translateY(0);
+  }
+  .nav-dropdown-menu a{display:block;padding:9px 14px;border-radius:9px;font-size:0.88rem;color:var(--text-dim);white-space:nowrap;}
+  .nav-dropdown-menu a:hover{background:rgba(255,20,254,0.1);color:var(--gold-light);text-shadow:none;}
   .btn{
     display:inline-block;padding:12px 28px;border-radius:999px;
     background:linear-gradient(135deg,var(--wa-green),var(--wa-green-dark));
@@ -583,7 +602,7 @@
   <div class="container">
     <a href="https://bucharest365.vip/#top" class="logo"><img src="logo.png" alt="Bucharest365" class="logo-img" data-edit="logo-img"> <span dir="ltr"><span style="font-weight:900;">BUCHAREST</span><span style="font-weight:400;">365.vip</span></span></a>
     <nav>
-      <a href="#services">שירותים</a>
+      <div class="nav-dropdown"><a href="#services">שירותים <span class="nav-dropdown-caret">▾</span></a><div class="nav-dropdown-menu"><a href="restaurants.html">מסעדות מומלצות</a><a href="limos.html">לימוזינות והסעות</a></div></div>
       <a href="#about">למה גולן</a>
       <a href="#reviews">ממליצים</a>
       <a href="#faq">שאלות נפוצות</a>
