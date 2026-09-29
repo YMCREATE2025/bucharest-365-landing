@@ -494,7 +494,7 @@ document.querySelectorAll('a[href*="instagram.com"]').forEach(function(a){
   var valEl = document.getElementById('eur-rate-value');
   var updEl = document.getElementById('eur-rate-updated');
   if(!valEl) return;
-  fetch('https://api.frankfurter.app/latest?from=EUR&to=RON')
+  fetch('https://api.frankfurter.dev/v1/latest?from=EUR&to=RON')
     .then(function(r){ return r.json(); })
     .then(function(data){
       var rate = data.rates && data.rates.RON;
