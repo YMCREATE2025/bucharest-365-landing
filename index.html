@@ -166,6 +166,7 @@
     background-position:center;
     text-align:center;
   }
+  .hero-top-badge{text-align:center;margin-bottom:4px;}
   .hero-flex{display:flex;align-items:flex-start;gap:48px;}
   .hero-text-col{flex:1 1 auto;text-align:right;min-width:0;}
   .hero-photo-col{flex:0 0 auto;margin-top:212px;}
@@ -180,7 +181,6 @@
     text-shadow:var(--neon-text);
     box-shadow:var(--neon-box-soft);
   }
-  .hero-text-col .eyebrow{display:table;margin:0 auto 20px;}
   .hero h1{
     font-size:clamp(2.4rem, 5vw, 4rem);font-weight:800;line-height:1.15;
     margin-bottom:24px;
@@ -581,13 +581,15 @@
 <section id="top" class="hero" data-edit-bg="hero-bg-img" data-bg-filename="hero-bg.jpg">
 <div id="main-content"></div>
   <div class="container">
+    <div class="hero-top-badge">
+      <img src="logo.png" alt="Bucharest365" class="hero-logo" data-edit="logo-img">
+      <span class="eyebrow">✦ החוויה שלכם בבוקרשט מתחילה כאן ✦</span>
+    </div>
     <div class="hero-flex">
       <div class="hero-photo-col">
         <img class="hero-golan-photo" src="golan-crown-headshot.jpg" alt="גולן כ' - Bucharest365">
       </div>
       <div class="hero-text-col">
-        <img src="logo.png" alt="Bucharest365" class="hero-logo" data-edit="logo-img">
-        <span class="eyebrow">✦ החוויה שלכם בבוקרשט מתחילה כאן ✦</span>
         <h1><span data-edit="hero-title-line1">לילות בוקרשט עם גולן,</span> <span class="accent" data-edit="hero-title-accent">תתכוננו לחוויה כמו שמגיע לכם!</span></h1>
         <p class="lead one-line" data-edit="hero-lead">ליווי VIP אישי, מקומות נבחרים ושירות בעברית - כדי שאתם תגיעו ליהנות, ואנחנו נדאג לכל השאר.</p>
         <div class="hero-ctas">
