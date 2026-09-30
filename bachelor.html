@@ -182,6 +182,14 @@
   .included-item p{color:var(--text-dim);font-size:0.88rem;}
   @media (max-width:700px){ .included-grid{grid-template-columns:1fr;} }
 
+  .pkg-more-btn{
+    display:inline-block;margin-top:14px;padding:8px 18px;border-radius:999px;
+    background:transparent;border:1px solid;font-size:0.82rem;font-weight:700;
+    cursor:pointer;font-family:inherit;transition:opacity .2s;color:var(--gold-light);border-color:var(--border);
+  }
+  .pkg-more-btn:hover{opacity:0.8;}
+  .pkg-extra{display:none;}
+
   .cta-band{
     background:linear-gradient(135deg, rgba(255,20,254,0.12), rgba(255,20,254,0.02));
     border-top:1px solid var(--border);border-bottom:1px solid var(--border);
@@ -295,10 +303,56 @@
   </div>
 </section>
 
+<section id="bachelor-packages" style="background:var(--bg-alt);">
+  <div class="container">
+    <span class="sec-eyebrow" style="text-align:center;display:block;">חבילות VIP</span>
+    <h2 class="sec-title" style="text-align:center;margin-bottom:8px;">שתי חבילות ל-3 לילות VIP</h2>
+    <p class="sec-sub one-line" style="text-align:center;">הכל כלול, הכל מאורגן מראש - אתם רק מגיעים ונהנים.</p>
+    <div class="rest-grid" style="grid-template-columns:repeat(2,1fr);margin-top:28px;">
+
+      <div class="rest-card">
+        <div class="rest-media">
+          <img class="rest-img" src="bachelor-hero.jpg" alt="חבילת BUCHAREST365 SILVER למסיבת רווקים" loading="lazy">
+          <div class="rest-title-overlay"><span class="rest-tag">3 לילות VIP</span><h3>BUCHAREST365 Silver</h3></div>
+        </div>
+        <div class="rest-body">
+          <p>3 לילות VIP בבוקרשט - נסיעה בלימוזינה עם שמפניה ורקדניות, ומסע בין המועדונים הכי חמים בעיר. חבילה מצוינת לקבוצה שרוצה חוויה שלמה ברמה גבוהה בלי להגזים בתקציב.</p>
+          <div class="rest-price-row"><span>לילה 1 - ג'נטלמן קלאב</span><strong>שולחן שמור + ריקוד חינם לחתן</strong></div>
+          <div class="rest-price-row"><span>לילה 2 - פרדו</span><strong>שולחן במיקום הכי טוב</strong></div>
+          <div class="rest-price-row"><span>לילה 3 - פייס</span><strong>אחד המקומות המבוקשים בעיר</strong></div>
+          <div class="rest-price-row pkg-extra"><span>שתייה</span><strong>קלה חופשי</strong></div>
+          <div class="rest-price-row pkg-extra"><span>הסעות</span><strong>פרטיות לכל האירועים, מהשדה ועד המלון</strong></div>
+          <button type="button" class="pkg-more-btn" onclick="togglePkgDetails(this)">עוד פרטים ↓</button>
+        </div>
+      </div>
+
+      <div class="rest-card">
+        <div class="rest-media">
+          <img class="rest-img" src="bachelor-hero.jpg" alt="חבילת BUCHAREST365 GOLD למסיבת רווקים" loading="lazy">
+          <div class="rest-title-overlay"><span class="rest-tag">3 לילות VIP · רמה גבוהה</span><h3>BUCHAREST365 Gold</h3></div>
+        </div>
+        <div class="rest-body">
+          <p>3 לילות VIP ברמה הכי גבוהה שיש - נסיעה בלימוזינה עם שמפניה ורקדניות, ולילה אחר בכל אחד מ-3 המועדונים המובילים בעיר, עם שולחנות משודרגים ופינוקים נוספים על החתן.</p>
+          <div class="rest-price-row"><span>לילה 1 - ג'נטלמן קלאב</span><strong>שולחן שמור, ריקוד לחתן, בקבוקי פרימיום</strong></div>
+          <div class="rest-price-row"><span>לילה 2 - פרדו</span><strong>שולחן VIP + פלטת אוכל או פירות</strong></div>
+          <div class="rest-price-row"><span>לילה 3 - פייס</span><strong>המועדון היוקרתי ביותר עם שולחן VIP</strong></div>
+          <div class="rest-price-row pkg-extra"><span>שתייה</span><strong>חופשית פרימיום בכל שלושת הלילות</strong></div>
+          <div class="rest-price-row pkg-extra"><span>הסעות</span><strong>פרטיות לכל האירועים, מהשדה ועד ההמראה</strong></div>
+          <button type="button" class="pkg-more-btn" onclick="togglePkgDetails(this)">עוד פרטים ↓</button>
+        </div>
+      </div>
+
+    </div>
+    <div class="cta-row" style="margin-top:32px;">
+      <a class="btn" data-wa-loc="bachelor-party-top" href="https://wa.me/972544709642?text=נשמח%20שתכנן%20לנו%20מסיבת%20רווקים" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.48 1.32 5L2 22l5.25-1.38c1.45.79 3.08 1.21 4.79 1.21h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.91-7.01A9.816 9.816 0 0012.04 2zm5.83 14.05c-.24.68-1.4 1.32-1.94 1.4-.5.08-1.12.11-1.81-.11-.42-.13-.96-.31-1.65-.61-2.91-1.26-4.81-4.18-4.96-4.38-.15-.2-1.18-1.57-1.18-3 0-1.42.75-2.12 1.01-2.41.26-.29.58-.36.77-.36.19 0 .39 0 .56.01.18.01.42-.07.65.5.24.58.82 2.01.89 2.16.07.15.12.32.02.52-.09.2-.14.32-.28.49-.14.17-.29.38-.42.51-.14.14-.28.29-.12.57.16.28.71 1.17 1.52 1.9 1.05.94 1.93 1.23 2.21 1.37.28.14.44.12.61-.07.16-.19.68-.79.86-1.06.18-.27.36-.22.61-.13.24.09 1.55.73 1.81.86.27.13.45.2.51.31.07.11.07.63-.17 1.31z"/></svg>אנחנו רוצים מסיבת רווקים בלתי נשכחת</a>
+    </div>
+  </div>
+</section>
+
 <section id="bachelor-timeline">
   <div class="container">
     <span class="sec-eyebrow" style="text-align:center;display:block;">איך זה נראה בפועל</span>
-    <h2 class="sec-title" style="text-align:center;margin-bottom:36px;">ערב טיפוסי במסיבת רווקים עם Bucharest365</h2>
+    <h2 class="sec-title" style="text-align:center;margin-bottom:36px;">ערב קלאסי במסיבת רווקים עם Bucharest365</h2>
     <div class="timeline">
       <div class="timeline-step">
         <div class="timeline-num">1</div>
@@ -335,42 +389,6 @@
           <p>אם הקבוצה רוצה עוד, גולן מסדר מעבר למועדון נוסף עם כניסת VIP, או פשוט משאיר אתכם עד סוף הלילה במקום שהכי מתחבר לאווירה.</p>
         </div>
       </div>
-    </div>
-  </div>
-</section>
-
-<section id="bachelor-packages" style="background:var(--bg-alt);">
-  <div class="container">
-    <span class="sec-eyebrow" style="text-align:center;display:block;">חבילות VIP</span>
-    <h2 class="sec-title" style="text-align:center;margin-bottom:36px;">שתי חבילות ל-3 לילות VIP</h2>
-    <div class="rest-grid" style="grid-template-columns:repeat(2,1fr);">
-
-      <div class="rest-card">
-        <div class="rest-media">
-          <img class="rest-img" src="card2c.jpg" alt="חבילת BUCHAREST365 SILVER למסיבת רווקים" loading="lazy">
-          <div class="rest-title-overlay"><span class="rest-tag">3 לילות VIP</span><h3>BUCHAREST365 Silver</h3></div>
-        </div>
-        <div class="rest-body">
-          <p>3 לילות VIP בבוקרשט - נסיעה בלימוזינה עם שמפניה ורקדניות, ומסע בין המועדונים הכי חמים בעיר. חבילה מצוינת לקבוצה שרוצה חוויה שלמה ברמה גבוהה בלי להגזים בתקציב.</p>
-          <div class="rest-price-row"><span>לילה 1 - ג'נטלמן קלאב</span><strong>שולחן שמור + ריקוד חינם לחתן</strong></div>
-          <div class="rest-price-row"><span>לילה 2 - פרדו</span><strong>שולחן במיקום הכי טוב</strong></div>
-          <div class="rest-price-row"><span>לילה 3 - פייס</span><strong>אחד המקומות המבוקשים בעיר</strong></div>
-        </div>
-      </div>
-
-      <div class="rest-card">
-        <div class="rest-media">
-          <img class="rest-img" src="card2b.jpg" alt="חבילת BUCHAREST365 GOLD למסיבת רווקים" loading="lazy">
-          <div class="rest-title-overlay"><span class="rest-tag">3 לילות VIP · רמה גבוהה</span><h3>BUCHAREST365 Gold</h3></div>
-        </div>
-        <div class="rest-body">
-          <p>3 לילות VIP ברמה הכי גבוהה שיש - נסיעה בלימוזינה עם שמפניה ורקדניות, ולילה אחר בכל אחד מ-3 המועדונים המובילים בעיר, עם שולחנות משודרגים ופינוקים נוספים על החתן.</p>
-          <div class="rest-price-row"><span>לילה 1 - ג'נטלמן קלאב</span><strong>שולחן שמור, ריקוד לחתן, בקבוקי פרימיום</strong></div>
-          <div class="rest-price-row"><span>לילה 2 - פרדו</span><strong>שולחן VIP + פלטת אוכל או פירות</strong></div>
-          <div class="rest-price-row"><span>לילה 3 - פייס</span><strong>המועדון היוקרתי ביותר עם שולחן VIP</strong></div>
-        </div>
-      </div>
-
     </div>
   </div>
 </section>
@@ -581,6 +599,15 @@ document.querySelectorAll('a[href*="wa.me"]').forEach(function(a){
 document.querySelectorAll('a[href*="instagram.com"]').forEach(function(a){
   a.addEventListener('click', function(){ trackEvent('instagram-clicks'); });
 });
+
+function togglePkgDetails(btn){
+  const card = btn.closest('.rest-card');
+  if(!card) return;
+  const extras = card.querySelectorAll('.pkg-extra');
+  const isHidden = extras.length && extras[0].style.display !== 'block';
+  extras.forEach(function(li){ li.style.display = isHidden ? 'block' : 'none'; });
+  btn.textContent = isHidden ? 'הצג פחות ↑' : 'עוד פרטים ↓';
+}
 
 </script>
 
