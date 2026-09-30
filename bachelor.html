@@ -188,7 +188,6 @@
     cursor:pointer;font-family:inherit;transition:opacity .2s;color:var(--gold-light);border-color:var(--border);
   }
   .pkg-more-btn:hover{opacity:0.8;}
-  .pkg-extra{display:none;}
 
   .cta-band{
     background:linear-gradient(135deg, rgba(255,20,254,0.12), rgba(255,20,254,0.02));
@@ -322,7 +321,7 @@
           <div class="rest-price-row"><span>לילה 3 - פייס</span><strong>אחד המקומות המבוקשים בעיר</strong></div>
           <div class="rest-price-row pkg-extra"><span>שתייה</span><strong>קלה חופשי</strong></div>
           <div class="rest-price-row pkg-extra"><span>הסעות</span><strong>פרטיות לכל האירועים, מהשדה ועד המלון</strong></div>
-          <button type="button" class="pkg-more-btn" onclick="togglePkgDetails(this)">עוד פרטים ↓</button>
+          <a class="pkg-more-btn" data-wa-loc="bachelor-package-card" href="https://wa.me/972544709642?text=נשמח%20שתכנן%20לנו%20מסיבת%20רווקים" target="_blank" rel="noopener">דברו איתי לפרטים נוספים</a>
         </div>
       </div>
 
@@ -338,7 +337,7 @@
           <div class="rest-price-row"><span>לילה 3 - פייס</span><strong>המועדון היוקרתי ביותר עם שולחן VIP</strong></div>
           <div class="rest-price-row pkg-extra"><span>שתייה</span><strong>חופשית פרימיום בכל שלושת הלילות</strong></div>
           <div class="rest-price-row pkg-extra"><span>הסעות</span><strong>פרטיות לכל האירועים, מהשדה ועד ההמראה</strong></div>
-          <button type="button" class="pkg-more-btn" onclick="togglePkgDetails(this)">עוד פרטים ↓</button>
+          <a class="pkg-more-btn" data-wa-loc="bachelor-package-card" href="https://wa.me/972544709642?text=נשמח%20שתכנן%20לנו%20מסיבת%20רווקים" target="_blank" rel="noopener">דברו איתי לפרטים נוספים</a>
         </div>
       </div>
 
@@ -354,7 +353,7 @@
           <div class="rest-price-row"><span>לילה 3 - ג'נטלמן קלאב</span><strong>שולחנות, בקבוקים וריקוד פרטי לחתן</strong></div>
           <div class="rest-price-row pkg-extra"><span>לימוזינה</span><strong>נסיעות עם רקדניות לאורך כל החופשה</strong></div>
           <div class="rest-price-row pkg-extra"><span>הסעות</span><strong>פרטיות ומקצועיות מהשדה ולכל האירועים</strong></div>
-          <button type="button" class="pkg-more-btn" onclick="togglePkgDetails(this)">עוד פרטים ↓</button>
+          <a class="pkg-more-btn" data-wa-loc="bachelor-package-card" href="https://wa.me/972544709642?text=נשמח%20שתכנן%20לנו%20מסיבת%20רווקים" target="_blank" rel="noopener">דברו איתי לפרטים נוספים</a>
         </div>
       </div>
 
@@ -616,14 +615,6 @@ document.querySelectorAll('a[href*="instagram.com"]').forEach(function(a){
   a.addEventListener('click', function(){ trackEvent('instagram-clicks'); });
 });
 
-function togglePkgDetails(btn){
-  const card = btn.closest('.rest-card');
-  if(!card) return;
-  const extras = card.querySelectorAll('.pkg-extra');
-  const isHidden = extras.length && extras[0].style.display !== 'block';
-  extras.forEach(function(li){ li.style.display = isHidden ? 'block' : 'none'; });
-  btn.textContent = isHidden ? 'הצג פחות ↑' : 'עוד פרטים ↓';
-}
 
 </script>
 
