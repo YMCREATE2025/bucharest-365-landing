@@ -154,6 +154,14 @@
   .rest-area{color:var(--gold-light);font-size:0.82rem;font-weight:600;}
   @media (max-width:900px){ .rest-grid{grid-template-columns:repeat(2,1fr);} }
   @media (max-width:600px){ .rest-grid{grid-template-columns:1fr;} }
+
+  .included-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;max-width:960px;margin:0 auto;}
+  .included-item{display:flex;gap:14px;align-items:flex-start;background:var(--card);border:2px solid var(--border);border-radius:14px;padding:18px 20px;box-shadow:var(--neon-box-soft);}
+  .included-icon{font-size:1.4rem;flex-shrink:0;}
+  .included-item h4{font-size:0.98rem;margin-bottom:4px;color:var(--gold-light);text-shadow:var(--neon-text);}
+  .included-item p{color:var(--text-dim);font-size:0.88rem;}
+  @media (max-width:900px){ .included-grid{grid-template-columns:repeat(2,1fr);} }
+  @media (max-width:600px){ .included-grid{grid-template-columns:1fr;} }
   .card-more-link{display:inline-block;margin-top:6px;color:var(--gold-light);font-weight:700;font-size:0.9rem;text-decoration:underline;text-shadow:var(--neon-text);}
   .card-more-link:hover{color:var(--gold);}
 
@@ -264,9 +272,39 @@
 
 <section class="page-hero" id="main-content">
   <div class="container">
-    <span class="eyebrow">✦ אטרקציות וחיי לילה</span>
+    <span class="eyebrow">✦ אטרקציות בבוקרשט</span>
     <h1>חיי הלילה של בוקרשט, בלי לעמוד בתור</h1>
     <p>בוקרשט היא בירת חיי הלילה של רומניה - עשרות מועדונים, ברים ומופעים ברמות שונות. גולן מכיר את כל הסצנה ויודע בדיוק לאיזה מקום לקחת אתכם, בהתאם למה שאתם מחפשים.</p>
+  </div>
+</section>
+
+<section id="day-attractions">
+  <div class="container">
+    <span class="sec-eyebrow" style="text-align:center;display:block;">ביום</span>
+    <h2 class="sec-title" style="text-align:center;margin-bottom:36px;">אטרקציות יום בבוקרשט וסביבתה</h2>
+    <div class="included-grid">
+      <div class="included-item"><span class="included-icon">🏎️</span><div><h4>קרטינג</h4><p>מסלול מרוצים אמיתי לקבוצה - תחרות מהירה וכיפית לפני שיוצאים ללילה.</p></div></div>
+      <div class="included-item"><span class="included-icon">🏞️</span><div><h4>טיול נופים מחוץ לבוקרשט</h4><p>יציאה ליום שלם לטירות, הרים או כפרים ציוריים מחוץ לעיר, עם נהג צמוד.</p></div></div>
+      <div class="included-item"><span class="included-icon">🏍️</span><div><h4>טרקטורונים</h4><p>רכיבת שטח אדרנלינית בטבע שמסביב לבוקרשט - חוויה מעולה לקבוצת חברים.</p></div></div>
+      <div class="included-item"><span class="included-icon">🎯</span><div><h4>פיינבול</h4><p>קרב פיינבול מאורגן לקבוצה - אטרקציה מצוינת למסיבת רווקים או יום גיבוש.</p></div></div>
+      <div class="included-item"><span class="included-icon">🏊</span><div><h4>בריכות בעונה</h4><p>יום רגוע בבריכות ובבתי מלון מפנקים, בעונה החמה - מנוחה לפני הלילה.</p></div></div>
+      <div class="included-item"><span class="included-icon">🧖</span><div><h4>טרמה</h4><p>קומפלקס הספא והבריכות המפורסם של בוקרשט - יום שלם של פינוק ומים חמים.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<section id="night-attractions" style="background:var(--bg-alt);">
+  <div class="container">
+    <span class="sec-eyebrow" style="text-align:center;display:block;">בלילה</span>
+    <h2 class="sec-title" style="text-align:center;margin-bottom:36px;">אטרקציות לילה בבוקרשט</h2>
+    <div class="included-grid">
+      <div class="included-item"><span class="included-icon">🎶</span><div><h4>מועדונים</h4><p>ממוזיקה אלקטרונית ועד מועדוני VIP עם שולחנות ובקבוקים - לכל סגנון וקהל.</p></div></div>
+      <div class="included-item"><span class="included-icon">🍸</span><div><h4>דאנסברים</h4><p>ברים עם רחבת ריקודים ואווירה סוערת, אופציה מצוינת לפתיחת ערב.</p></div></div>
+      <div class="included-item"><span class="included-icon">🍽️</span><div><h4>מסעדות מיוחדות</h4><p>ארוחת ערב באווירה ייחודית לפני שממשיכים לחלק הסוער של הלילה.</p></div></div>
+      <div class="included-item"><span class="included-icon">💃</span><div><h4>מועדוני חשפנות</h4><p>מהמועדונים המוכרים באירופה, עם כניסת VIP ושולחן שמור לפי בקשה.</p></div></div>
+      <div class="included-item"><span class="included-icon">🚗</span><div><h4>לימוזינות</h4><p>נסיעה בין היעדים בסטייל, עם שמפניה ותאורה - חלק בלתי נפרד מהלילה.</p></div></div>
+      <div class="included-item"><span class="included-icon">🌆</span><div><h4>רופטופים</h4><p>ברים על גגות עם נוף לעיר - התחלה אלגנטית לערב או סיום רגוע ללילה.</p></div></div>
+    </div>
   </div>
 </section>
 
