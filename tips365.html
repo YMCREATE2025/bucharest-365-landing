@@ -172,6 +172,10 @@
   .eur-rate-label{font-size:0.8rem;color:var(--text-dim);letter-spacing:0.5px;}
   .eur-rate-value{font-size:2.4rem;font-weight:800;color:var(--gold-light);text-shadow:var(--neon-text);}
   .eur-rate-updated{font-size:0.75rem;color:var(--text-dim);opacity:0.7;}
+  .weather-box{margin-top:14px;background:rgba(0,0,0,0.25);border:1px solid var(--border);border-radius:14px;padding:18px 22px;display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center;}
+  .weather-label{font-size:0.8rem;color:var(--text-dim);letter-spacing:0.5px;}
+  .weather-value{font-size:2.1rem;font-weight:800;color:var(--gold-light);text-shadow:var(--neon-text);}
+  .weather-updated{font-size:0.75rem;color:var(--text-dim);opacity:0.7;}
   @media (max-width:800px){
     .tip-grid{grid-template-columns:1fr;}
     .tip-block-currency{grid-column:auto;}
@@ -332,6 +336,11 @@
         <div class="tip-block-head"><span class="tip-icon">❄️</span><h3>מזג האוויר</h3></div>
         <p>קריר עד קריר מאוד. עדיין אין שלג, אבל תקופת המינוסים כבר התחילה. כדאי להביא כפפות, כובעי צמר, ובעיקר נעליים נוחות שמונעות החלקה.</p>
         <p>יש מתחם החלקה על הקרח בקניון AFI ובפארק צ'ישמיג'יו (Cișmigiu).</p>
+        <div class="weather-box">
+          <span class="weather-label">הטמפרטורה כרגע בבוקרשט</span>
+          <span class="weather-value" id="weather-value">טוען...</span>
+          <span class="weather-updated" id="weather-updated"></span>
+        </div>
       </div>
 
       <div class="tip-block tip-block-currency">
@@ -505,6 +514,28 @@ document.querySelectorAll('a[href*="instagram.com"]').forEach(function(a){
     .catch(function(){
       valEl.textContent = '1€ = 4.97 ליי (משוער)';
       updEl.textContent = '';
+    });
+})();
+
+
+(function(){
+  var wEl = document.getElementById('weather-value');
+  var wUpdEl = document.getElementById('weather-updated');
+  if(!wEl) return;
+  var weatherLabels = {0: "בהיר", 1: "בהיר בעיקר", 2: "מעונן חלקית", 3: "מעונן", 45: "ערפל", 48: "ערפל קפוא", 51: "טפטוף קל", 53: "טפטוף", 55: "טפטוף חזק", 61: "גשם קל", 63: "גשם", 65: "גשם חזק", 71: "שלג קל", 73: "שלג", 75: "שלג חזק", 80: "ממטרים קלים", 81: "ממטרים", 82: "ממטרים חזקים", 95: "סופת רעמים"};
+  fetch('https://api.open-meteo.com/v1/forecast?latitude=44.43&longitude=26.10&current_weather=true&timezone=Europe%2FBucharest')
+    .then(function(r){ return r.json(); })
+    .then(function(data){
+      var cw = data.current_weather;
+      if(!cw) throw new Error('no weather');
+      var desc = weatherLabels[cw.weathercode] || '';
+      wEl.textContent = Math.round(cw.temperature) + '°C' + (desc ? ' · ' + desc : '');
+      var t = cw.time ? cw.time.replace('T', ' ') : '';
+      wUpdEl.textContent = t ? 'מעודכן ל-' + t : '';
+    })
+    .catch(function(){
+      wEl.textContent = 'לא זמין כרגע';
+      wUpdEl.textContent = '';
     });
 })();
 </script>
