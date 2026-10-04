@@ -369,7 +369,7 @@
             <span class="rate-value" id="rate-ils-eur">טוען...</span>
           </div>
           <div class="rate-box">
-            <span class="rate-label">שער רון רומני ליורו</span>
+            <span class="rate-label">שער יורו לרון רומני</span>
             <span class="rate-value" id="rate-ron-eur">טוען...</span>
           </div>
         </div>
@@ -540,13 +540,13 @@ document.querySelectorAll('a[href*="instagram.com"]').forEach(function(a){
       var ronToEur = ilsToEur / ilsToRon;
       ilsRonEl.textContent = '1₪ = ' + ilsToRon.toFixed(2) + ' ליי';
       ilsEurEl.textContent = '1€ = ' + (1 / ilsToEur).toFixed(2) + '₪';
-      ronEurEl.textContent = '1 ליי = ' + ronToEur.toFixed(3) + '€';
+      ronEurEl.textContent = '1€ = ' + (1 / ronToEur).toFixed(2) + ' ליי';
       updEl.textContent = 'מעודכן ל-' + data.date;
     })
     .catch(function(){
       ilsRonEl.textContent = '1₪ ≈ 1.51 ליי';
       ilsEurEl.textContent = '1€ ≈ 3.48₪';
-      ronEurEl.textContent = '1 ליי ≈ 0.19€';
+      ronEurEl.textContent = '1€ ≈ 5.25 ליי';
       updEl.textContent = '';
     });
 })();
