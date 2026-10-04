@@ -361,7 +361,7 @@
         <p>מקומות שמחליפים כסף ישראלי: מול מלון מריוט, והציינג' בפיאצה רומנה.</p>
         <div class="rate-grid">
           <div class="rate-box">
-            <span class="rate-label">שער שקל לרון רומני</span>
+            <span class="rate-label">שער רון רומני לשקל</span>
             <span class="rate-value" id="rate-ils-ron">טוען...</span>
           </div>
           <div class="rate-box">
@@ -538,13 +538,13 @@ document.querySelectorAll('a[href*="instagram.com"]').forEach(function(a){
       var ilsToEur = data.rates && data.rates.EUR;
       if(!ilsToRon || !ilsToEur) throw new Error('no rate');
       var ronToEur = ilsToEur / ilsToRon;
-      ilsRonEl.textContent = '1₪ = ' + ilsToRon.toFixed(2) + ' ליי';
+      ilsRonEl.textContent = '1 ליי = ' + (1 / ilsToRon).toFixed(2) + '₪';
       ilsEurEl.textContent = '1€ = ' + (1 / ilsToEur).toFixed(2) + '₪';
       ronEurEl.textContent = '1€ = ' + (1 / ronToEur).toFixed(2) + ' ליי';
       updEl.textContent = 'מעודכן ל-' + data.date;
     })
     .catch(function(){
-      ilsRonEl.textContent = '1₪ ≈ 1.51 ליי';
+      ilsRonEl.textContent = '1 ליי ≈ 0.66₪';
       ilsEurEl.textContent = '1€ ≈ 3.48₪';
       ronEurEl.textContent = '1€ ≈ 5.25 ליי';
       updEl.textContent = '';
