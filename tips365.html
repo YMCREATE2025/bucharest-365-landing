@@ -361,7 +361,7 @@
         <p>מקומות שמחליפים כסף ישראלי: מול מלון מריוט, והציינג' בפיאצה רומנה.</p>
         <div class="rate-grid">
           <div class="rate-box">
-            <span class="rate-label">שער רון רומני לשקל</span>
+            <span class="rate-label">שער שקל לרון רומני</span>
             <span class="rate-value" id="rate-ils-ron">טוען...</span>
           </div>
           <div class="rate-box">
@@ -538,13 +538,13 @@ document.querySelectorAll('a[href*="instagram.com"]').forEach(function(a){
       var ilsToEur = data.rates && data.rates.EUR;
       if(!ilsToRon || !ilsToEur) throw new Error('no rate');
       var ronToEur = ilsToEur / ilsToRon;
-      ilsRonEl.innerHTML = '<bdi dir="ltr">1 ליי</bdi> = <bdi dir="ltr">' + (1 / ilsToRon).toFixed(2) + '₪</bdi>';
+      ilsRonEl.innerHTML = '<bdi dir="ltr">1₪</bdi> = <bdi dir="ltr">' + ilsToRon.toFixed(2) + ' ליי</bdi>';
       ilsEurEl.innerHTML = '<bdi dir="ltr">1€</bdi> = <bdi dir="ltr">' + (1 / ilsToEur).toFixed(2) + '₪</bdi>';
       ronEurEl.innerHTML = '<bdi dir="ltr">1€</bdi> = <bdi dir="ltr">' + (1 / ronToEur).toFixed(2) + ' ליי</bdi>';
       updEl.textContent = 'מעודכן ל-' + data.date;
     })
     .catch(function(){
-      ilsRonEl.innerHTML = '<bdi dir="ltr">1 ליי</bdi> ≈ <bdi dir="ltr">0.66₪</bdi>';
+      ilsRonEl.innerHTML = '<bdi dir="ltr">1₪</bdi> ≈ <bdi dir="ltr">1.51 ליי</bdi>';
       ilsEurEl.innerHTML = '<bdi dir="ltr">1€</bdi> ≈ <bdi dir="ltr">3.48₪</bdi>';
       ronEurEl.innerHTML = '<bdi dir="ltr">1€</bdi> ≈ <bdi dir="ltr">5.25 ליי</bdi>';
       updEl.textContent = '';
