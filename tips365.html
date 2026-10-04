@@ -538,15 +538,15 @@ document.querySelectorAll('a[href*="instagram.com"]').forEach(function(a){
       var ilsToEur = data.rates && data.rates.EUR;
       if(!ilsToRon || !ilsToEur) throw new Error('no rate');
       var ronToEur = ilsToEur / ilsToRon;
-      ilsRonEl.textContent = '1 ליי = ' + (1 / ilsToRon).toFixed(2) + '₪';
-      ilsEurEl.textContent = '1€ = ' + (1 / ilsToEur).toFixed(2) + '₪';
-      ronEurEl.textContent = '1€ = ' + (1 / ronToEur).toFixed(2) + ' ליי';
+      ilsRonEl.innerHTML = '<bdi dir="ltr">1 ליי</bdi> = <bdi dir="ltr">' + (1 / ilsToRon).toFixed(2) + '₪</bdi>';
+      ilsEurEl.innerHTML = '<bdi dir="ltr">1€</bdi> = <bdi dir="ltr">' + (1 / ilsToEur).toFixed(2) + '₪</bdi>';
+      ronEurEl.innerHTML = '<bdi dir="ltr">1€</bdi> = <bdi dir="ltr">' + (1 / ronToEur).toFixed(2) + ' ליי</bdi>';
       updEl.textContent = 'מעודכן ל-' + data.date;
     })
     .catch(function(){
-      ilsRonEl.textContent = '1 ליי ≈ 0.66₪';
-      ilsEurEl.textContent = '1€ ≈ 3.48₪';
-      ronEurEl.textContent = '1€ ≈ 5.25 ליי';
+      ilsRonEl.innerHTML = '<bdi dir="ltr">1 ליי</bdi> ≈ <bdi dir="ltr">0.66₪</bdi>';
+      ilsEurEl.innerHTML = '<bdi dir="ltr">1€</bdi> ≈ <bdi dir="ltr">3.48₪</bdi>';
+      ronEurEl.innerHTML = '<bdi dir="ltr">1€</bdi> ≈ <bdi dir="ltr">5.25 ליי</bdi>';
       updEl.textContent = '';
     });
 })();
