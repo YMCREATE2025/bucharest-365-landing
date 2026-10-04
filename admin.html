@@ -39,7 +39,13 @@
   .logout-btn{background:transparent;border:1px solid var(--border);color:var(--text-dim);padding:9px 18px;border-radius:999px;cursor:pointer;font-size:0.85rem;}
   .logout-btn:hover{color:var(--gold-light);border-color:var(--gold);}
 
-  .cards-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-bottom:32px;}
+  .cards-row{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:10px;margin-bottom:32px;}
+  .cards-row .links-card{grid-column:1/-1;}
+  .cards-row .stat-card{padding:14px 10px;}
+  .cards-row .stat-card .num{font-size:1.6rem;}
+  .cards-row .stat-card .lbl{font-size:0.75rem;line-height:1.3;}
+  @media (max-width:1100px){.cards-row{grid-template-columns:repeat(4,minmax(0,1fr));}}
+  @media (max-width:600px){.cards-row{grid-template-columns:repeat(2,minmax(0,1fr));}}
   .stat-card{background:var(--card);border:2px solid var(--border);border-radius:14px;padding:20px;box-shadow:var(--neon-box-soft);}
   .stat-card .num{font-size:2rem;font-weight:800;color:var(--gold-light);text-shadow:0 0 8px rgba(255,20,254,0.3);}
   #stat-whatsapp-clicks .num{color:var(--wa-green);text-shadow:0 0 8px rgba(37,211,102,0.35);}
