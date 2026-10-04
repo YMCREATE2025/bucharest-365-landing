@@ -365,7 +365,7 @@
             <span class="rate-value" id="rate-ils-ron">טוען...</span>
           </div>
           <div class="rate-box">
-            <span class="rate-label">שער שקל ליורו</span>
+            <span class="rate-label">שער יורו לשקל</span>
             <span class="rate-value" id="rate-ils-eur">טוען...</span>
           </div>
           <div class="rate-box">
@@ -539,13 +539,13 @@ document.querySelectorAll('a[href*="instagram.com"]').forEach(function(a){
       if(!ilsToRon || !ilsToEur) throw new Error('no rate');
       var ronToEur = ilsToEur / ilsToRon;
       ilsRonEl.textContent = '1₪ = ' + ilsToRon.toFixed(2) + ' ליי';
-      ilsEurEl.textContent = '1₪ = ' + ilsToEur.toFixed(3) + '€';
+      ilsEurEl.textContent = '1€ = ' + (1 / ilsToEur).toFixed(2) + '₪';
       ronEurEl.textContent = '1 ליי = ' + ronToEur.toFixed(3) + '€';
       updEl.textContent = 'מעודכן ל-' + data.date;
     })
     .catch(function(){
       ilsRonEl.textContent = '1₪ ≈ 1.51 ליי';
-      ilsEurEl.textContent = '1₪ ≈ 0.287€';
+      ilsEurEl.textContent = '1€ ≈ 3.48₪';
       ronEurEl.textContent = '1 ליי ≈ 0.19€';
       updEl.textContent = '';
     });
