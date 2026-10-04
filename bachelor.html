@@ -609,7 +609,7 @@ function acceptCookies(){
   try{ localStorage.setItem('cookieConsent','accepted'); }catch(e){}
   const b = document.getElementById('cookie-banner');
   if(b) b.style.display = 'none';
-  trackEvent('faq-visits');
+  trackEvent('bachelor-visits');
 }
 function declineCookies(){
   try{ localStorage.setItem('cookieConsent','declined'); }catch(e){}
@@ -623,7 +623,7 @@ function initCookieBanner(){
     const b = document.getElementById('cookie-banner');
     if(b) b.style.display = 'block';
   } else if(consent === 'accepted'){
-    trackEvent('faq-visits');
+    trackEvent('bachelor-visits');
   }
 }
 initCookieBanner();

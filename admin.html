@@ -39,7 +39,7 @@
   .logout-btn{background:transparent;border:1px solid var(--border);color:var(--text-dim);padding:9px 18px;border-radius:999px;cursor:pointer;font-size:0.85rem;}
   .logout-btn:hover{color:var(--gold-light);border-color:var(--gold);}
 
-  .cards-row{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:10px;margin-bottom:32px;}
+  .cards-row{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:10px;margin-bottom:32px;}
   .cards-row .links-card{grid-column:1/-1;}
   .cards-row .stat-card{padding:14px 10px;}
   .cards-row .stat-card .num{font-size:1.6rem;}
@@ -343,6 +343,12 @@ if(sessionStorage.getItem(SESSION_KEY) === '1'){ showDashboard(); }
 const STAT_COUNTERS = [
   {key:'index-visits', label:'כניסות לדף הבית', icon:'👀'},
   {key:'faq-visits', label:'כניסות לדף שאלות ותשובות', icon:'❓'},
+  {key:'limos-visits', label:'כניסות לדף לימוזינות', icon:'🚘'},
+  {key:'vip-visits', label:'כניסות לדף VIP', icon:'⭐'},
+  {key:'bachelor-visits', label:'כניסות לדף מסיבות רווקים', icon:'🥂'},
+  {key:'nightlife-visits', label:'כניסות לדף אטרקציות', icon:'🌃'},
+  {key:'clubs-visits', label:'כניסות לדף מועדונים', icon:'🍾'},
+  {key:'tips-visits', label:'כניסות לדף המלצות 365', icon:'💡'},
   {key:'whatsapp-clicks', label:'לחיצות על כפתורי WhatsApp', icon:'💬'},
   {key:'instagram-clicks', label:'לחיצות על כפתורי אינסטגרם', icon:'📸'},
   {key:'contact-form-submits', label:'שליחות טופס "בואו נדבר"', icon:'📝'},
