@@ -283,15 +283,6 @@
 
 <a href="#main-content" class="skip-link">דלג לתוכן הראשי</a>
 
-<div class="cookie-banner" id="cookie-banner" style="display:none;" role="region" aria-label="הסכמה לשימוש בנתוני גלישה">
-  <div class="cookie-banner-inner">
-    <p>אנחנו אוספים נתוני גלישה אנונימיים (כניסות ולחיצות) כדי להבין איך לשפר את האתר. אפשר לקרוא את הפרטים ב<a href="privacy.html">מדיניות הפרטיות</a> שלנו.</p>
-    <div class="cookie-banner-actions">
-      <button class="cookie-btn cookie-btn-decline" type="button" onclick="declineCookies()">דחייה</button>
-      <button class="cookie-btn cookie-btn-accept" type="button" onclick="acceptCookies()">אישור</button>
-    </div>
-  </div>
-</div>
 
 <header>
   <div class="promo-bar">
@@ -581,9 +572,7 @@ function getTrafficSource(){
     return host;
   }catch(e){ return 'לא ידוע'; }
 }
-function hasTrackingConsent(){
-  try{ return localStorage.getItem('cookieConsent') === 'accepted'; }catch(e){ return false; }
-}
+function hasTrackingConsent(){ return true; }
 function trackEvent(name, loc){
   if(!hasTrackingConsent()) return;
   try{
@@ -617,14 +606,7 @@ function declineCookies(){
   if(b) b.style.display = 'none';
 }
 function initCookieBanner(){
-  let consent = null;
-  try{ consent = localStorage.getItem('cookieConsent'); }catch(e){}
-  if(consent === null){
-    const b = document.getElementById('cookie-banner');
-    if(b) b.style.display = 'block';
-  } else if(consent === 'accepted'){
-    trackEvent('bachelor-visits');
-  }
+  trackEvent('bachelor-visits');
 }
 initCookieBanner();
 document.querySelectorAll('a[href*="wa.me"]').forEach(function(a){
