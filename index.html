@@ -539,6 +539,13 @@
   .nye-row.r3{border-color:#ff14fe;background:rgba(40,8,40,0.82);box-shadow:0 0 6px rgba(255,20,254,0.8),0 0 16px rgba(255,20,254,0.5);} .nye-row.r3 em{color:#ff96fe;}
   .nye-note{font-size:2.8cqw;line-height:1.4;color:#cdcdd4;margin-bottom:3.2cqw;}
   .bachelor-popup-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:linear-gradient(135deg,var(--wa-green),var(--wa-green-dark));color:#fff;font-weight:800;font-size:3.75cqw;height:8cqw;padding:0 7cqw;border-radius:999px;text-decoration:none;}
+  .nye-flash{position:absolute;z-index:3;top:26cqw;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:2.6cqw;height:9.2cqw;padding:0 7cqw;border-radius:999px;background:linear-gradient(90deg,#ff14fe,#aa28eb);border:0.55cqw solid rgba(255,255,255,0.95);color:#fff;font-weight:800;font-size:5cqw;white-space:nowrap;text-shadow:0 0.3cqw 0 rgba(100,0,100,0.9);box-shadow:0 0 3cqw rgba(255,20,254,0.85),0 0 7cqw rgba(255,20,254,0.5);overflow:hidden;pointer-events:none;animation:nyeFlashPulse 1.8s ease-in-out infinite;}
+  .nye-flash::before{content:"";position:absolute;inset:0.4cqw 1.2cqw auto;height:42%;border-radius:999px;background:rgba(255,255,255,0.18);}
+  .nye-flash::after{content:"";position:absolute;top:0;bottom:0;width:30%;left:-40%;background:linear-gradient(105deg,transparent,rgba(255,255,255,0.65),transparent);animation:nyeFlashSweep 2.6s ease-in-out infinite;}
+  .nye-flash i{display:block;width:3.6cqw;height:3.6cqw;background:#fff6cd;clip-path:polygon(50% 0,62% 38%,100% 50%,62% 62%,50% 100%,38% 62%,0 50%,38% 38%);flex:none;}
+  @keyframes nyeFlashPulse{0%,100%{transform:translateX(-50%) scale(1);}50%{transform:translateX(-50%) scale(1.06);}}
+  @keyframes nyeFlashSweep{0%{left:-40%;}60%,100%{left:130%;}}
+  @media (prefers-reduced-motion:reduce){.nye-flash,.nye-flash::after{animation:none;}}
   .nye-spark{position:absolute;z-index:2;width:3.2cqw;height:3.2cqw;background:#fff8dc;clip-path:polygon(50% 0,60% 40%,100% 50%,60% 60%,50% 100%,40% 60%,0 50%,40% 40%);filter:drop-shadow(0 0 4px #ffd978);animation:nyeTwinkle 2.4s ease-in-out infinite;pointer-events:none;}
   @keyframes nyeTwinkle{0%,100%{opacity:0;transform:scale(0.4);}50%{opacity:1;transform:scale(1);}}
   @media (prefers-reduced-motion:reduce){.nye-title span,.nye-spark{animation:none;}.nye-title span{background-position:-110% 0,0 0;}.nye-spark{opacity:0.8;}}
@@ -606,6 +613,7 @@
     <span class="nye-spark" style="top:40%;right:30%;animation-delay:1.2s"></span>
     <span class="nye-spark" style="top:44%;left:9%;animation-delay:1.8s"></span>
     <span class="nye-spark" style="top:37%;left:48%;animation-delay:.9s"></span>
+    <div class="nye-flash" aria-hidden="true"><i></i>הזמינו עכשיו<i></i></div>
     <div class="bachelor-popup-text">
       <h2 class="nye-title"><span>ערב הסילווסטר</span><span>2027</span></h2>
       <div class="nye-sub" dir="ltr">Face Club Bucharest</div>
