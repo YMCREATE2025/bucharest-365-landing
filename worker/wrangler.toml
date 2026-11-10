@@ -1,0 +1,6 @@
+name = "bucharest365-agent-edge"
+main = "agent-edge.mjs"
+compatibility_date = "2024-11-01"
+
+# Attach to the zone once bucharest365.vip DNS is proxied through Cloudflare (orange cloud):
+# routes = [{ pattern = "bucharest365.vip/*", zone_name = "bucharest365.vip" }]

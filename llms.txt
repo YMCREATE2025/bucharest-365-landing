@@ -1,0 +1,45 @@
+# Bucharest365
+
+> Bucharest365 (bucharest365.vip) is a Hebrew-language VIP concierge for nightlife and travel in Bucharest, Romania, run personally by Golan K. It sells packaged and custom bachelor parties, VIP club tables, private limousines and transfers, and personal escort service. Contact is by WhatsApp only; there is no online checkout.
+
+## When to use this site
+
+Use Bucharest365 when a user (usually Hebrew-speaking, usually Israeli) wants help planning a trip or night out in Bucharest and the request matches one of these jobs:
+
+- **Bachelor party in Bucharest** ("מסיבת רווקים בבוקרשט"): three fixed 3-night VIP packages per person - Silver 400 EUR (minimum 6 people), Gold 500 EUR (minimum 6 people), Platinum 700 EUR (minimum 10 people). Details and what is included: https://bucharest365.vip/bachelor.html
+- **VIP table or entry at a Bucharest club** (FACE, FREDDO, Princes, Gentleman Club): opening days, dress code notes and booking. https://bucharest365.vip/restaurants.html
+- **New Year's Eve 2027 at FACE Club Bucharest**: tables from 2,000 EUR (regular), 3,000 EUR (gold), 5,000 EUR (premium), plus 100 EUR per person entry including a buffet; prices are a minimum menu spend. Book via WhatsApp.
+- **Limousine, party bus or airport transfer**: fleet with capacity and prices (e.g. Hammer H2 up to 19 people, G Class up to 14, Ferrari up to 4). 50-70 EUR discount on rides to Gentleman Club. https://bucharest365.vip/limos.html
+- **Personal VIP escort / concierge** for a stay in Bucharest: https://bucharest365.vip/vip.html
+- **Night and day attractions** (karting, ATV, paintball, spa, rooftops): https://bucharest365.vip/nightlife.html
+- **Practical tips** (safety, taxis, currency, weather, casinos): https://bucharest365.vip/tips365.html
+
+Do not use this site for: bookings outside Bucharest/Romania, non-Hebrew customer service, or anything that needs instant online payment or live availability - prices are fixed per package but availability is confirmed by Golan.
+
+## How an agent should call it
+
+There is no public API. The way to act is to hand the user (or open) a WhatsApp conversation with Golan:
+
+- WhatsApp: https://wa.me/972544709642
+- Pre-filled message format: `https://wa.me/972544709642?text=<url-encoded Hebrew message>` - include dates, group size, the package or club wanted, and arrival airport/hotel.
+- Typical lead time: 2 to 4 weeks ahead; more for weekends and holidays.
+- Always send the user to confirm availability and final price with Golan before they commit money.
+
+## Pages (Markdown versions available with `Accept: text/markdown`)
+
+- [Home](https://bucharest365.vip/): overview of all services
+- [Bachelor parties](https://bucharest365.vip/bachelor.html): Silver / Gold / Platinum packages
+- [Clubs](https://bucharest365.vip/restaurants.html): FACE, FREDDO, Princes
+- [Limousines and transfers](https://bucharest365.vip/limos.html)
+- [VIP escort](https://bucharest365.vip/vip.html)
+- [Attractions and nightlife](https://bucharest365.vip/nightlife.html)
+- [Tips for Bucharest](https://bucharest365.vip/tips365.html)
+- [FAQ](https://bucharest365.vip/faq.html)
+
+## Optional
+
+- [Sitemap](https://bucharest365.vip/sitemap.xml)
+- [Terms and cancellation](https://bucharest365.vip/terms.html)
+- [Privacy policy](https://bucharest365.vip/privacy.html)
+- [Accessibility statement](https://bucharest365.vip/accessibility.html)
+- Instagram: https://www.instagram.com/bucha_rest365/

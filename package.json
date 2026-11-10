@@ -1,0 +1,8 @@
+{
+  "name": "bucharest-365-landing",
+  "private": true,
+  "scripts": {
+    "build:md": "python3 tools/build_markdown.py",
+    "test": "node --test tests/agent-readiness.test.mjs"
+  }
+}
