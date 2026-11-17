@@ -104,6 +104,8 @@
   table.stats-table td{color:var(--text-dim);}
   table.stats-table tr:last-child td{border-bottom:none;}
   table.stats-table td b{color:var(--gold-light);}
+  table.stats-table .wa-col{background:rgba(37,211,102,0.10);color:var(--wa-green);font-weight:700;}
+  table.stats-table th.wa-col{border-bottom:2px solid var(--wa-green);}
   .chart-legend{display:flex;gap:16px;flex-wrap:wrap;font-size:0.78rem;color:var(--text-dim);margin-bottom:8px;}
   .chart-legend i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-inline-end:5px;vertical-align:middle;}
   .stats-chart{width:100%;height:220px;display:block;}
@@ -1136,7 +1138,7 @@ function renderPeriodTable(fetchFailed){
   const periods = Object.keys(grouped).sort().reverse().slice(0, limit);
 
   let html = '<thead><tr><th>תקופה</th>';
-  STAT_COUNTERS.forEach(c=> html += "<th title='" + c.label.replace(/'/g,"&#39;") + "'>" + c.icon + '</th>');
+  STAT_COUNTERS.forEach(c=> html += "<th" + (c.key === 'whatsapp-clicks' ? " class='wa-col'" : '') + " title='" + c.label.replace(/'/g,"&#39;") + "'>" + c.icon + '</th>');
   html += '<th>סה"כ</th></tr></thead><tbody>';
 
   if(periods.length === 0){
@@ -1149,7 +1151,7 @@ function renderPeriodTable(fetchFailed){
       STAT_COUNTERS.forEach(c=>{
         const v = row[c.key] || 0;
         total += v;
-        cells += '<td>' + (v || '–') + '</td>';
+        cells += (c.key === 'whatsapp-clicks' ? '<td class="wa-col">' : '<td>') + (v || '–') + '</td>';
       });
       html += '<tr><td>' + periodLabel(key, statsView) + '</td>' + cells + '<td><b>' + total + '</b></td></tr>';
     });
